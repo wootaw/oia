@@ -1,7 +1,11 @@
 class Change < ApplicationRecord
   include AASM
 
-  validates :version, presence: true
+  belongs_to :project
+
+  validates :version, presence: true, uniqueness: { scope: :project }
+
+  acts_as_list scope: [:project]
   
   enum state: {
     mounted: 1,

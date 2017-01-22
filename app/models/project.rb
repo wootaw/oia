@@ -4,6 +4,7 @@ class Project < ApplicationRecord
   belongs_to :owner, polymorphic: true
 
   has_many :documents, dependent: :destroy
+  has_many :changes, dependent: :destroy
 
   validates :name, presence: true, length: { minimum: 2, maximum: 50 }, uniqueness: { scope: :owner }
   validates :key, presence: true, uniqueness: true
@@ -17,5 +18,9 @@ class Project < ApplicationRecord
   aasm column: :state, enum: true do
     state :mounted, initial: true
     state :running
+  end
+
+  def update_documents
+    
   end
 end
