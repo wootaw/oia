@@ -11,5 +11,20 @@ module Apiwoods
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
+
+    config.i18n.available_locales = ['zh-CN', 'en', 'zh-TW']
+    config.i18n.fallbacks = true
+
+    config.autoload_paths += [
+      Rails.root.join('lib')
+    ]
+
+    config.generators do |g|
+      g.test_framework :rspec
+      g.fixture_replacement :factory_girl, dir: 'spec/factories'
+    end
+
+    config.active_job.queue_adapter = :sidekiq
+    config.middleware.use Rack::Attack
   end
 end

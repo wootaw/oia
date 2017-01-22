@@ -27,8 +27,10 @@ gem 'devise'
 gem 'cancancan'
 
 gem 'acts_as_tree'
+gem 'acts_as_list'
 gem 'aasm'
 gem 'hashdiff'
+gem 'thor', '0.19.1'
 
 gem 'redis'
 gem 'hiredis'
@@ -36,14 +38,28 @@ gem 'redis-namespace'
 gem 'redis-objects'
 gem 'redis-session-store'
 
+gem 'sidekiq'
+# Sidekiq Web
+gem 'sinatra', '~> 2.0.0.beta2', require: false
+
+gem 'rack-attack'
+
 group :development, :test do
-  gem 'byebug', platform: :mri
+  gem 'listen'
+  gem 'rspec-rails'
+  gem 'factory_girl_rails'
+  gem 'database_cleaner'
+  gem 'capybara'
+  gem 'letter_opener'
+
+  gem 'codecov', require: false
+  gem 'pry-byebug'
 end
 
 group :development do
+  gem 'better_errors'
   # Access an IRB console on exception pages or by using <%= console %> anywhere in the code.
   gem 'web-console', '>= 3.3.0'
-  gem 'listen', '~> 3.0.5'
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
 end
