@@ -13,6 +13,9 @@ class CreateInouts < ActiveRecord::Migration[5.0]
       t.string      :options
       t.integer     :version, default: 0, index: true
       t.string      :key, index: true
+      t.integer     :state, index: true
+      t.integer     :position, index: true
+      t.datetime    :changed_at
       t.references  :resource, index: true
       t.timestamps
     end

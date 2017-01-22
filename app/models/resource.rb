@@ -1,5 +1,5 @@
 class Resource < ApplicationRecord
-  enum method: %i(GET HEAD POST PUT DELETE PATCH TRACE OPTIONS CONNECT)
+  include AASM
 
   belongs_to :document
 
@@ -14,8 +14,19 @@ class Resource < ApplicationRecord
 
   before_create :generate_key
 
+  enum method: %i(GET HEAD POST PUT DELETE PATCH TRACE OPTIONS CONNECT)
+  enum state: {
+    mounted: 1,
+    running: 99
+  }
+
+  aasm column: :state, enum: true do
+    state :mounted, initial: true
+    state :running
+  end
+
   protected
-  
+
   def generate_key
     self.key = Digest::MD5.hexdigest("#{self.method}|#{self.path}")
   end

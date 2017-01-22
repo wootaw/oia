@@ -1,4 +1,6 @@
 class Inout < ApplicationRecord
+  include AASM
+
   enum clazz: %i(header param return error)
 
   belongs_to :resource
@@ -10,11 +12,22 @@ class Inout < ApplicationRecord
   validates :summary, length: { minimum: 2, maximum: 50 }
 
   acts_as_tree
+  acts_as_list scope: [:resource, :clazz]
 
   before_create :generate_key
+  
+  enum state: {
+    mounted: 1,
+    running: 99
+  }
+
+  aasm column: :state, enum: true do
+    state :mounted, initial: true
+    state :running
+  end
 
   protected
-  
+
   def generate_key
     self.key = Digest::MD5.hexdigest("#{self.clazz}|#{self.parent_id}|#{self.name}")
   end

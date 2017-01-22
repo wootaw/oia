@@ -6,9 +6,10 @@ class CreateResources < ActiveRecord::Migration[5.0]
       t.string      :summary
       t.string      :custom_state
       t.string      :custom_state_summary
-      t.string      :aasm_state, index: true
+      t.integer     :state, index: true
       t.string      :key, index: true
       t.integer     :version, default: 0, index: true
+      t.datetime    :changed_at
       t.references  :document, index: true
       t.timestamps
     end

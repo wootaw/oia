@@ -1,4 +1,5 @@
 class User < ApplicationRecord
+  include AASM
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
@@ -11,4 +12,14 @@ class User < ApplicationRecord
   has_many :team_projects, through: :teams, source: :projects
   has_many :roles, through: :members, source: :roles
   has_many :groups, through: :roles, source: :group
+
+  enum state: {
+    mounted: 1,
+    running: 99
+  }
+
+  aasm column: :state, enum: true do
+    state :mounted, initial: true
+    state :running
+  end
 end
