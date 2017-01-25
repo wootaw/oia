@@ -1,5 +1,6 @@
 class Project < ApplicationRecord
   include AASM
+  include Versionable
 
   belongs_to :owner, polymorphic: true
 
@@ -14,15 +15,15 @@ class Project < ApplicationRecord
 
   accepts_nested_attributes_for :documents
 
-  enum state: {
-    mounted: 1,
-    running: 99
-  }
+  # enum state: {
+  #   mounted: 1,
+  #   running: 99
+  # }
 
-  aasm column: :state, enum: true do
-    state :mounted, initial: true
-    state :running
-  end
+  # aasm column: :state, enum: true do
+  #   state :mounted, initial: true
+  #   state :running
+  # end
 
   def version_number
     "#{major_version}.#{minor_version}.#{patch_version}.#{changes_version}"
@@ -66,12 +67,23 @@ class Project < ApplicationRecord
       doc_attrs = attrs.slice(:name, :summary)
 
       doc = self.documents.where("name = ? OR summary = ?", attrs[:name], attrs[:summary]).take
-      if doc.nil?
+      descs = if doc.nil?
         results[:minor] += 1
+        []
       else
         doc_attrs.merge!({ id: doc.id })
+        change = self.lastest_change
+        change.nil? ? [] : change.parts(doc, :descriptions)
       end
-      
+
+      attrs[:descriptions].each_with_index do |row, i|
+        str = row.join(" ").strip
+        next if str.nil?
+        next if !descs[i].nil? && Digest::MD5.hexdigest(str) == descs[i].key
+        doc_attrs[:descriptions_attributes] = [] unless doc_attrs.has_key?(:descriptions_attributes)
+        doc_attrs[:descriptions_attributes] << { content: str, position: i + 1, key: Digest::MD5.hexdigest(str) }
+      end unless attrs[:descriptions].nil?
+
       doc_attrs
     end
 

@@ -3,15 +3,27 @@ class Description < ApplicationRecord
 
   belongs_to :owner, polymorphic: true
 
-  acts_as_list scope: [:owner]
+  validates :content, :version, :key, presence: true
+
+  # acts_as_list scope: [:owner_type, :owner_id]
   
+  # before_save :generate_key
+
   enum state: {
-    mounted: 1,
-    running: 99
+    latest: 1,
+    dated: 50,
+    discarded: 99
   }
 
-  aasm column: :state, enum: true do
-    state :mounted, initial: true
-    state :running
-  end
+  # aasm column: :state, enum: true do
+  #   state :mounted, initial: true
+  #   state :running
+  # end
+
+  protected
+
+  # def generate_key
+  #   self.key = Digest::MD5.hexdigest(self.content)
+  # end
+
 end

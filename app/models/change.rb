@@ -16,4 +16,8 @@ class Change < ApplicationRecord
   #   state :mounted, initial: true
   #   state :running
   # end
+
+  def parts(object, set)
+    object.list_by_version(set, position)
+  end
 end

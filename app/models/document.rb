@@ -1,5 +1,6 @@
 class Document < ApplicationRecord
   include AASM
+  include Versionable
 
   belongs_to :project
 
@@ -9,5 +10,6 @@ class Document < ApplicationRecord
   validates :name, presence: true, length: { minimum: 2, maximum: 20 }, uniqueness: { scope: :project }
   validates :summary, presence: true, length: { minimum: 2, maximum: 50 }, uniqueness: { scope: :project }
 
-  acts_as_list scope: [:project_id]
+  accepts_nested_attributes_for :descriptions
+
 end

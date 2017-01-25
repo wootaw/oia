@@ -11,7 +11,8 @@ class CreateInouts < ActiveRecord::Migration[5.0]
       t.integer     :parent_id, default: 0, index: true
       t.string      :default
       t.string      :options
-      t.integer     :version, default: 0, index: true
+      t.integer     :version, default: 1, index: true
+      t.integer     :discard_version, index: true
       t.string      :key, index: true
       t.integer     :state, index: true
       t.integer     :position, index: true

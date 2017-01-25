@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170124084318) do
+ActiveRecord::Schema.define(version: 20170125120457) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -29,14 +29,16 @@ ActiveRecord::Schema.define(version: 20170124084318) do
 
   create_table "descriptions", force: :cascade do |t|
     t.text     "content"
-    t.integer  "version",    default: 0
+    t.integer  "version",         default: 0
     t.integer  "state"
     t.datetime "changed_at"
     t.integer  "position"
     t.string   "owner_type"
     t.integer  "owner_id"
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
+    t.integer  "discard_version"
+    t.string   "key"
     t.index ["owner_type", "owner_id"], name: "index_descriptions_on_owner_type_and_owner_id", using: :btree
     t.index ["position"], name: "index_descriptions_on_position", using: :btree
     t.index ["state"], name: "index_descriptions_on_state", using: :btree
@@ -53,7 +55,9 @@ ActiveRecord::Schema.define(version: 20170124084318) do
     t.integer  "project_id"
     t.datetime "created_at",                       null: false
     t.datetime "updated_at",                       null: false
+    t.integer  "position"
     t.integer  "version",              default: 0
+    t.integer  "discard_version"
     t.index ["name"], name: "index_documents_on_name", using: :btree
     t.index ["project_id"], name: "index_documents_on_project_id", using: :btree
     t.index ["state"], name: "index_documents_on_state", using: :btree
@@ -77,17 +81,18 @@ ActiveRecord::Schema.define(version: 20170124084318) do
     t.string   "summary"
     t.boolean  "required"
     t.boolean  "array"
-    t.integer  "parent_id",   default: 0
+    t.integer  "parent_id",       default: 0
     t.string   "default"
     t.string   "options"
-    t.integer  "version",     default: 0
+    t.integer  "version",         default: 0
     t.string   "key"
     t.integer  "state"
     t.integer  "position"
     t.datetime "changed_at"
     t.integer  "resource_id"
-    t.datetime "created_at",              null: false
-    t.datetime "updated_at",              null: false
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
+    t.integer  "discard_version"
     t.index ["clazz"], name: "index_inouts_on_clazz", using: :btree
     t.index ["key"], name: "index_inouts_on_key", using: :btree
     t.index ["parent_id"], name: "index_inouts_on_parent_id", using: :btree
@@ -142,6 +147,8 @@ ActiveRecord::Schema.define(version: 20170124084318) do
     t.integer  "document_id"
     t.datetime "created_at",                       null: false
     t.datetime "updated_at",                       null: false
+    t.integer  "position"
+    t.integer  "discard_version"
     t.index ["document_id"], name: "index_resources_on_document_id", using: :btree
     t.index ["key"], name: "index_resources_on_key", using: :btree
     t.index ["path"], name: "index_resources_on_path", using: :btree
