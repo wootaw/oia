@@ -9,5 +9,5 @@ class Document < ApplicationRecord
   validates :name, presence: true, length: { minimum: 2, maximum: 20 }, uniqueness: { scope: :project }
   validates :summary, presence: true, length: { minimum: 2, maximum: 50 }, uniqueness: { scope: :project }
 
-  
+  acts_as_list scope: [:project_id]
 end

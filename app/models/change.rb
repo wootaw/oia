@@ -5,15 +5,15 @@ class Change < ApplicationRecord
 
   validates :version, presence: true, uniqueness: { scope: :project }
 
-  acts_as_list scope: [:project]
+  acts_as_list scope: [:project_id]
   
-  enum state: {
-    mounted: 1,
-    running: 99
-  }
+  # enum state: {
+  #   mounted: 1,
+  #   running: 99
+  # }
 
-  aasm column: :state, enum: true do
-    state :mounted, initial: true
-    state :running
-  end
+  # aasm column: :state, enum: true do
+  #   state :mounted, initial: true
+  #   state :running
+  # end
 end
