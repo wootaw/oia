@@ -18,7 +18,7 @@ if ENV['CI'] == 'true'
 end
 
 Devise.stretches = 1
-Rails.logger.level = 4
+# Rails.logger.level = 4
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
 # spec/support/ and its subdirectories. Files matching `spec/**/*_spec.rb` are

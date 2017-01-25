@@ -54,6 +54,7 @@ group :development, :test do
 
   gem 'codecov', require: false
   gem 'pry-byebug'
+  gem 'awesome_print'
 end
 
 group :development do
@@ -62,6 +63,11 @@ group :development do
   gem 'web-console', '>= 3.3.0'
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
+  gem 'spring-commands-rspec'
+
+  gem 'rspec-nc', '~> 0'
+  gem 'guard', '~> 2'
+  gem 'guard-rspec', '~> 4'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
