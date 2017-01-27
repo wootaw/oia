@@ -3,7 +3,7 @@ class Description < ApplicationRecord
 
   belongs_to :owner, polymorphic: true
 
-  validates :content, :version, :key, presence: true
+  validates :content, :version, :key, :position, presence: true
 
   # acts_as_list scope: [:owner_type, :owner_id]
   

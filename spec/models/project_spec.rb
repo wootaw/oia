@@ -319,7 +319,8 @@ RSpec.describe Project, type: :model do
         :summary => "Document One", 
         :name => "document2", 
         :descriptions => [
-          ["This is document of number two"]
+          ["This is document of number two"],
+          ["More description about response C.", "Can't write more about response C."]
         ], 
         :resources => [
           {
@@ -360,7 +361,6 @@ RSpec.describe Project, type: :model do
       it "Should be create 2 document when 2 new document attributes" do
         project_user.update_version(docs[1..-1])
         project_user.save
-        # ap project_user
 
         expect(project_user.documents.count).to eq 2
       end
@@ -402,23 +402,96 @@ RSpec.describe Project, type: :model do
       end
 
       it "The version number should remain unchanged when without document changes" do
-        FactoryGirl.create(:document, name: "document2", project: project_user, version: 1)
+        FactoryGirl.create(:document, name: "document3", project: project_user, version: 1)
         FactoryGirl.create(:document, project: project_team)
-        FactoryGirl.create(:change, version: "0.1.0.0", project: project_user)
+        FactoryGirl.create(:change, version: "0.1.9.0", project: project_user)
         project_user.update_attributes(minor_version: 1, patch_version: 9)
 
-        project_user.update_version([docs[1]])
+        project_user.update_version([docs[2]])
         project_user.save
         project_user.reload
 
         expect(project_user.documents.map(&:version)).to match_array [1]
-        expect(project_user.lastest_change.version).to eq "0.1.0.0"
+        expect(project_user.lastest_change.version).to eq "0.1.9.0"
       end
     end
 
     context "Description" do
+      before(:example) do
+        @doc3   = FactoryGirl.create(:document, name: "document3", project: project_user, version: 1)
+        @change = FactoryGirl.create(:change, version: "0.1.0.0", project: project_user)
+      end
 
+      it "Description position interval is 1000" do
+        attrs = docs[2]
+        attrs[:descriptions] = [["9"], ["6"]]
+
+        project_user.update_version([attrs])
+        project_user.save
+
+        project_user.reload
+        expect(project_user.lastest_change.parts(@doc3, :descriptions).map(&:position)).to eq [0, 1000]
+      end
+
+      it "Insert and Remove" do
+        FactoryGirl.create(:description, content: "9", key: Digest::MD5.hexdigest("9"), position: 0, version: @change.position, owner: @doc3)
+        FactoryGirl.create(:description, content: "8", key: Digest::MD5.hexdigest("8"), position: 1000, version: @change.position, owner: @doc3)
+        FactoryGirl.create(:description, content: "7", key: Digest::MD5.hexdigest("7"), position: 2000, version: @change.position, owner: @doc3)
+
+        attrs = docs[2]
+        attrs[:descriptions] = [["9"], ["6"], ["5"], ["7"]]
+
+        project_user.update_version([attrs])
+        project_user.save
+
+        project_user.reload
+        @change.reload
+        lastest = project_user.lastest_change
+        expect(lastest.parts(@doc3, :descriptions).map(&:content)).to eq ["9", "6", "5", "7"]
+        expect(@change.parts(@doc3, :descriptions).map(&:content)).to eq ["9", "8", "7"]
+      end
+
+      it "Position should be can expand" do
+        FactoryGirl.create(:description, content: "9", key: Digest::MD5.hexdigest("9"), position: 0, version: @change.position, owner: @doc3)
+        FactoryGirl.create(:description, content: "8", key: Digest::MD5.hexdigest("8"), position: 1, version: @change.position, owner: @doc3)
+        FactoryGirl.create(:description, content: "7", key: Digest::MD5.hexdigest("7"), position: 2, version: @change.position, owner: @doc3)
+
+        attrs = docs[2]
+        attrs[:descriptions] = [["9"], ["8"], ["6"], ["5"], ["4"], ["7"]]
+
+        project_user.update_version([attrs])
+        project_user.save
+
+        project_user.reload
+        @change.reload
+        lastest = project_user.lastest_change
+        expect(@change.parts(@doc3, :descriptions).last.position).to eq 42
+      end
+
+      it "The position of discarded description should be can expand" do
+        change2 = FactoryGirl.create(:change, version: "0.1.1.0", project: project_user)
+
+        FactoryGirl.create(:description, content: "9", key: Digest::MD5.hexdigest("9"), position: 0, version: @change.position, owner: @doc3)
+        FactoryGirl.create(:description, content: "8", key: Digest::MD5.hexdigest("8"), position: 1, version: @change.position, owner: @doc3)
+        FactoryGirl.create(:description, content: "7", key: Digest::MD5.hexdigest("7"), position: 2, version: @change.position, discard_version: change2.position, owner: @doc3)
+        FactoryGirl.create(:description, content: "6", key: Digest::MD5.hexdigest("6"), position: 2, version: change2.position, owner: @doc3)
+        FactoryGirl.create(:description, content: "5", key: Digest::MD5.hexdigest("5"), position: 3, version: @change.position, discard_version: change2.position, owner: @doc3)
+
+        attrs = docs[2]
+        attrs[:descriptions] = [["9"], ["0"], ["8"], ["1"], ["6"], ["2"], ["3"]]
+
+        project_user.update_version([attrs])
+        project_user.save
+
+        project_user.reload
+        @change.reload
+        lastest = project_user.lastest_change
+        expect(lastest.parts(@doc3, :descriptions).map(&:content)).to eq ["9", "0", "8", "1", "6", "2", "3"]
+        expect(change2.parts(@doc3, :descriptions).map(&:content)).to eq ["9", "8", "6"]
+        expect(@change.parts(@doc3, :descriptions).map(&:content)).to eq ["9", "8", "7", "5"]
+      end
     end
 
   end
+
 end
