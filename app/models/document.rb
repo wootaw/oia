@@ -11,5 +11,6 @@ class Document < ApplicationRecord
   validates :summary, presence: true, length: { minimum: 2, maximum: 50 }, uniqueness: { scope: :project }
 
   accepts_nested_attributes_for :descriptions
+  accepts_nested_attributes_for :resources
 
 end

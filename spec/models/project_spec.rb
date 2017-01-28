@@ -250,7 +250,7 @@ RSpec.describe Project, type: :model do
                 :summary => "A boolean value"
               }
             ], 
-            :returns => [
+            :responses => [
               {
                 :group => "group1", 
                 :required => false, 
@@ -284,10 +284,7 @@ RSpec.describe Project, type: :model do
                 :descriptions => [
                   ["More description about response C.", "Can't write more about response C."]
                 ]
-              }
-            ], 
-            :errors => [
-              {
+              }, {
                 :required => true, 
                 :name => "code", 
                 :summary => "Error code", 
@@ -391,7 +388,7 @@ RSpec.describe Project, type: :model do
         FactoryGirl.create(:document, name: "document2", project: project_user, version: 1)
         FactoryGirl.create(:document, project: project_team)
         FactoryGirl.create(:change, version: "0.1.0.0", project: project_user)
-        project_user.update_attributes(minor_version: 1, patch_version: 9)
+        project_user.update_attributes(minor_version: 1, patch_version: 0)
 
         project_user.update_version(docs[1..-1])
         project_user.save
@@ -413,6 +410,42 @@ RSpec.describe Project, type: :model do
 
         expect(project_user.documents.map(&:version)).to match_array [1]
         expect(project_user.lastest_change.version).to eq "0.1.9.0"
+      end
+    end
+
+    context "Resource" do
+      it "Should be create 2 resources for the first document" do
+        project_user.update_attributes(minor_version: 1, patch_version: 0)
+        project_user.update_version([docs[0]])
+        project_user.save
+
+        expect(project_user.documents.first.resources.count).to eq 2
+
+        doc1 = project_user.documents.first
+        project_user.reload
+        expect(project_user.lastest_change.parts(doc1, :resources).map(&:position)).to eq [0, 1000]
+        expect(project_user.lastest_change.version).to eq "0.2.0.0"
+      end
+
+      it "Should be update resource summary when it have new summary" do
+        doc1   = FactoryGirl.create(:document, name: "document1", project: project_user, version: 1)
+        change = FactoryGirl.create(:change, version: "0.1.0.0", project: project_user)
+        key1   = Digest::MD5.hexdigest("GET|/api/v1/a_res")
+        key2   = Digest::MD5.hexdigest("POST|/api/v1/a_res")
+
+        res1 = FactoryGirl.create(:resource, method: "GET", path: "/api/v1/a_res", key: key1, position: 1, version: change.version, document: doc1)
+        res2 = FactoryGirl.create(:resource, method: "POST", path: "/api/v1/a_res", key: key2, position: 2, version: change.version, document: doc1)
+        project_user.update_attributes(minor_version: 1, patch_version: 0)
+
+        project_user.update_version([docs[0]])
+        project_user.save
+
+        project_user.reload
+        res1.reload
+        res2.reload
+        expect(res1.summary).to eq "Get list of A"
+        expect(res2.summary).to eq "Create an A resource"
+        expect(project_user.lastest_change.version).to eq "0.1.0.1"
       end
     end
 

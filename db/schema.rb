@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170125120457) do
+ActiveRecord::Schema.define(version: 20170127023102) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -32,15 +32,14 @@ ActiveRecord::Schema.define(version: 20170125120457) do
     t.integer  "version",         default: 0
     t.integer  "state"
     t.datetime "changed_at"
-    t.integer  "position"
     t.string   "owner_type"
     t.integer  "owner_id"
     t.datetime "created_at",                  null: false
     t.datetime "updated_at",                  null: false
-    t.integer  "discard_version"
     t.string   "key"
+    t.integer  "discard_version"
+    t.integer  "position"
     t.index ["owner_type", "owner_id"], name: "index_descriptions_on_owner_type_and_owner_id", using: :btree
-    t.index ["position"], name: "index_descriptions_on_position", using: :btree
     t.index ["state"], name: "index_descriptions_on_state", using: :btree
     t.index ["version"], name: "index_descriptions_on_version", using: :btree
   end
@@ -55,7 +54,6 @@ ActiveRecord::Schema.define(version: 20170125120457) do
     t.integer  "project_id"
     t.datetime "created_at",                       null: false
     t.datetime "updated_at",                       null: false
-    t.integer  "position"
     t.integer  "version",              default: 0
     t.integer  "discard_version"
     t.index ["name"], name: "index_documents_on_name", using: :btree
@@ -87,16 +85,15 @@ ActiveRecord::Schema.define(version: 20170125120457) do
     t.integer  "version",         default: 0
     t.string   "key"
     t.integer  "state"
-    t.integer  "position"
     t.datetime "changed_at"
     t.integer  "resource_id"
     t.datetime "created_at",                  null: false
     t.datetime "updated_at",                  null: false
     t.integer  "discard_version"
+    t.integer  "position"
     t.index ["clazz"], name: "index_inouts_on_clazz", using: :btree
     t.index ["key"], name: "index_inouts_on_key", using: :btree
     t.index ["parent_id"], name: "index_inouts_on_parent_id", using: :btree
-    t.index ["position"], name: "index_inouts_on_position", using: :btree
     t.index ["resource_id"], name: "index_inouts_on_resource_id", using: :btree
     t.index ["state"], name: "index_inouts_on_state", using: :btree
     t.index ["version"], name: "index_inouts_on_version", using: :btree
@@ -147,7 +144,6 @@ ActiveRecord::Schema.define(version: 20170125120457) do
     t.integer  "document_id"
     t.datetime "created_at",                       null: false
     t.datetime "updated_at",                       null: false
-    t.integer  "position"
     t.integer  "discard_version"
     t.index ["document_id"], name: "index_resources_on_document_id", using: :btree
     t.index ["key"], name: "index_resources_on_key", using: :btree
