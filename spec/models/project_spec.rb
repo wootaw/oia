@@ -447,6 +447,36 @@ RSpec.describe Project, type: :model do
         expect(res2.summary).to eq "Create an A resource"
         expect(project_user.lastest_change.version).to eq "0.1.0.1"
       end
+
+      it "" do
+        doc1   = FactoryGirl.create(:document, name: "document1", project: project_user, version: 1)
+        change1 = FactoryGirl.create(:change, version: "0.1.0.0", project: project_user)
+        change2 = FactoryGirl.create(:change, version: "0.1.1.0", project: project_user)
+        key1   = Digest::MD5.hexdigest("GET|/api/v1/a_res")
+        key2   = Digest::MD5.hexdigest("POST|/api/v1/a_res")
+        res1 = FactoryGirl.create(:resource, method: "GET", path: "/api/v1/a_res", key: key1, position: 1, version: change1.version, document: doc1)
+        res2 = FactoryGirl.create(:resource, method: "POST", path: "/api/v1/a_res", key: key2, position: 2, version: change1.version, document: doc1)
+
+        FactoryGirl.create(:description, content: "9", key: Digest::MD5.hexdigest("9"), position: 0, version: change1.position, owner: res2)
+        FactoryGirl.create(:description, content: "8", key: Digest::MD5.hexdigest("8"), position: 1, version: change1.position, owner: res2)
+        FactoryGirl.create(:description, content: "7", key: Digest::MD5.hexdigest("7"), position: 2, version: change1.position, discard_version: change2.position, owner: res2)
+        FactoryGirl.create(:description, content: "6", key: Digest::MD5.hexdigest("6"), position: 2, version: change2.position, owner: res2)
+        FactoryGirl.create(:description, content: "5", key: Digest::MD5.hexdigest("5"), position: 3, version: change1.position, discard_version: change2.position, owner: res2)
+
+        attrs = docs[0]
+        attrs[:resources][1][:descriptions] = [["9"], ["0"], ["8"], ["1"], ["6"], ["2"], ["3"]]
+
+        project_user.update_version([docs[0]])
+        project_user.save
+
+        project_user.reload
+        change1.reload
+        change2.reload
+        lastest = project_user.lastest_change
+        expect(lastest.parts(res2, :descriptions).map(&:content)).to eq ["9", "0", "8", "1", "6", "2", "3"]
+        expect(change2.parts(res2, :descriptions).map(&:content)).to eq ["9", "8", "6"]
+        expect(change1.parts(res2, :descriptions).map(&:content)).to eq ["9", "8", "7", "5"]
+      end
     end
 
     context "Description" do

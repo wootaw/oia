@@ -1,5 +1,6 @@
 class Resource < ApplicationRecord
   include AASM
+  include Versionable
 
   belongs_to :document
 
@@ -17,6 +18,9 @@ class Resource < ApplicationRecord
   # before_create :generate_key
 
   enum method: %i(GET HEAD POST PUT DELETE PATCH TRACE OPTIONS CONNECT)
+
+  accepts_nested_attributes_for :descriptions
+  
   # enum state: {
   #   mounted: 1,
   #   running: 99

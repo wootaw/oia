@@ -32,17 +32,21 @@ class Project
     def attach_version(attrs, number)
       attrs.each do |doc|
         doc[:version] = number unless doc.has_key?(:id)
-
-        doc[:descriptions_attributes].each do |desc_attrs|
-          next if desc_attrs.has_key?(:id) && desc_attrs.has_key?(:position)
-          desc_attrs[desc_attrs.has_key?(:id) ? :discard_version : :version] = number
-        end unless doc[:descriptions_attributes].nil?
-        
-        doc[:resources_attributes].each do |res_attrs|
-          next if res_attrs.has_key?(:id) && (res_attrs.has_key?(:position) || res_attrs.has_key?(:summary))
-          res_attrs[res_attrs.has_key?(:id) ? :discard_version : :version] = number
-        end unless doc[:resources_attributes].nil?
+        attr_version(doc, :descriptions_attributes, number)
+        attr_version(doc, :resources_attributes, number)
       end
+    end
+
+    def attr_version(json, field, number)
+      json[field].each do |attrs|
+        attr_version(attrs, :descriptions_attributes, number) unless field == :descriptions_attributes
+
+        if attrs.has_key?(:id)
+          attrs[:discard_version] = number if attrs.size == 1
+        else
+          attrs[:version] = number
+        end
+      end unless json[field].nil?
     end
 
     def update_documents(doc_params)
@@ -68,17 +72,17 @@ class Project
 
         res_jsons = attribute_jsons(change, doc, attrs, :resources)
         unless res_jsons.length == 0
-          doc_attrs[:resources_attributes] = res_jsons
-          is_change = false
           res_jsons.each do |r|
             if r.has_key?(:id)
-              is_change = true
+              results[:changes] += 1
             else
               results[:minor] += 1
               break
             end
+
+            # desc_jsons = attribute_jsons(change, doc, attrs, :descriptions)
           end
-          results[:changes] += 1 if is_change
+          doc_attrs[:resources_attributes] = res_jsons
         end
         doc_attrs
       end
@@ -98,7 +102,8 @@ class Project
           res.symbolize_keys!
           res.slice(:path, :summary).merge({ 
             key: Digest::MD5.hexdigest("#{res[:method].upcase}|#{res[:path]}"),
-            method: res[:method].upcase
+            method: res[:method].upcase,
+            descriptions: new_jsons(res, :descriptions)
           })
         end
       end
@@ -110,42 +115,81 @@ class Project
       when :descriptions
         data.map { |o| { key: o.key, position: o.position, id: o.id } }
       when :resources
-        data.map { |o| { key: o.key, position: o.position, id: o.id, summary: o.summary } }
+        data.map do |o| 
+          { 
+            key: o.key, 
+            position: o.position, 
+            id: o.id, 
+            summary: o.summary,
+            descriptions: old_jsons(change, o, :descriptions),
+            object: o
+          }
+        end
       end
     end
 
+    def attribute_jsons(change, item, attrs, part)
+      results, lastest = will_lastest(change, item, attrs, part)
+      results + rearrange(lastest, item, part)
+    end
+
     def will_lastest(change, item, attrs, part)
-      results = []
       lastest = old_jsons(change, item, part)
       expects = new_jsons(attrs, part)
-
-      HashDiff.diff(lastest.map { |o| o[:key] }, expects.map { |o| o[:key] }).each do |diff|
-        idx = /\[(\d+)\]/.match(diff[1])[1].to_i
-        if diff[0] == "+"
-          lastest.insert(idx, expects.delete_at(expects.index { |o| o[:key] == diff[2] }))
-        elsif diff[0] == "-"
-          results << lastest.delete_at(idx).slice(:id)
-        end
-      end
+      results = merge_lastest_with_expects(lastest, expects)
 
       case part
       when :resources
         lastest.each do |o|
-          next if o[:id].nil?
-          res = expects.delete_at(expects.index { |e| e[:key] == o[:key] })
-          results << res.slice(:summary).merge({ id: o[:id] }) unless res[:summary] == o[:summary]
+          # rlastest = 
+          rlastest = o[:descriptions]
+          if o[:id].nil?
+            # rlastest = o[:descriptions]
+            desc_jsons = rearrange(rlastest, nil, :descriptions)
+            o[:descriptions_attributes] = desc_jsons if desc_jsons.length > 0
+          else
+            res = expects.delete_at(expects.index { |e| e[:key] == o[:key] })
+
+            changed = {}
+            changed.merge!({ id: o[:id], summary: res[:summary] }) unless res[:summary] == o[:summary]
+
+            
+            desc_jsons = merge_lastest_with_expects(rlastest, res[:descriptions])
+            desc_jsons += rearrange(rlastest, o[:object], :descriptions)
+            changed.merge!({ id: o[:id], descriptions_attributes: desc_jsons }) if desc_jsons.length > 0
+
+            # results << res.slice(:summary).merge({ id: o[:id] }) unless res[:summary] == o[:summary]
+            results << changed if changed.size > 0
+          end
+          o.delete_if { |k, v| k == :descriptions || k == :object }
+          # o.
+          # next if o[:id].nil?
+          
         end
       end
 
       return results, lastest
     end
 
-    def attribute_jsons(change, item, attrs, part)
-      stack = []
-      step  = 1000
-      move  = 0
+    def merge_lastest_with_expects(lastest, expects)
+      removes = []
+      HashDiff.diff(lastest.map { |o| o[:key] }, expects.map { |o| o[:key] }).each do |diff|
+        idx = /\[(\d+)\]/.match(diff[1])[1].to_i
+        if diff[0] == "+"
+          lastest.insert(idx, expects.delete_at(expects.index { |o| o[:key] == diff[2] }))
+        elsif diff[0] == "-"
+          removes << lastest.delete_at(idx).slice(:id)
+        end
+      end
+      removes
+    end
+
+    def rearrange(lastest, item, part)
+      stack   = []
+      step    = 1000
+      move    = 0
       expands = nil
-      results, lastest = will_lastest(change, item, attrs, part)
+      results = []
 
       lastest.each do |o|
         if o[:position].nil? || stack.length == 0
