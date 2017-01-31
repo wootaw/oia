@@ -30,23 +30,17 @@ class Project
     end
 
     def attach_version(attrs, number)
-      attrs.each do |doc|
-        doc[:version] = number unless doc.has_key?(:id)
-        attr_version(doc, :descriptions_attributes, number)
-        attr_version(doc, :resources_attributes, number)
-      end
-    end
-
-    def attr_version(json, field, number)
-      json[field].each do |attrs|
-        attr_version(attrs, :descriptions_attributes, number) unless field == :descriptions_attributes
-
-        if attrs.has_key?(:id)
-          attrs[:discard_version] = number if attrs.size == 1
-        else
-          attrs[:version] = number
+      attrs.each do |o|
+        o.each do |k, data|
+          attach_version(o[k], number) if /s\_attributes\Z/ === k
         end
-      end unless json[field].nil?
+
+        if o.has_key?(:id)
+          o[:discard_version] = number if o.size == 1
+        else
+          o[:version] = number
+        end
+      end unless attrs.nil?
     end
 
     def update_documents(doc_params)
@@ -73,14 +67,12 @@ class Project
         res_jsons = attribute_jsons(change, doc, attrs, :resources)
         unless res_jsons.length == 0
           res_jsons.each do |r|
-            if r.has_key?(:id)
+            if r.has_key?(:id) || r.has_key?(:descriptions_attributes)
               results[:changes] += 1
             else
               results[:minor] += 1
               break
             end
-
-            # desc_jsons = attribute_jsons(change, doc, attrs, :descriptions)
           end
           doc_attrs[:resources_attributes] = res_jsons
         end
@@ -103,7 +95,18 @@ class Project
           res.slice(:path, :summary).merge({ 
             key: Digest::MD5.hexdigest("#{res[:method].upcase}|#{res[:path]}"),
             method: res[:method].upcase,
-            descriptions: new_jsons(res, :descriptions)
+            descriptions: new_jsons(res, :descriptions),
+            # headers: new_jsons(res, :headers),
+            # parameters: new_jsons(res, :parameters),
+            # responses: new_jsons(res, :responses)
+          })
+        end
+      when /\Aheaders|parameters|responses\Z/
+        data.map do |o|
+          o.symbolize_keys!
+          o.slice(:name, :group, :type, :summary, :required, :array, :default, :options).merge({
+            key: Digest::MD5.hexdigest("#{part}|#{(o[:parent] || []).join(',')}|#{o[:name]}"),
+            descriptions: new_jsons(o, :descriptions)
           })
         end
       end
@@ -121,10 +124,11 @@ class Project
             position: o.position, 
             id: o.id, 
             summary: o.summary,
-            descriptions: old_jsons(change, o, :descriptions),
             object: o
           }
         end
+      when /\Aheaders|parameters|responses\Z/
+
       end
     end
 
@@ -137,96 +141,24 @@ class Project
       lastest = old_jsons(change, item, part)
       expects = new_jsons(attrs, part)
       results = merge_lastest_with_expects(lastest, expects)
-
-      case part
-      when :resources
-        lastest.each do |o|
-          # rlastest = 
-          rlastest = o[:descriptions]
-          if o[:id].nil?
-            # rlastest = o[:descriptions]
-            desc_jsons = rearrange(rlastest, nil, :descriptions)
-            o[:descriptions_attributes] = desc_jsons if desc_jsons.length > 0
-          else
-            res = expects.delete_at(expects.index { |e| e[:key] == o[:key] })
-
-            changed = {}
-            changed.merge!({ id: o[:id], summary: res[:summary] }) unless res[:summary] == o[:summary]
-
-            
-            desc_jsons = merge_lastest_with_expects(rlastest, res[:descriptions])
-            desc_jsons += rearrange(rlastest, o[:object], :descriptions)
-            changed.merge!({ id: o[:id], descriptions_attributes: desc_jsons }) if desc_jsons.length > 0
-
-            # results << res.slice(:summary).merge({ id: o[:id] }) unless res[:summary] == o[:summary]
-            results << changed if changed.size > 0
-          end
-          o.delete_if { |k, v| k == :descriptions || k == :object }
-          # o.
-          # next if o[:id].nil?
-          
-        end
-      end
-
+      results += resource_changes(lastest, expects) if part == :resources
       return results, lastest
     end
 
-    def merge_lastest_with_expects(lastest, expects)
-      removes = []
-      HashDiff.diff(lastest.map { |o| o[:key] }, expects.map { |o| o[:key] }).each do |diff|
-        idx = /\[(\d+)\]/.match(diff[1])[1].to_i
-        if diff[0] == "+"
-          lastest.insert(idx, expects.delete_at(expects.index { |o| o[:key] == diff[2] }))
-        elsif diff[0] == "-"
-          removes << lastest.delete_at(idx).slice(:id)
-        end
-      end
-      removes
-    end
-
-    def rearrange(lastest, item, part)
-      stack   = []
-      step    = 1000
-      move    = 0
-      expands = nil
+    def resource_changes(lastest, expects)
       results = []
-
       lastest.each do |o|
-        if o[:position].nil? || stack.length == 0
-          stack.push(o)
-          next
-        elsif stack.last[:position].nil?
-          unless stack[0][:position].nil?
-            if o[:position] + move - stack[0][:position] < stack.length
-              expand  = stack.length * 10
-              if expands.nil?
-                moves   = item.send(part).where("position >= ?", o[:position])
-                expands = moves.map { |d| { id: d.id, position: d.position + expand } }
-              else
-                expands.each { |d| d[:position] += expand if d[:position] >= o[:position] + move }
-              end
-              move += expand
-            end
-            step = (o[:position] + move - stack[0][:position]) / stack.length
-          end
-
-          stack.reverse.each_with_index do |d, i|
-            results << d.merge!({ position: o[:position] + move - step * (i + 1) }) if d[:position].nil?
-          end
-          stack = [o]
+        if o[:id].nil?
+          desc_jsons = rearrange(o[:descriptions], nil, :descriptions)
+          o[:descriptions_attributes] = desc_jsons if desc_jsons.length > 0
+          o.delete(:descriptions)
         else
-          stack[0] = o
+          resource = expects.delete_at(expects.index { |e| e[:key] == o[:key] })
+          changed  = o[:object].changes_with_expect(resource)
+          results << changed if changed.size > 0
+          o.delete(:object)
         end
-
-        stack[0][:position] += move
       end
-
-      start = stack[0].nil? || stack[0][:position].nil? ? 0 : stack[0][:position]
-      stack.each_with_index do |d, i|
-        results << d.merge!({ position: start + 1000 * i }) if d[:position].nil?
-      end
-
-      expands.each { |d| results << d } unless expands.nil?
       results
     end
 
