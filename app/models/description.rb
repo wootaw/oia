@@ -9,11 +9,11 @@ class Description < ApplicationRecord
   
   # before_save :generate_key
 
-  enum state: {
-    latest: 1,
-    dated: 50,
-    discarded: 99
-  }
+  # enum state: {
+  #   latest: 1,
+  #   dated: 50,
+  #   discarded: 99
+  # }
 
   # aasm column: :state, enum: true do
   #   state :mounted, initial: true

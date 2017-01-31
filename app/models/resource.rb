@@ -7,6 +7,10 @@ class Resource < ApplicationRecord
   has_many :inouts, dependent: :destroy
   has_many :descriptions, as: :owner, dependent: :destroy
 
+  has_many :headers,    -> { where clazz: :header },    class_name: "Inout"
+  has_many :parameters, -> { where clazz: :parameter }, class_name: "Inout"
+  has_many :responses,  -> { where clazz: :response },  class_name: "Inout"
+
   delegate :project, to: :document, prefix: false
 
   validates :method, :path, presence: true
@@ -19,8 +23,9 @@ class Resource < ApplicationRecord
 
   enum method: %i(GET HEAD POST PUT DELETE PATCH TRACE OPTIONS CONNECT)
 
+  accepts_nested_attributes_for :inouts
   accepts_nested_attributes_for :descriptions
-  
+
   # enum state: {
   #   mounted: 1,
   #   running: 99

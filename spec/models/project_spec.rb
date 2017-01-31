@@ -448,7 +448,7 @@ RSpec.describe Project, type: :model do
         expect(project_user.lastest_change.version).to eq "0.1.0.1"
       end
 
-      it "" do
+      it "The position of discarded resource description should be can expand" do
         doc1   = FactoryGirl.create(:document, name: "document1", project: project_user, version: 1)
         change1 = FactoryGirl.create(:change, version: "0.1.0.0", project: project_user)
         change2 = FactoryGirl.create(:change, version: "0.1.1.0", project: project_user)
