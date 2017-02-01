@@ -20,6 +20,16 @@ class Description < ApplicationRecord
   #   state :running
   # end
 
+  def self.attributes_by_json(data)
+    { key: Digest::MD5.hexdigest(data), content: data }
+  end
+
+  def self.expects(attrs)
+    (attrs[:descriptions] || []).map { |row| row.join(" ").strip }.compact.map do |s|
+      attributes_by_json(s)
+    end
+  end
+
   protected
 
   # def generate_key

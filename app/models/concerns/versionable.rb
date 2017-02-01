@@ -22,6 +22,12 @@ module Versionable
 
     # end
 
+    def self.init_descriptions(data, attrs)
+      desc_lastest = Description.expects(data)
+      desc_lastest.each_with_index { |d, i| d[:position] = 1000 * i }
+      attrs[:descriptions_attributes] = desc_lastest unless desc_lastest.length == 0
+    end
+
     def list_by_version(set, number)
       recs = self.send(set)
       recs = recs.where("version <= ? AND (discard_version IS NULL OR discard_version IS NOT NULL AND discard_version > ?)", number, number)
@@ -29,6 +35,15 @@ module Versionable
       recs.joins("
         INNER JOIN (#{max.to_sql}) AS maxpos ON maxpos.mv = #{set}.version AND maxpos.position = #{set}.position
       ").order(:position)
+    end
+
+    def replace_descriptions(data, attrs)
+      descs  = lastest_change.nil? ? [] : lastest_change.parts(self, :descriptions)
+      desc_lastest = descs.map { |o| { key: o.key, position: o.position, id: o.id } }
+      desc_expects = Description.expects(data)
+      desc_removes = merge_lastest_with_expects(desc_lastest, desc_expects)
+      desc_arrange = rearrange(desc_lastest, :descriptions)
+      attrs[:descriptions_attributes] = desc_removes + desc_arrange if desc_removes.length + desc_arrange.length > 0
     end
 
     def merge_lastest_with_expects(lastest, expects)
@@ -44,7 +59,7 @@ module Versionable
       removes
     end
 
-    def rearrange(lastest, item, part)
+    def rearrange(lastest, part)
       stack   = []
       step    = 1000
       move    = 0
@@ -60,7 +75,7 @@ module Versionable
             if o[:position] + move - stack[0][:position] < stack.length
               expand = stack.length * 10
               if expands.nil?
-                moves   = item.send(part).where("position >= ?", o[:position])
+                moves   = self.send(part).where("position >= ?", o[:position])
                 expands = moves.map { |d| { id: d.id, position: d.position + expand } }
               else
                 expands.each { |d| d[:position] += expand if d[:position] >= o[:position] + move }

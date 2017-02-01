@@ -49,33 +49,35 @@ class Project
 
       docs_attrs = doc_params.map do |attrs|
         attrs.symbolize_keys!
-        doc_attrs = attrs.slice(:name, :summary)
 
         doc = self.documents.where("name = ? OR summary = ?", attrs[:name], attrs[:summary]).take
-        if doc.nil?
-          results[:minor] += 1
+        doc_attrs = if doc.nil?
+          Document.attributes_by_json(attrs)
         else
-          doc_attrs.merge!({ id: doc.id })
+          doc.changes_by_expect(attrs)
         end
 
-        desc_jsons = attribute_jsons(change, doc, attrs, :descriptions)
-        unless desc_jsons.length == 0
-          doc_attrs[:descriptions_attributes] = desc_jsons
-          results[:changes] += 1
-        end
+        results[:minor] += 1 unless doc_attrs.has_key?(:id)
+        results[:changes] += 1 if doc_attrs.has_key?(:descriptions_attributes)
 
-        res_jsons = attribute_jsons(change, doc, attrs, :resources)
-        unless res_jsons.length == 0
-          res_jsons.each do |r|
-            if r.has_key?(:id) || r.has_key?(:descriptions_attributes)
-              results[:changes] += 1
-            else
-              results[:minor] += 1
-              break
-            end
-          end
-          doc_attrs[:resources_attributes] = res_jsons
-        end
+        # desc_jsons = attribute_jsons(change, doc, attrs, :descriptions)
+        # unless desc_jsons.length == 0
+        #   doc_attrs[:descriptions_attributes] = desc_jsons
+        #   results[:changes] += 1
+        # end
+
+        # res_jsons = attribute_jsons(change, doc, attrs, :resources)
+        # unless res_jsons.length == 0
+        #   res_jsons.each do |r|
+        #     if r.has_key?(:id) || r.has_key?(:descriptions_attributes)
+        #       results[:changes] += 1
+        #     else
+        #       results[:minor] += 1
+        #       break
+        #     end
+        #   end
+        #   doc_attrs[:resources_attributes] = res_jsons
+        # end
         doc_attrs
       end
 
@@ -96,9 +98,9 @@ class Project
             key: Digest::MD5.hexdigest("#{res[:method].upcase}|#{res[:path]}"),
             method: res[:method].upcase,
             descriptions: new_jsons(res, :descriptions),
-            # headers: new_jsons(res, :headers),
-            # parameters: new_jsons(res, :parameters),
-            # responses: new_jsons(res, :responses)
+            headers: new_jsons(res, :headers),
+            parameters: new_jsons(res, :parameters),
+            responses: new_jsons(res, :responses)
           })
         end
       when /\Aheaders|parameters|responses\Z/
@@ -127,8 +129,6 @@ class Project
             object: o
           }
         end
-      when /\Aheaders|parameters|responses\Z/
-
       end
     end
 
@@ -151,7 +151,7 @@ class Project
         if o[:id].nil?
           desc_jsons = rearrange(o[:descriptions], nil, :descriptions)
           o[:descriptions_attributes] = desc_jsons if desc_jsons.length > 0
-          o.delete(:descriptions)
+          o.except!(:descriptions, :headers, :parameters, :responses)
         else
           resource = expects.delete_at(expects.index { |e| e[:key] == o[:key] })
           changed  = o[:object].changes_with_expect(resource)
