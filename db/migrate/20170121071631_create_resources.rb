@@ -11,7 +11,6 @@ class CreateResources < ActiveRecord::Migration[5.0]
       t.integer     :version, default: 1, index: true
       t.integer     :discard_version, index: true
       t.integer     :position, index: true
-      t.datetime    :changed_at
       t.references  :document, index: true
       t.timestamps
     end

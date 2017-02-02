@@ -5,7 +5,6 @@ class CreateDescriptions < ActiveRecord::Migration[5.0]
       t.integer     :version, default: 1, index: true
       t.integer     :discard_version, index: true
       t.integer     :state, index: true
-      t.datetime    :changed_at
       t.integer     :position, index: true
       t.string      :key
       t.references  :owner, polymorphic: true, index: true

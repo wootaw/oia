@@ -30,10 +30,11 @@ module Versionable
 
     def list_by_version(set, number)
       recs = self.send(set)
+      tn   = recs.table_name
       recs = recs.where("version <= ? AND (discard_version IS NULL OR discard_version IS NOT NULL AND discard_version > ?)", number, number)
       max  = recs.select("MAX(version) AS mv, position").group(:position)
       recs.joins("
-        INNER JOIN (#{max.to_sql}) AS maxpos ON maxpos.mv = #{set}.version AND maxpos.position = #{set}.position
+        INNER JOIN (#{max.to_sql}) AS maxpos ON maxpos.mv = #{tn}.version AND maxpos.position = #{tn}.position
       ").order(:position)
     end
 

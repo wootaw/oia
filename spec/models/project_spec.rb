@@ -451,6 +451,7 @@ RSpec.describe Project, type: :model do
         res2 = FactoryGirl.create(:resource, method: "POST", path: "/api/v1/a_res", key: key2, position: 2, version: change.version, document: doc1)
         project_user.update_attributes(minor_version: 1, patch_version: 0)
 
+        docs[0][:resources].each { |r| r.delete_if { |d| [:params, :headers, :responses].include?(d) } }
         project_user.update_version([docs[0]])
         project_user.save
 

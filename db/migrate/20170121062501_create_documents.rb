@@ -6,7 +6,6 @@ class CreateDocuments < ActiveRecord::Migration[5.0]
       t.string      :custom_state
       t.string      :custom_state_summary
       t.integer     :state, index: true
-      t.datetime    :changed_at
       t.integer     :position, index: true
       t.integer     :version, default: 1, index: true
       t.integer     :discard_version, index: true

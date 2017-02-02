@@ -46,63 +46,59 @@ class Resource < ApplicationRecord
 
     init_descriptions(data, attrs)
 
+    inout_lastest = []
+    Inout::clazzs.each do |cls|
+      cls_lastest = (data["#{cls}s".to_sym] || []).map { |h| Inout.attributes_by_json(h, cls.to_sym) }
+      cls_lastest.each_with_index { |r, i| r[:position] = 1000 * i }
+      inout_lastest += cls_lastest
+    end
+    attrs[:inouts_attributes] = inout_lastest unless inout_lastest.length == 0
+
     attrs
   end
 
   def changes_by_expect(data)
+    data.symbolize_keys!
     attrs = {}
     attrs[:summary] = data[:summary] unless self.summary == data[:summary]
     replace_descriptions(data, attrs)
 
+    inout_jsons = []
+    Inout::clazzs.each do |cls, v|
+      part = cls.tableize.to_sym
+      inouts  = lastest_change.nil? ? [] : lastest_change.parts(self, part)
+      lastest = inouts.map { |o| { key: o.key, position: o.position, id: o.id } }
+      expects = (data[part] || []).map { |h| Inout.attributes_by_json(h, cls.to_sym) }
+      indexs  = inouts.map { |r| { object: r, idx: expects.index { |o| o[:key] == r.key } } }
+      removes = merge_lastest_with_expects(lastest, expects)
+      arrange = rearrange(lastest, part)
+      changes = []
+
+      indexs.each do |rx|
+        next if rx[:idx].nil?
+        changed_attrs, new_attrs = rx[:object].changes_by_expect(data[part][rx[:idx]])
+        next if changed_attrs.size == 0
+
+        idx = arrange.index { |o| o[:id] == changed_attrs[:id] }
+        if idx.nil?
+          changes << changed_attrs
+        else
+          arrange[idx].merge!(changed_attrs)
+          unless new_attrs.nil?
+            arrange[idx][:has_discarded_flag] = true
+            new_attrs[:position] = arrange[idx][:position]
+          end
+        end
+        changes << new_attrs unless new_attrs.nil?
+      end
+      inout_jsons = removes + arrange + changes
+    end
+
+    attrs[:inouts_attributes] = inout_jsons if inout_jsons.length > 0
     attrs[:id] = self.id if attrs.size > 0
 
     # ap attrs
     attrs
-  end
-
-  def changes_with_expect(expect)
-    changed = {}
-    change  = self.lastest_change
-
-    Inout::clazzs.each do |cls|
-      set = cls.to_s.tableize.to_sym
-      param_lastest = change.parts(self, set).map do |o|
-        r = o.attributes.symbolize_keys.slice(:id, :name, :group, :type, :summary, :required, :array, :default, :options, :key, :position)
-
-        pdesc_lastest = change.parts(o, :descriptions)
-        # pdesc_expects = expect[set].delete(:descriptions)
-        pdesc_jsons = merge_lastest_with_expects(pdesc_lastest, pdesc_expects)
-        pdesc_jsons += rearrange(pdesc_lastest, self, :descriptions)
-      end
-
-
-
-      param_json = merge_lastest_with_expects(param_lastest, expect[set])
-      param_json += rearrange(param_lastest, self, set)
-    end
-
-    
-    changed[:summary] = expect[:summary] unless expect[:summary] == self.summary
-
-    rdesc_lastest = change.parts(self, :descriptions).map { |o| o.attributes.symbolize_keys.slice(:id, :key, :position) }
-    desc_jsons = merge_lastest_with_expects(rdesc_lastest, expect[:descriptions])
-    desc_jsons += rearrange(rdesc_lastest, self, :descriptions)
-    changed[:descriptions_attributes] = desc_jsons if desc_jsons.length > 0
-
-
-    # if o[:id].nil?
-    #       desc_jsons = rearrange(o[:descriptions], nil, :descriptions)
-    #       o[:descriptions_attributes] = desc_jsons if desc_jsons.length > 0
-    #       o.except!(:descriptions, :headers, :parameters, :responses)
-    #     else
-    #       resource = expects.delete_at(expects.index { |e| e[:key] == o[:key] })
-    #       changed  = o[:object].changes_with_expect(resource)
-    #       results << changed if changed.size > 0
-    #       o.delete(:object)
-    #     end
-
-    changed[:id] = self.id if changed.size > 0
-    changed
   end
 
   protected
