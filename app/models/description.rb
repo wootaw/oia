@@ -7,8 +7,6 @@ class Description < ApplicationRecord
 
   # acts_as_list scope: [:owner_type, :owner_id]
   
-  # before_save :generate_key
-
   # enum state: {
   #   latest: 1,
   #   dated: 50,
@@ -31,9 +29,5 @@ class Description < ApplicationRecord
   end
 
   protected
-
-  # def generate_key
-  #   self.key = Digest::MD5.hexdigest(self.content)
-  # end
 
 end

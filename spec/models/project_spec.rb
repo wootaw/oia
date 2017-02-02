@@ -411,6 +411,20 @@ RSpec.describe Project, type: :model do
         expect(project_user.documents.map(&:version)).to match_array [1]
         expect(project_user.lastest_change.version).to eq "0.1.9.0"
       end
+
+      it 'The patch version number should be increased by 1 when creating a resource' do
+        FactoryGirl.create(:document, name: "document2", project: project_user, version: 1)
+        FactoryGirl.create(:document, project: project_team)
+        FactoryGirl.create(:change, version: "0.1.9.0", project: project_user)
+        project_user.update_attributes(minor_version: 1, patch_version: 9)
+
+        project_user.update_version([docs[1]])
+        project_user.save
+        project_user.reload
+
+        expect(project_user.documents.map(&:version)).to match_array [1]
+        expect(project_user.lastest_change.version).to eq "0.1.10.0"
+      end
     end
 
     context "Resource" do
@@ -476,6 +490,30 @@ RSpec.describe Project, type: :model do
         expect(lastest.parts(res2, :descriptions).map(&:content)).to eq ["9", "0", "8", "1", "6", "2", "3"]
         expect(change2.parts(res2, :descriptions).map(&:content)).to eq ["9", "8", "6"]
         expect(change1.parts(res2, :descriptions).map(&:content)).to eq ["9", "8", "7", "5"]
+      end
+
+      it 'The resource 2 of position and summary should be changed' do
+        doc1   = FactoryGirl.create(:document, name: "document1", project: project_user, version: 1)
+        change1 = FactoryGirl.create(:change, version: "0.1.0.0", project: project_user)
+        key1   = Digest::MD5.hexdigest("GET|/api/v1/a_res")
+        key2   = Digest::MD5.hexdigest("POST|/api/v1/a_res")
+        res1 = FactoryGirl.create(:resource, method: "GET", path: "/api/v1/a_res", key: key1, position: 1, version: change1.version, document: doc1)
+        res2 = FactoryGirl.create(:resource, method: "POST", path: "/api/v1/a_res", key: key2, position: 2, version: change1.version, document: doc1)
+
+        new_res = {
+          :method => "delete", 
+          :path => "/api/v2/b_res", 
+          :summary => "Get list of A"
+        }
+        docs[0][:resources].insert(1, new_res)
+        project_user.update_version([docs[0]])
+        project_user.save
+
+        project_user.reload
+        lastest = project_user.lastest_change
+        expect(lastest.parts(doc1, :resources).map(&:method)).to eq ["GET", "DELETE", "POST"]
+        res2.reload
+        expect(res2.summary).to eq "Create an A resource"
       end
     end
 

@@ -33,7 +33,7 @@ class Document < ApplicationRecord
     attrs[:summary] = data[:summary] unless self.summary == data[:summary]
     replace_descriptions(data, attrs)
 
-    resources  = lastest_change.nil? ? [] : lastest_change.parts(self, :resources)
+    resources   = lastest_change.nil? ? [] : lastest_change.parts(self, :resources)
     res_lastest = resources.map { |o| { key: o.key, position: o.position, id: o.id } }
     res_expects = (data[:resources] || []).map { |r| Resource.attributes_by_json(r) }
     res_indexs  = resources.map { |r| { resource: r, idx: res_expects.index { |o| o[:key] == r.key } } }

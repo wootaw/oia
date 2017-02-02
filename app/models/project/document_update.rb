@@ -3,7 +3,18 @@ class Project
     extend ActiveSupport::Concern
 
     def update_version(params)
-      changes, docs_attrs = update_documents(params)
+      changes = { minor: 0, patch: 0, changes: 0 }
+      docs_attrs = documents_attributes_by_json(params)
+
+      docs_attrs.map do |doc_attrs|
+        changes[:minor] += 1 unless doc_attrs.has_key?(:id)
+        changes[:changes] += 1 if doc_attrs.has_key?(:descriptions_attributes)
+
+        doc_attrs[:resources_attributes].each do |res_attrs|
+          changes[:patch] += 1 unless res_attrs.has_key?(:id)
+          changes[:changes] += 1 if res_attrs.has_key?(:descriptions_attributes)
+        end if doc_attrs.has_key?(:resources_attributes)
+      end
 
       # ap changes
       if changes[:minor] > 0
@@ -43,45 +54,17 @@ class Project
       end unless attrs.nil?
     end
 
-    def update_documents(doc_params)
-      results = { minor: 0, patch: 0, changes: 0 }
-      change  = self.lastest_change
-
-      docs_attrs = doc_params.map do |attrs|
+    def documents_attributes_by_json(doc_params)
+      doc_params.map do |attrs|
         attrs.symbolize_keys!
 
         doc = self.documents.where("name = ? OR summary = ?", attrs[:name], attrs[:summary]).take
-        doc_attrs = if doc.nil?
+        if doc.nil?
           Document.attributes_by_json(attrs)
         else
           doc.changes_by_expect(attrs)
         end
-
-        results[:minor] += 1 unless doc_attrs.has_key?(:id)
-        results[:changes] += 1 if doc_attrs.has_key?(:descriptions_attributes)
-
-        # desc_jsons = attribute_jsons(change, doc, attrs, :descriptions)
-        # unless desc_jsons.length == 0
-        #   doc_attrs[:descriptions_attributes] = desc_jsons
-        #   results[:changes] += 1
-        # end
-
-        # res_jsons = attribute_jsons(change, doc, attrs, :resources)
-        # unless res_jsons.length == 0
-        #   res_jsons.each do |r|
-        #     if r.has_key?(:id) || r.has_key?(:descriptions_attributes)
-        #       results[:changes] += 1
-        #     else
-        #       results[:minor] += 1
-        #       break
-        #     end
-        #   end
-        #   doc_attrs[:resources_attributes] = res_jsons
-        # end
-        doc_attrs
       end
-
-      return results, docs_attrs
     end
 
     def new_jsons(attrs, part)
