@@ -17,13 +17,11 @@ class Document < ApplicationRecord
 
   def self.attributes_by_json(data)
     attrs = data.slice(:name, :summary)
-
     init_descriptions(data, attrs)
 
     res_lastest = (data[:resources] || []).map { |r| Resource.attributes_by_json(r) }
     res_lastest.each_with_index { |r, i| r[:position] = 1000 * i }
     attrs[:resources_attributes] = res_lastest unless res_lastest.length == 0
-
     attrs
   end
 

@@ -352,6 +352,26 @@ RSpec.describe Project, type: :model do
   let(:project_user) { FactoryGirl.create(:project_user) }
   let(:project_team) { FactoryGirl.create(:project_team) }
 
+  describe '.attach_version' do
+    it 'Should be delete all the key names is has_discarded_flag then add discard_version in the attributes' do
+      attrs = [{ 
+        id: 1,
+        resources_attributes: [{
+          id: 2,
+          inouts_attributes: [{
+            id: 33,
+            position: 22,
+            has_discarded_flag: true
+          }]
+        }]
+      }]
+
+      project_user.attach_version(attrs, 3)
+
+      expect(attrs[0][:resources_attributes][0][:inouts_attributes][0]).to eq({ id: 33, position: 22, discard_version: 3 })
+    end
+  end
+
   describe ".update_version" do
 
     context "Document" do

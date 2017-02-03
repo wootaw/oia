@@ -7,9 +7,9 @@ class Resource < ApplicationRecord
   has_many :inouts, dependent: :destroy
   has_many :descriptions, as: :owner, dependent: :destroy
 
-  has_many :headers,    -> { where clazz: :header },    class_name: "Inout"
-  has_many :parameters, -> { where clazz: :parameter }, class_name: "Inout"
-  has_many :responses,  -> { where clazz: :response },  class_name: "Inout"
+  has_many :headers,   -> { where clazz: :header },   class_name: "Inout"
+  has_many :params,    -> { where clazz: :param },    class_name: "Inout"
+  has_many :responses, -> { where clazz: :response }, class_name: "Inout"
 
   delegate :project, to: :document, prefix: false
   delegate :lastest_change, to: :project, prefix: false
@@ -43,7 +43,6 @@ class Resource < ApplicationRecord
       key: Digest::MD5.hexdigest("#{data[:method].upcase}|#{data[:path]}"),
       method: data[:method].upcase,
     })
-
     init_descriptions(data, attrs)
 
     inout_lastest = []
@@ -53,7 +52,6 @@ class Resource < ApplicationRecord
       inout_lastest += cls_lastest
     end
     attrs[:inouts_attributes] = inout_lastest unless inout_lastest.length == 0
-
     attrs
   end
 
@@ -91,13 +89,11 @@ class Resource < ApplicationRecord
         end
         changes << new_attrs unless new_attrs.nil?
       end
-      inout_jsons = removes + arrange + changes
+      inout_jsons += removes + arrange + changes
     end
 
     attrs[:inouts_attributes] = inout_jsons if inout_jsons.length > 0
     attrs[:id] = self.id if attrs.size > 0
-
-    # ap attrs
     attrs
   end
 

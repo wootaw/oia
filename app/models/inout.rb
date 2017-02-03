@@ -2,7 +2,7 @@ class Inout < ApplicationRecord
   include AASM
   include Versionable
 
-  enum clazz: %i(header parameter response)
+  enum clazz: %i(header param response)
 
   belongs_to :resource
 
@@ -44,7 +44,6 @@ class Inout < ApplicationRecord
     })
 
     init_descriptions(data, attrs)
-    # ap attrs
     attrs
   end
 
@@ -53,7 +52,7 @@ class Inout < ApplicationRecord
     attrs = {}
     old_attrs = self.attributes.symbolize_keys.slice(:group, :data_type, :summary, :required, :array, :default, :options)
     new_attrs = data.slice(:group, :summary, :required, :array, :default, :options).merge({ data_type: data[:type] })
-    diffs = HashDiff.diff(old_attrs, new_attrs)
+    diffs = HashDiff.diff(old_attrs.compact, new_attrs.compact)
 
     if diffs.length == 0
       replace_descriptions(data, attrs)

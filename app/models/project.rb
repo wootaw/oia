@@ -1,5 +1,6 @@
 class Project < ApplicationRecord
   include AASM
+  include Versionable
   include DocumentUpdate
 
   belongs_to :owner, polymorphic: true

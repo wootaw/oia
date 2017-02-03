@@ -22,7 +22,6 @@ class Project
         end if doc_attrs.has_key?(:resources_attributes)
       end
 
-      # ap changes
       if changes[:minor] > 0
         self.minor_version += 1
         self.patch_version = 0
@@ -38,11 +37,8 @@ class Project
       unless changes[:minor] + changes[:patch] + changes[:changes] == 0
         number = change.nil? ? 1 : change.position + 1
         self.attach_version(docs_attrs, number)
-        # ap version_number
         self.version_changes.build(version: self.version_number)
       end
-
-      # ap docs_attrs
       self.assign_attributes(documents_attributes: docs_attrs)
     end
 
