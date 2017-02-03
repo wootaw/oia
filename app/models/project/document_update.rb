@@ -39,6 +39,7 @@ class Project
         self.attach_version(docs_attrs, number)
         self.version_changes.build(version: self.version_number)
       end
+
       self.assign_attributes(documents_attributes: docs_attrs)
     end
 

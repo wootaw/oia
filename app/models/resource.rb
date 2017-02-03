@@ -1,9 +1,11 @@
 class Resource < ApplicationRecord
   include AASM
   include Versionable
+  include Flagable
 
   belongs_to :document
 
+  has_many :flags, as: :owner, dependent: :destroy
   has_many :inouts, dependent: :destroy
   has_many :descriptions, as: :owner, dependent: :destroy
 
@@ -24,6 +26,7 @@ class Resource < ApplicationRecord
 
   enum method: %i(GET HEAD POST PUT DELETE PATCH TRACE OPTIONS CONNECT)
 
+  accepts_nested_attributes_for :flags
   accepts_nested_attributes_for :inouts
   accepts_nested_attributes_for :descriptions
 
@@ -44,6 +47,7 @@ class Resource < ApplicationRecord
       method: data[:method].upcase,
     })
     init_descriptions(data, attrs)
+    init_flags(data, attrs)
 
     inout_lastest = []
     Inout::clazzs.each do |cls|
@@ -60,14 +64,15 @@ class Resource < ApplicationRecord
     attrs = {}
     attrs[:summary] = data[:summary] unless self.summary == data[:summary]
     replace_descriptions(data, attrs)
+    replace_flags(data, attrs)
 
     inout_jsons = []
     Inout::clazzs.each do |cls, v|
       part = cls.tableize.to_sym
-      inouts  = lastest_change.nil? ? [] : lastest_change.parts(self, part)
-      lastest = inouts.map { |o| { key: o.key, position: o.position, id: o.id } }
+      linouts = lastest_change.nil? ? [] : lastest_change.parts(self, part)
+      lastest = linouts.map { |o| { key: o.key, position: o.position, id: o.id } }
       expects = (data[part] || []).map { |h| Inout.attributes_by_json(h, cls.to_sym) }
-      indexs  = inouts.map { |r| { object: r, idx: expects.index { |o| o[:key] == r.key } } }
+      indexs  = linouts.map { |r| { object: r, idx: expects.index { |o| o[:key] == r.key } } }
       removes = merge_lastest_with_expects(lastest, expects)
       arrange = rearrange(lastest, part)
       changes = []
@@ -91,8 +96,8 @@ class Resource < ApplicationRecord
       end
       inout_jsons += removes + arrange + changes
     end
-
     attrs[:inouts_attributes] = inout_jsons if inout_jsons.length > 0
+
     attrs[:id] = self.id if attrs.size > 0
     attrs
   end

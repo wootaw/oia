@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170202153516) do
+ActiveRecord::Schema.define(version: 20170203112224) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -35,8 +35,8 @@ ActiveRecord::Schema.define(version: 20170202153516) do
     t.integer  "owner_id"
     t.datetime "created_at",                  null: false
     t.datetime "updated_at",                  null: false
-    t.integer  "discard_version"
     t.string   "key"
+    t.integer  "discard_version"
     t.integer  "position"
     t.index ["owner_type", "owner_id"], name: "index_descriptions_on_owner_type_and_owner_id", using: :btree
     t.index ["state"], name: "index_descriptions_on_state", using: :btree
@@ -52,12 +52,28 @@ ActiveRecord::Schema.define(version: 20170202153516) do
     t.integer  "project_id"
     t.datetime "created_at",                       null: false
     t.datetime "updated_at",                       null: false
-    t.integer  "position"
     t.integer  "version",              default: 0
     t.integer  "discard_version"
     t.index ["name"], name: "index_documents_on_name", using: :btree
     t.index ["project_id"], name: "index_documents_on_project_id", using: :btree
     t.index ["state"], name: "index_documents_on_state", using: :btree
+  end
+
+  create_table "flags", force: :cascade do |t|
+    t.string   "name"
+    t.string   "summary"
+    t.integer  "version",         default: 1
+    t.integer  "discard_version"
+    t.integer  "position"
+    t.string   "owner_type"
+    t.integer  "owner_id"
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
+    t.index ["discard_version"], name: "index_flags_on_discard_version", using: :btree
+    t.index ["name"], name: "index_flags_on_name", using: :btree
+    t.index ["owner_type", "owner_id"], name: "index_flags_on_owner_type_and_owner_id", using: :btree
+    t.index ["position"], name: "index_flags_on_position", using: :btree
+    t.index ["version"], name: "index_flags_on_version", using: :btree
   end
 
   create_table "groups", force: :cascade do |t|
@@ -139,7 +155,6 @@ ActiveRecord::Schema.define(version: 20170202153516) do
     t.integer  "document_id"
     t.datetime "created_at",                       null: false
     t.datetime "updated_at",                       null: false
-    t.integer  "position"
     t.integer  "discard_version"
     t.index ["document_id"], name: "index_resources_on_document_id", using: :btree
     t.index ["key"], name: "index_resources_on_key", using: :btree

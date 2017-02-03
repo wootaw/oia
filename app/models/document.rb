@@ -1,23 +1,27 @@
 class Document < ApplicationRecord
   include AASM
   include Versionable
+  include Flagable
 
   belongs_to :project
 
+  has_many :flags, as: :owner, dependent: :destroy
   has_many :resources, dependent: :destroy
   has_many :descriptions, as: :owner, dependent: :destroy
 
   delegate :lastest_change, to: :project, prefix: false
 
-  validates :name, presence: true, length: { minimum: 2, maximum: 20 }, uniqueness: { scope: :project }
+  validates :name, presence: true, length: { minimum: 2, maximum: 20 }, uniqueness: { scope: :project_id }
   validates :summary, presence: true, length: { minimum: 2, maximum: 50 }, uniqueness: { scope: :project }
 
+  accepts_nested_attributes_for :flags
   accepts_nested_attributes_for :descriptions
   accepts_nested_attributes_for :resources
 
   def self.attributes_by_json(data)
     attrs = data.slice(:name, :summary)
     init_descriptions(data, attrs)
+    init_flags(data, attrs)
 
     res_lastest = (data[:resources] || []).map { |r| Resource.attributes_by_json(r) }
     res_lastest.each_with_index { |r, i| r[:position] = 1000 * i }
@@ -30,11 +34,12 @@ class Document < ApplicationRecord
     attrs[:name] = data[:name] unless self.name == data[:name]
     attrs[:summary] = data[:summary] unless self.summary == data[:summary]
     replace_descriptions(data, attrs)
+    replace_flags(data, attrs)
 
-    resources   = lastest_change.nil? ? [] : lastest_change.parts(self, :resources)
-    res_lastest = resources.map { |o| { key: o.key, position: o.position, id: o.id } }
+    lresources  = lastest_change.nil? ? [] : lastest_change.parts(self, :resources)
+    res_lastest = lresources.map { |o| { key: o.key, position: o.position, id: o.id } }
     res_expects = (data[:resources] || []).map { |r| Resource.attributes_by_json(r) }
-    res_indexs  = resources.map { |r| { resource: r, idx: res_expects.index { |o| o[:key] == r.key } } }
+    res_indexs  = lresources.map { |r| { resource: r, idx: res_expects.index { |o| o[:key] == r.key } } }
     res_removes = merge_lastest_with_expects(res_lastest, res_expects)
     res_arrange = rearrange(res_lastest, :resources)
     res_changes = []
