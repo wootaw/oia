@@ -3,10 +3,73 @@ module Versionable
 
   included do
 
-    def self.init_descriptions(data, attrs)
-      desc_lastest = Description.expects(data)
-      desc_lastest.each_with_index { |d, i| d[:position] = 1000 * i }
-      attrs[:descriptions_attributes] = desc_lastest unless desc_lastest.length == 0
+    def self.key_name(field)
+      case field
+      when :parameter
+        :params
+      when :flag
+        :state
+      else
+        field.to_s.tableize.to_sym
+      end
+    end
+
+    def self.init_association(data, attrs, field)
+      lastest = case field
+      when :description
+        Description.expects(data)
+      when :flag
+        flag_attrs = Flag.attributes_by_json(data[:state] || {})
+        flag_attrs.size == 0 ? [] : [flag_attrs]
+      else
+        (data[key_name(field)] || []).map { |r| field.to_s.classify.constantize.attributes_by_json(r) }
+      end
+
+      lastest.each_with_index { |r, i| r[:position] = 1000 * i } unless field == :flag
+      attrs["#{field.to_s.tableize}_attributes".to_sym] = lastest unless lastest.length == 0
+    end
+
+    def replace_descriptions(data, attrs)
+      descs  = lastest_change.nil? ? [] : lastest_change.parts(self, :descriptions)
+      desc_lastest = descs.map { |o| { key: o.key, position: o.position, id: o.id } }
+      desc_expects = Description.expects(data)
+      desc_removes = merge_lastest_with_expects(desc_lastest, desc_expects)
+      desc_arrange = rearrange(desc_lastest, :descriptions)
+      attrs[:descriptions_attributes] = desc_removes + desc_arrange if desc_removes.length + desc_arrange.length > 0
+    end
+
+    def replace_association(data, attrs, field)
+      keyname = self.class.key_name(field)
+      ass     = field.to_s.tableize.to_sym
+      objects = lastest_change.nil? ? [] : lastest_change.parts(self, ass)
+      lastest = objects.map { |o| { key: o.key, position: o.position, id: o.id } }
+      expects = (data[keyname] || []).map { |r| field.to_s.classify.constantize.attributes_by_json(r) }
+      indexs  = objects.map { |r| { object: r, idx: expects.index { |o| o[:key] == r.key } } }
+      removes = merge_lastest_with_expects(lastest, expects)
+      arrange = rearrange(lastest, ass)
+      moves   = []
+
+      indexs.each do |rx|
+        next if rx[:idx].nil?
+        changed_attrs, new_attrs = rx[:object].changes_by_expect(data[keyname][rx[:idx]])
+        next if changed_attrs.size == 0
+
+        idx = arrange.index { |o| o[:id] == changed_attrs[:id] }
+        if idx.nil?
+          moves << changed_attrs
+        else
+          arrange[idx].merge!(changed_attrs)
+          unless new_attrs.nil?
+            arrange[idx][:has_discarded_flag] = true
+            new_attrs[:position] = arrange[idx][:position]
+          end
+        end
+        moves << new_attrs unless new_attrs.nil?
+      end
+
+      if removes.length + arrange.length + moves.length > 0
+        attrs["#{field.to_s.tableize}_attributes".to_sym] = removes + arrange + moves
+      end
     end
 
     def list_by_version(set, number)
@@ -17,15 +80,6 @@ module Versionable
       recs.joins("
         INNER JOIN (#{max.to_sql}) AS maxpos ON maxpos.mv = #{tn}.version AND maxpos.position = #{tn}.position
       ").order(:position)
-    end
-
-    def replace_descriptions(data, attrs)
-      descs  = lastest_change.nil? ? [] : lastest_change.parts(self, :descriptions)
-      desc_lastest = descs.map { |o| { key: o.key, position: o.position, id: o.id } }
-      desc_expects = Description.expects(data)
-      desc_removes = merge_lastest_with_expects(desc_lastest, desc_expects)
-      desc_arrange = rearrange(desc_lastest, :descriptions)
-      attrs[:descriptions_attributes] = desc_removes + desc_arrange if desc_removes.length + desc_arrange.length > 0
     end
 
     def merge_lastest_with_expects(lastest, expects)

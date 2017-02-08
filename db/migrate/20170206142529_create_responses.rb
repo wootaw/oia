@@ -1,15 +1,13 @@
-class CreateInouts < ActiveRecord::Migration[5.0]
+class CreateResponses < ActiveRecord::Migration[5.0]
   def change
-    create_table :inouts do |t|
-      t.integer     :clazz, index: true
+    create_table :responses do |t|
       t.string      :name
+      t.integer     :location
       t.string      :group
       t.string      :data_type
       t.string      :summary
-      t.boolean     :required, default: false
       t.boolean     :array, default: false
       t.string      :ancestor, index: true
-      t.string      :default
       t.string      :options
       t.integer     :version, default: 1, index: true
       t.integer     :discard_version, index: true

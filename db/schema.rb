@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170203112224) do
+ActiveRecord::Schema.define(version: 20170208062338) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -35,8 +35,8 @@ ActiveRecord::Schema.define(version: 20170203112224) do
     t.integer  "owner_id"
     t.datetime "created_at",                  null: false
     t.datetime "updated_at",                  null: false
-    t.string   "key"
     t.integer  "discard_version"
+    t.string   "key"
     t.integer  "position"
     t.index ["owner_type", "owner_id"], name: "index_descriptions_on_owner_type_and_owner_id", using: :btree
     t.index ["state"], name: "index_descriptions_on_state", using: :btree
@@ -52,6 +52,7 @@ ActiveRecord::Schema.define(version: 20170203112224) do
     t.integer  "project_id"
     t.datetime "created_at",                       null: false
     t.datetime "updated_at",                       null: false
+    t.integer  "position"
     t.integer  "version",              default: 0
     t.integer  "discard_version"
     t.index ["name"], name: "index_documents_on_name", using: :btree
@@ -86,31 +87,6 @@ ActiveRecord::Schema.define(version: 20170203112224) do
     t.index ["team_id"], name: "index_groups_on_team_id", using: :btree
   end
 
-  create_table "inouts", force: :cascade do |t|
-    t.string   "name"
-    t.string   "group"
-    t.string   "summary"
-    t.string   "default"
-    t.string   "options"
-    t.integer  "version",         default: 0
-    t.string   "key"
-    t.integer  "state"
-    t.integer  "resource_id"
-    t.datetime "created_at",                      null: false
-    t.datetime "updated_at",                      null: false
-    t.integer  "discard_version"
-    t.integer  "position"
-    t.integer  "clazz"
-    t.string   "ancestor"
-    t.string   "data_type"
-    t.boolean  "required",        default: false
-    t.boolean  "array",           default: false
-    t.index ["key"], name: "index_inouts_on_key", using: :btree
-    t.index ["resource_id"], name: "index_inouts_on_resource_id", using: :btree
-    t.index ["state"], name: "index_inouts_on_state", using: :btree
-    t.index ["version"], name: "index_inouts_on_version", using: :btree
-  end
-
   create_table "members", force: :cascade do |t|
     t.integer  "team_id"
     t.integer  "user_id"
@@ -118,6 +94,33 @@ ActiveRecord::Schema.define(version: 20170203112224) do
     t.datetime "updated_at", null: false
     t.index ["team_id"], name: "index_members_on_team_id", using: :btree
     t.index ["user_id"], name: "index_members_on_user_id", using: :btree
+  end
+
+  create_table "parameters", force: :cascade do |t|
+    t.string   "name"
+    t.integer  "location"
+    t.string   "data_type"
+    t.string   "summary"
+    t.boolean  "required",        default: false
+    t.boolean  "array",           default: false
+    t.string   "ancestor"
+    t.string   "default"
+    t.string   "options"
+    t.integer  "version",         default: 1
+    t.integer  "discard_version"
+    t.string   "key"
+    t.integer  "state"
+    t.integer  "position"
+    t.integer  "resource_id"
+    t.datetime "created_at",                      null: false
+    t.datetime "updated_at",                      null: false
+    t.index ["ancestor"], name: "index_parameters_on_ancestor", using: :btree
+    t.index ["discard_version"], name: "index_parameters_on_discard_version", using: :btree
+    t.index ["key"], name: "index_parameters_on_key", using: :btree
+    t.index ["position"], name: "index_parameters_on_position", using: :btree
+    t.index ["resource_id"], name: "index_parameters_on_resource_id", using: :btree
+    t.index ["state"], name: "index_parameters_on_state", using: :btree
+    t.index ["version"], name: "index_parameters_on_version", using: :btree
   end
 
   create_table "projects", force: :cascade do |t|
@@ -155,12 +158,39 @@ ActiveRecord::Schema.define(version: 20170203112224) do
     t.integer  "document_id"
     t.datetime "created_at",                       null: false
     t.datetime "updated_at",                       null: false
+    t.integer  "position"
     t.integer  "discard_version"
     t.index ["document_id"], name: "index_resources_on_document_id", using: :btree
     t.index ["key"], name: "index_resources_on_key", using: :btree
     t.index ["path"], name: "index_resources_on_path", using: :btree
     t.index ["state"], name: "index_resources_on_state", using: :btree
     t.index ["version"], name: "index_resources_on_version", using: :btree
+  end
+
+  create_table "responses", force: :cascade do |t|
+    t.string   "name"
+    t.integer  "location"
+    t.string   "group"
+    t.string   "data_type"
+    t.string   "summary"
+    t.boolean  "array",           default: false
+    t.string   "ancestor"
+    t.string   "options"
+    t.integer  "version",         default: 1
+    t.integer  "discard_version"
+    t.string   "key"
+    t.integer  "state"
+    t.integer  "position"
+    t.integer  "resource_id"
+    t.datetime "created_at",                      null: false
+    t.datetime "updated_at",                      null: false
+    t.index ["ancestor"], name: "index_responses_on_ancestor", using: :btree
+    t.index ["discard_version"], name: "index_responses_on_discard_version", using: :btree
+    t.index ["key"], name: "index_responses_on_key", using: :btree
+    t.index ["position"], name: "index_responses_on_position", using: :btree
+    t.index ["resource_id"], name: "index_responses_on_resource_id", using: :btree
+    t.index ["state"], name: "index_responses_on_state", using: :btree
+    t.index ["version"], name: "index_responses_on_version", using: :btree
   end
 
   create_table "roles", force: :cascade do |t|

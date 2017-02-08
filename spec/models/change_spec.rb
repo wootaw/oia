@@ -27,7 +27,7 @@ RSpec.describe Change, type: :model do
       end
     end
 
-    context "Have a discarded document" do
+    context "Exists a discarded document" do
       before(:example) do
         FactoryGirl.create(:document, name: "666", version: 1, position: 4, discard_version: 2, project: project_user)
         FactoryGirl.create(:document, name: "444", version: 3, position: 3, project: project_user)

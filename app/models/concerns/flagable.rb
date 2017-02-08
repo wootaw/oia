@@ -3,11 +3,6 @@ module Flagable
 
   included do
 
-    def self.init_flags(data, attrs)
-      changed_flag_attrs = Flag.attributes_by_json(data[:state] || {})
-      attrs[:flags_attributes] = [changed_flag_attrs] if changed_flag_attrs.length > 0
-    end
-
     def replace_flags(data, attrs)
       flag_attrs = []
       lflag = lastest_change.nil? ? nil : lastest_change.parts(self, :flags).take

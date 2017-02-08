@@ -14,7 +14,7 @@ RSpec.describe Project, type: :model do
         :resources => [
           { 
             :method => "get", 
-            :path => "/api/v1/a_res", 
+            :path => "/api/v1/a_res/:num_a", 
             :summary => "Get list of A", 
             :descriptions => [
               ["This resource can get list of A. It can paginate."], 
@@ -22,8 +22,10 @@ RSpec.describe Project, type: :model do
               ["    This is the second paragraph of this resource description.", "Can not have more describe."]
             ], 
             :params => [
-              { :array => false, 
+              { 
+                :array => false, 
                 :type => "Boolean", 
+                :location => "query",
                 :required => true, 
                 :name => "is", 
                 :summary => "A boolean value", 
@@ -33,6 +35,7 @@ RSpec.describe Project, type: :model do
               }, {
                 :array => false, 
                 :type => "Number", 
+                :location => "query",
                 :required => false, 
                 :default => "0", 
                 :name => "num", 
@@ -41,42 +44,49 @@ RSpec.describe Project, type: :model do
                 :options => ["a", "b", "c"], 
                 :array => false, 
                 :type => "String", 
+                :location => "query",
                 :required => true, 
                 :name => "str", 
                 :summary => "Allowed values"
               }, {
                 :array => false, 
                 :type => "Number", 
+                :location => "path",
                 :required => false, 
                 :name => "num_a", 
                 :summary => "A Number value"
               }, {
                 :array => false, 
                 :type => "Number", 
+                :location => "query",
                 :required => false, 
                 :name => "num_b", 
                 :summary => "A Number value, too."
               }, {
                 :array => false, 
                 :type => "Number", 
+                :location => "query",
                 :required => false, 
                 :name => "num_c", 
                 :summary => "A Number value, again."
               }, {
                 :array => false, 
                 :type => "Number", 
+                :location => "query",
                 :required => false, 
                 :name => "num_x", 
                 :summary => "Number X"
               }, {
                 :array => false, 
                 :type => "Number", 
+                :location => "query",
                 :required => false, 
                 :name => "num_y", 
                 :summary => "Number Y"
               }, {
                 :array => false, 
                 :type => "Number", 
+                :location => "query",
                 :required => false, 
                 :default => "3", 
                 :name => "num_z", 
@@ -84,48 +94,54 @@ RSpec.describe Project, type: :model do
               }, {
                 :array => false, 
                 :type => "String", 
+                :location => "query",
                 :required => false, 
                 :name => "str_a", 
                 :summary => "A String value"
               }, {
                 :array => false, 
                 :type => "String", 
+                :location => "query",
                 :required => false, 
                 :name => "str_b", 
                 :summary => "A String value, too."
               }, {
                 :array => false, 
                 :type => "String", 
+                :location => "query",
                 :required => false, 
                 :name => "str_c", 
                 :summary => "A String value, again."
               }, {
                 :array => true, 
                 :type => "String", 
+                :location => "query",
                 :required => false, 
                 :name => "str_x", 
                 :summary => "X"
               }, {
                 :array => false, 
                 :type => "String", 
+                :location => "query",
                 :required => false, 
                 :name => "str_y", 
                 :summary => "Y"
               }, {
                 :required => false, 
+                :location => "query",
                 :name => "z", 
                 :summary => "Z"
               }, {
                 :array => false, 
                 :type => "Object", 
-                :group => "group1", 
+                :location => "body",
                 :required => true, 
                 :name => "obj", 
                 :summary => "An Object value"
               }, {
                 :array => false, 
                 :type => "String", 
-                :group => "group1", 
+                :location => "body",
                 :required => true, 
                 :parent => ["obj"], 
                 :name => "name", 
@@ -133,7 +149,7 @@ RSpec.describe Project, type: :model do
               }, {
                 :array => false, 
                 :type => "Number", 
-                :group => "group1", 
+                :location => "body",
                 :required => false, 
                 :default => "0", 
                 :parent => ["obj"], 
@@ -142,14 +158,14 @@ RSpec.describe Project, type: :model do
               }, {
                 :array => true, 
                 :type => "Object", 
-                :group => "group2", 
+                :location => "body",
                 :required => true, 
                 :name => "data", 
                 :summary => "An Array value"
               }, {
                 :array => false, 
                 :type => "Boolean", 
-                :group => "group2", 
+                :location => "body",
                 :required => true, 
                 :parent => ["data"], 
                 :name => "ok", 
@@ -158,7 +174,7 @@ RSpec.describe Project, type: :model do
                 :options => ["2", "3", "4"], 
                 :array => true, 
                 :type => "Number", 
-                :group => "group2", 
+                :location => "body",
                 :required => false, 
                 :parent => ["data"], 
                 :name => "sum", 
@@ -193,15 +209,17 @@ RSpec.describe Project, type: :model do
                 ["This resource is not finish"]
               ]
             }, 
-            :headers => [
+            :params => [
               {
                 :required => false, 
+                :location => "header",
                 :name => "a", 
                 :summary => "A"
               }, {
                 :options => ["a", "b", "c"], 
                 :array => false, 
                 :type => "String", 
+                :location => "header",
                 :required => true, 
                 :name => "b", 
                 :summary => "B"
@@ -209,6 +227,7 @@ RSpec.describe Project, type: :model do
                 :options => ["1", "2", "3"], 
                 :array => true, 
                 :type => "Number", 
+                :location => "header",
                 :required => true, 
                 :name => "c", 
                 :summary => "C", 
@@ -218,14 +237,14 @@ RSpec.describe Project, type: :model do
               }, {
                 :array => false, 
                 :type => "Object", 
-                :group => "group1", 
+                :location => "body",
                 :required => true, 
                 :name => "obj", 
                 :summary => "An Object value"
               }, {
                 :array => false, 
                 :type => "String", 
-                :group => "group1", 
+                :location => "body",
                 :required => true, 
                 :parent => ["obj"], 
                 :name => "name", 
@@ -233,18 +252,16 @@ RSpec.describe Project, type: :model do
               }, {
                 :array => false, 
                 :type => "Number", 
-                :group => "group1", 
+                :location => "body",
                 :required => false, 
                 :default => "0", 
                 :parent => ["obj"], 
                 :name => "count", 
                 :summary => "count of Object"
-              }
-            ], 
-            :params => [
-              {
+              }, {
                 :array => false, 
                 :type => "Boolean", 
+                :location => "query",
                 :required => true, 
                 :name => "ok", 
                 :summary => "A boolean value"
@@ -252,7 +269,7 @@ RSpec.describe Project, type: :model do
             ], 
             :responses => [
               {
-                :group => "group1", 
+                :location => "header",
                 :required => false, 
                 :name => "a", 
                 :summary => "A"
@@ -260,7 +277,8 @@ RSpec.describe Project, type: :model do
                 :options => ["a", "b", "c"], 
                 :array => false, 
                 :type => "String", 
-                :group => "group1", 
+                :group => "201", 
+                :location => "body",
                 :required => true, 
                 :name => "b", 
                 :summary => "B", 
@@ -278,6 +296,8 @@ RSpec.describe Project, type: :model do
                 :options => ["1", "2", "3"], 
                 :array => true, 
                 :type => "Number", 
+                :group => "201", 
+                :location => "body",
                 :required => true, 
                 :name => "c", 
                 :summary => "C", 
@@ -286,6 +306,8 @@ RSpec.describe Project, type: :model do
                 ]
               }, {
                 :required => true, 
+                :group => "403", 
+                :location => "body",
                 :name => "code", 
                 :summary => "Error code", 
                 :descriptions => [
@@ -298,6 +320,8 @@ RSpec.describe Project, type: :model do
               }, {
                 :required => true, 
                 :name => "msg", 
+                :group => "403", 
+                :location => "body",
                 :summary => "Error message", 
                 :descriptions => [
                   ["This is a row detail,", "See more:"], 
@@ -379,6 +403,7 @@ RSpec.describe Project, type: :model do
         project_user.update_version(docs[1..-1])
         project_user.save
 
+        project_user.reload
         expect(project_user.documents.count).to eq 2
       end
 
@@ -464,10 +489,10 @@ RSpec.describe Project, type: :model do
       it "Should be update resource summary when it have new summary" do
         doc1   = FactoryGirl.create(:document, name: "document1", project: project_user, version: 1)
         change = FactoryGirl.create(:change, version: "0.1.0.0", project: project_user)
-        key1   = Digest::MD5.hexdigest("GET|/api/v1/a_res")
+        key1   = Digest::MD5.hexdigest("GET|/api/v1/a_res/:num_a")
         key2   = Digest::MD5.hexdigest("POST|/api/v1/a_res")
 
-        res1 = FactoryGirl.create(:resource, method: "GET", path: "/api/v1/a_res", key: key1, position: 1, version: change.version, document: doc1)
+        res1 = FactoryGirl.create(:resource, method: "GET", path: "/api/v1/a_res/:num_a", key: key1, position: 1, version: change.version, document: doc1)
         res2 = FactoryGirl.create(:resource, method: "POST", path: "/api/v1/a_res", key: key2, position: 2, version: change.version, document: doc1)
         project_user.update_attributes(minor_version: 1, patch_version: 0)
 
