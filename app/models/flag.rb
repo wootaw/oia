@@ -12,7 +12,6 @@ class Flag < ApplicationRecord
   def self.attributes_by_json(data)
     data.symbolize_keys!
     attrs = data.slice(:name, :summary)
-    # init_descriptions(data, attrs)
     init_association(data, attrs, :description)
     attrs[:position] = 1 if attrs.size > 0
     attrs.compact

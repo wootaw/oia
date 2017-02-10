@@ -1,0 +1,204 @@
+{
+  "title": "A JSON Schema for APIWoods API.",
+  "id": "http://www.apiwoods.com/schemas/v1.0/schema.json#",
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "definitions": {
+    "descriptions": {
+      "type": "array",
+      "items": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      }
+    },
+    "state": {
+      "type": "object",
+      "required": [
+        "name"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "summary": {
+          "type": "string"
+        },
+        "descriptions": {
+          "$ref": "#/definitions/descriptions"
+        }
+      }
+    },
+    "ancestor": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "parameter": {
+      "type": "object",
+      "required": [
+        "location",
+        "name"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "location": {
+          "type": "string",
+          "enum": [
+            "path",
+            "query",
+            "header",
+            "form", 
+            "body",
+            "cookie"
+          ]
+        },
+        "name": {
+          "type": "string"
+        },
+        "data_type": {
+          "type": "string",
+          "enum": [
+            "Boolean",
+            "Number",
+            "String",
+            "Object"
+          ]
+        },
+        "summary": {
+          "type": "string"
+        },
+        "required": {
+          "type": "boolean"
+        },
+        "array": {
+          "type": "boolean"
+        },
+        "ancestor": {
+          "$ref": "#/definitions/ancestor"
+        },
+        "default": {
+          "type": "string"
+        },
+        "descriptions": {
+          "$ref": "#/definitions/descriptions"
+        }
+      }
+    },
+    "response": {
+      "type": "object",
+      "required": [
+        "location",
+        "name"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "location": {
+          "type": "string",
+          "enum": [
+            "header",
+            "body"
+          ]
+        },
+        "name": {
+          "type": "string"
+        },
+        "data_type": {
+          "type": "string"
+        },
+        "summary": {
+          "type": "string"
+        },
+        "group": {
+          "type": "string"
+        },
+        "array": {
+          "type": "boolean"
+        },
+        "ancestor": {
+          "$ref": "#/definitions/ancestor"
+        },
+        "descriptions": {
+          "$ref": "#/definitions/descriptions"
+        }
+      }
+    }
+  },
+  "type": "array",
+  "items": {
+    "type": "object",
+    "required": [
+      "name",
+      "summary"
+    ],
+    "additionalProperties": false,
+    "properties": {
+      "name": {
+        "type": "string"
+      },
+      "summary": {
+        "type": "string"
+      },
+      "descriptions": {
+        "$ref": "#/definitions/descriptions"
+      },
+      "state": {
+        "$ref": "#/definitions/state"
+      },
+      "resources": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "method",
+            "path",
+            "summary"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "method": {
+              "type": "string",
+              "enum": [
+                "get",
+                "head",
+                "post",
+                "put",
+                "delete",
+                "patch",
+                "trace",
+                "options",
+                "connect"
+              ]
+            },
+            "path": {
+              "type": "string"
+            },
+            "summary": {
+              "type": "string"
+            },
+            "descriptions": {
+              "$ref": "#/definitions/descriptions"
+            },
+            "state": {
+              "$ref": "#/definitions/state"
+            },
+            "params": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/parameter"
+              }
+            },
+            "responses": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/response"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

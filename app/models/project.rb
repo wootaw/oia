@@ -8,6 +8,7 @@ class Project < ApplicationRecord
   has_one :lastest_change, -> { order 'position DESC' }, class_name: 'Change'
 
   has_many :documents, dependent: :destroy
+  has_many :tapes, dependent: :destroy
   has_many :version_changes, dependent: :destroy, class_name: 'Change'
 
   validates :name, presence: true, length: { minimum: 2, maximum: 50 }, uniqueness: { scope: :owner }
