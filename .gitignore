@@ -18,6 +18,7 @@
 !/tmp/.keep
 
 # Ignore Byebug command history file.
+/config/database.yml
 /config/application.yml
 .byebug_history
 coverage

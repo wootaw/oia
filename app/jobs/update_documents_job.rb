@@ -1,7 +1,7 @@
 class UpdateDocumentsJob < ApplicationJob
   queue_as :transcription
 
-  def perform(tape_id)
-    Tape.transcription(tape_id)
+  def perform(project_id)
+    Tape.transcription(project_id)
   end
 end

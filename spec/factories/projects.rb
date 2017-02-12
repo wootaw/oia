@@ -1,8 +1,8 @@
 FactoryGirl.define do
   factory :project do
-    sequence(:name)      { |n| "project_name#{n}" }
-    sequence(:key)       { |n| "project_key#{n}" }
-    sequence(:token)     { |n| "project_token#{n}" }
+    sequence(:name)       { |n| "project_name#{n}" }
+    sequence(:access_key) { |n| "project_access_key#{n}" }
+    sequence(:secret_key) { |n| "project_secret_key#{n}" }
 
     factory :project_user do
       association :owner, factory: :user

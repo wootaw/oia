@@ -12,8 +12,8 @@ class Project < ApplicationRecord
   has_many :version_changes, dependent: :destroy, class_name: 'Change'
 
   validates :name, presence: true, length: { minimum: 2, maximum: 50 }, uniqueness: { scope: :owner }
-  validates :key, presence: true, uniqueness: true
-  validates :token, presence: true
+  validates :access_key, presence: true, uniqueness: true
+  validates :secret_key, presence: true
 
   accepts_nested_attributes_for :documents
 

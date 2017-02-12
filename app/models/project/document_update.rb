@@ -34,13 +34,18 @@ class Project
       end
 
       change = self.lastest_change
+      number = change.nil? ? 1 : change.position + 1
       unless changes[:minor] + changes[:patch] + changes[:changes] == 0
-        number = change.nil? ? 1 : change.position + 1
         self.attach_version(docs_attrs, number)
         self.version_changes.build(version: self.version_number)
       end
 
-      self.assign_attributes(documents_attributes: docs_attrs)
+      if docs_attrs.length == 0
+        nil
+      else
+        self.assign_attributes(documents_attributes: docs_attrs)
+        number
+      end
     end
 
     def attach_version(attrs, number)
