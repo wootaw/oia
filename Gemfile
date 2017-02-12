@@ -32,6 +32,8 @@ gem 'acts_as_list'
 gem 'aasm'
 gem 'hashdiff'
 gem 'thor', '0.19.1'
+gem 'kaminari'
+gem 'settingslogic'
 
 gem 'redis'
 gem 'hiredis'
