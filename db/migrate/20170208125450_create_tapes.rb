@@ -5,6 +5,7 @@ class CreateTapes < ActiveRecord::Migration[5.0]
       t.integer     :state, index: true
       t.integer     :version, index: true
       t.string      :schema
+      t.string      :job_id
       t.references  :project, index: true
       t.timestamps
     end

@@ -65,7 +65,7 @@ RSpec.describe Tape, type: :model do
 
   describe '.transcription' do
     context 'Exception content of tape' do
-      before(:each) do
+      before(:example) do
         @tape1 = FactoryGirl.create(:tape, content: bad_content)
         @tape2 = FactoryGirl.create(:tape, content: invalid_content1)
       end
@@ -88,7 +88,7 @@ RSpec.describe Tape, type: :model do
     end
 
     context 'Normal content of tape' do
-      before(:each) do
+      before(:example) do
         @tape = FactoryGirl.create(:tape, content: normal_content1)
       end
 
