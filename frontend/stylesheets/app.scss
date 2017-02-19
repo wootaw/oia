@@ -86,6 +86,18 @@ body {
 //   }
 // }
 
+.v-middle {
+  vertical-align: middle !important;
+}
+
+.v-top {
+  vertical-align: top !important;
+}
+
+.v-bottom {
+  vertical-align: bottom !important;
+}
+
 // .vbox {
 //   position: relative;
 //   display: table;
@@ -120,13 +132,15 @@ body {
 //   display: table-cell;
 // }
 
-.modal-over {
-  position: fixed;
+.modal-over, .modal-container {
   top: 0;
   right: 0;
   bottom: 0;
   left: 0;
   margin: auto;
+}
+.modal-container {
+  position: absolute;
 }
 
 // @media (max-width: 767px) {
@@ -168,6 +182,42 @@ body {
 //   }
 // }
 
+.pos-rlt {
+  position: relative;
+}
+
+.pos-stc {
+  position: static !important;
+}
+
+.pos-abt {
+  position: absolute;
+}
+
+.pos-fix {
+  position: fixed;
+}
+
+.dp-none {
+  display: none;
+}
+.dp-table {
+  display: table;
+
+  .cell {
+    display: table-cell;
+  }
+}
+.bg {
+  &.cover {
+    // background-attachment: fixed;
+    background-size: cover;
+  }
+  &.woods {
+    background-position: 50%;
+    background-image: url("../images/woods.jpg");
+  }
+}
 .w-1x {
   width: 1em;
 }
@@ -212,6 +262,10 @@ body {
   width: 360px;
 }
 
+.w-half {
+  width: 50%;
+}
+
 .w-full {
   width: 100%;
 }
@@ -230,4 +284,105 @@ body {
 
 .h-full {
   height: 100%;
+}
+.m-center {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.item {
+  position: relative;
+
+  .top {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+
+  .bottom {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+  }
+
+  .center {
+    position: absolute;
+    top: 50%;
+  }
+}
+
+.item-overlay {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: none;
+}
+
+.item-overlay.active,
+.item:hover .item-overlay {
+  display: block;
+}
+
+.wrapper-xs {
+  padding: 5px;
+}
+
+.wrapper-sm {
+  padding: 10px;
+}
+
+.wrapper {
+  padding: 15px;
+}
+
+.wrapper-md {
+  padding: 20px;
+}
+
+.wrapper-lg {
+  padding: 30px;
+}
+
+.wrapper-xl {
+  padding: 50px;
+}
+
+.padder-lg {
+  padding-right: 30px;
+  padding-left: 30px;
+}
+
+.padder-md {
+  padding-right: 20px;
+  padding-left: 20px;
+}
+
+.padder {
+  padding-right: 15px;
+  padding-left: 15px;
+}
+
+.padder-sm {
+  padding-right: 10px;
+  padding-left: 10px;
+}
+
+.padder-v {
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+
+.padder-xl {
+  padding-top: 50px;
+  padding-bottom: 50px;
+}
+
+.no-padder {
+  padding: 0 !important;
+}
+
+.txt-center {
+  text-align: center;
 }

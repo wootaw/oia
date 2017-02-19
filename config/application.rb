@@ -28,5 +28,10 @@ module Apiwoods
     config.active_job.queue_name_delimiter = '.'
     config.active_job.queue_adapter = :sidekiq
     config.middleware.use Rack::Attack
+
+    config.webpack = {
+      asset_manifest: {}
+    }
   end
+  
 end
