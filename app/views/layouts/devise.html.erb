@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Apiwoods</title>
+    <%= csrf_meta_tags %>
+    <%= webpack_javascript_include_tag 'main' %>
+    <%= webpack_stylesheet_link_tag 'main' %>
+  </head>
+
+  <body>
+    <div class="app">
+      <div class="row win-over pos-fix">
+        <div class="col-md-6 h-full container">
+          <div class="grid-over h-full">
+            <div class="dp-table w-full h-full item">
+              <div class="cell w-half v-middle wrapper-md">
+                <div class="padder-xl">
+                  <%= yield %>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 h-full container bg cover woods">
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
