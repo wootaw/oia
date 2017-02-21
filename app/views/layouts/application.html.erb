@@ -1,14 +1,21 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <meta charset="utf-8" />
     <title>Apiwoods</title>
     <%= csrf_meta_tags %>
-
-    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <%= webpack_javascript_include_tag 'main' %>
+    <%= webpack_stylesheet_link_tag 'main' %>
   </head>
 
   <body>
-    <%= yield %>
+    <div class="app app-header-fixed app-aside-fixed">
+      <header id="header" class="app-header navbar" role="menu">
+      </header>
+
+      <div id="content" class="app-content" role="main">
+        <%= yield %>
+      </div>
+    </div>
   </body>
 </html>
