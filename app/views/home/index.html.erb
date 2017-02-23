@@ -13,7 +13,159 @@
           <div class="cell">
             <div class="cell-inner">
 
-              <div class="panel panel-doc m-b-none no-radius">
+              <div class="panel panel-doc list m-b-none no-radius">
+                <div class="panel-heading">Contacts</div>
+                <ul class="list-group alt">
+                  <li class="list-group-item">
+                    <div class="media">
+                      <span class="label label-success pull-left">GET</span>
+                      <a href="#" class="more pull-right m-t-sm">
+                        <i class="fa fa-ellipsis-h"></i>
+                      </a>
+                      <div class="media-body">
+                        <a href="#">
+                          <h5>Stranger tag class list</h5>
+                          <small class="text-muted">/api/v1/stranger_tag_classes</small>
+                        </a>
+                      </div>
+                    </div>
+                  </li>
+                  <li class="list-group-item">
+                    <div class="media">
+                      <span class="label label-warning pull-left">POST</span>
+                      <a href="#" class="more pull-right m-t-sm">
+                        <i class="fa fa-ellipsis-h"></i>
+                      </a>
+                      <div class="media-body">
+                        <a href="#">
+                          <h5>Send business card</h5>
+                          <small class="text-muted">/api/v1/business_cards</small>
+                        </a>
+                      </div>
+                    </div>
+                  </li>
+                  <li class="list-group-item">
+                    <div class="media">
+                      <span class="label label-success pull-left">GET</span>
+                      <a href="#" class="more pull-right m-t-sm">
+                        <i class="fa fa-ellipsis-h"></i>
+                      </a>
+                      <div class="media-body">
+                        <a href="#">
+                          <h5>Browse business card</h5>
+                          <small class="text-muted">/api/v1/business_cards</small>
+                        </a>
+                      </div>
+                    </div>
+                  </li>
+                  <li class="list-group-item">
+                    <div class="media">
+                      <span class="label label-primary pull-left">PUT</span>
+                      <a href="#" class="more pull-right m-t-sm">
+                        <i class="fa fa-ellipsis-h"></i>
+                      </a>
+                      <div class="media-body">
+                        <a href="#">
+                          <h5>Dispose business card</h5>
+                          <small class="text-muted">/api/v1/business_cards/:id</small>
+                        </a>
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+
+              <div class="panel panel-doc list m-b-none no-radius">
+                <div class="panel-heading">IM</div>
+                <ul class="list-group alt">
+                  <li class="list-group-item">
+                    <div class="media">
+                      <span class="label label-success pull-left">GET</span>
+                      <a href="#" class="more pull-right m-t-sm">
+                        <i class="fa fa-ellipsis-h"></i>
+                      </a>
+                      <div class="media-body">
+                        <a href="#">
+                          <h5>Get sign</h5>
+                          <small class="text-muted">/api/v1/im/sign</small>
+                        </a>
+                      </div>
+                    </div>
+                  </li>
+                  <li class="list-group-item">
+                    <div class="media">
+                      <span class="label label-success pull-left">GET</span>
+                      <a href="#" class="more pull-right m-t-sm">
+                        <i class="fa fa-ellipsis-h"></i>
+                      </a>
+                      <div class="media-body">
+                        <a href="#">
+                          <h5>List conferences</h5>
+                          <small class="text-muted">/api/v1/im/conferences</small>
+                        </a>
+                      </div>
+                    </div>
+                  </li>
+                  <li class="list-group-item">
+                    <div class="media">
+                      <span class="label label-warning pull-left">POST</span>
+                      <a href="#" class="more pull-right m-t-sm">
+                        <i class="fa fa-ellipsis-h"></i>
+                      </a>
+                      <div class="media-body">
+                        <a href="#">
+                          <h5>Create conference</h5>
+                          <small class="text-muted">/api/v1/im/conferences</small>
+                        </a>
+                      </div>
+                    </div>
+                  </li>
+                  <li class="list-group-item">
+                    <div class="media">
+                      <span class="label label-primary pull-left">PUT</span>
+                      <a href="#" class="more pull-right m-t-sm">
+                        <i class="fa fa-ellipsis-h"></i>
+                      </a>
+                      <div class="media-body">
+                        <a href="#">
+                          <h5>Update conference</h5>
+                          <small class="text-muted">/api/v1/im/conferences/:conv_id</small>
+                        </a>
+                      </div>
+                    </div>
+                  </li>
+                  <li class="list-group-item">
+                    <div class="media">
+                      <span class="label label-danger pull-left">DEL</span>
+                      <a href="#" class="more pull-right m-t-sm">
+                        <i class="fa fa-ellipsis-h"></i>
+                      </a>
+                      <div class="media-body">
+                        <a href="#">
+                          <h5>Remove conference</h5>
+                          <small class="text-muted">/api/v1/im/conferences/:conv_id</small>
+                        </a>
+                      </div>
+                    </div>
+                  </li>
+                  <li class="list-group-item">
+                    <div class="media">
+                      <span class="label label-success pull-left">GET</span>
+                      <a href="#" class="more pull-right m-t-sm">
+                        <i class="fa fa-ellipsis-h"></i>
+                      </a>
+                      <div class="media-body">
+                        <a href="#">
+                          <h5>Detail conference</h5>
+                          <small class="text-muted">/api/v1/im/conferences/:conv_id/detail</small>
+                        </a>
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+
+              <div class="panel panel-doc list m-b-none no-radius">
                 <div class="panel-heading">
                   Connection
                 </div>
@@ -77,135 +229,7 @@
                 </ul>
               </div>
 
-              <div class="panel panel-doc m-b-none no-radius">
-                <div class="panel-heading">
-                  Connection
-                </div>
-                <ul class="list-group alt">
-                  <li class="list-group-item">
-                    <div class="media">
-                      <span class="label label-success pull-left">GET</span>
-                      <div class="pull-right text-success m-t-sm">
-                        <i class="fa fa-circle"></i>
-                      </div>
-                      <div class="media-body">
-                        <a href="#">
-                          <h5>Chris Fox</h5>
-                          <small class="text-muted">about 2 minutes ago</small>
-                        </a>
-                      </div>
-                    </div>
-                  </li>
-                  <li class="list-group-item">
-                    <div class="media">
-                      <span class="label label-warning pull-left">POST</span>
-                      <div class="pull-right text-muted m-t-sm">
-                        <i class="fa fa-circle"></i>
-                      </div>
-                      <div class="media-body">
-                        <a href="#">
-                          <h5>Amanda Conlan</h5>
-                          <small class="text-muted">about 2 minutes ago</small>
-                        </a>
-                      </div>
-                    </div>
-                  </li>
-                  <li class="list-group-item">
-                    <div class="media">
-                      <span class="label label-danger pull-left">DEL</span>
-                      <div class="pull-right text-warning m-t-sm">
-                        <i class="fa fa-circle"></i>
-                      </div>
-                      <div class="media-body">
-                        <a href="#">
-                          <h5>Dan Doorack</h5>
-                          <small class="text-muted">about 2 minutes ago</small>
-                        </a>
-                      </div>
-                    </div>
-                  </li>
-                  <li class="list-group-item">
-                    <div class="media">
-                      <span class="label label-primary pull-left">PUT</span>
-                      <div class="pull-right text-danger m-t-sm">
-                        <i class="fa fa-circle"></i>
-                      </div>
-                      <div class="media-body">
-                        <a href="#">
-                          <h5>Lauren Taylor</h5>
-                          <small class="text-muted">about 2 minutes ago</small>
-                        </a>
-                      </div>
-                    </div>
-                  </li>
-                </ul>
-              </div>
-
-              <div class="panel panel-doc m-b-none no-radius">
-                <div class="panel-heading">
-                  Connection
-                </div>
-                <ul class="list-group alt">
-                  <li class="list-group-item">
-                    <div class="media">
-                      <span class="label label-success pull-left">GET</span>
-                      <div class="pull-right text-success m-t-sm">
-                        <i class="fa fa-circle"></i>
-                      </div>
-                      <div class="media-body">
-                        <a href="#">
-                          <h5>Chris Fox</h5>
-                          <small class="text-muted">about 2 minutes ago</small>
-                        </a>
-                      </div>
-                    </div>
-                  </li>
-                  <li class="list-group-item">
-                    <div class="media">
-                      <span class="label label-warning pull-left">POST</span>
-                      <div class="pull-right text-muted m-t-sm">
-                        <i class="fa fa-circle"></i>
-                      </div>
-                      <div class="media-body">
-                        <a href="#">
-                          <h5>Amanda Conlan</h5>
-                          <small class="text-muted">about 2 minutes ago</small>
-                        </a>
-                      </div>
-                    </div>
-                  </li>
-                  <li class="list-group-item">
-                    <div class="media">
-                      <span class="label label-danger pull-left">DEL</span>
-                      <div class="pull-right text-warning m-t-sm">
-                        <i class="fa fa-circle"></i>
-                      </div>
-                      <div class="media-body">
-                        <a href="#">
-                          <h5>Dan Doorack</h5>
-                          <small class="text-muted">about 2 minutes ago</small>
-                        </a>
-                      </div>
-                    </div>
-                  </li>
-                  <li class="list-group-item">
-                    <div class="media">
-                      <span class="label label-primary pull-left">PUT</span>
-                      <div class="pull-right text-danger m-t-sm">
-                        <i class="fa fa-circle"></i>
-                      </div>
-                      <div class="media-body">
-                        <a href="#">
-                          <h5>Lauren Taylor</h5>
-                          <small class="text-muted">about 2 minutes ago</small>
-                        </a>
-                      </div>
-                    </div>
-                  </li>
-                </ul>
-              </div>
-
-              <div class="panel panel-doc m-b-none no-radius">
+              <div class="panel panel-doc list m-b-none no-radius">
                 <div class="panel-heading">
                   Connection
                 </div>
@@ -277,16 +301,185 @@
     <!-- /column -->
 
     <!-- column -->
-    <div class="col bg-dark lt">
+    <div class="col">
       <div class="vbox">
         <div class="row-row">
           <div class="cell">
             <div class="cell-inner">
-              <div class="wrapper-md">
-                This is the scrollable content
-                <p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p>
-                You got the bottom
+              <div class="panel panel-doc m-b-none no-radius">
+                <div class="panel-heading">
+                  <h2>Contacts</h2>
+                </div>
+                <div class="panel-body">
+                  <p>You can pass a block to devise_for that will add any routes defined in the block to Devise's list of known actions. This is important if you add a custom action to a controller that overrides an out of the box Devise controller. For example:<p/>
+                  <p>You can explicitly pass the name of the method which provides access to the enumeration mapping as a value of enum, or you can simply set it to true. In the latter case AASM will try to use pluralized column name to access possible enum states.<p/>
+                </div>
               </div>
+              <div class="panel panel-res">
+                <div class="panel-heading">
+                  <div class="clearfix">
+                    <div class="clear">
+                      <div class="h3 m-t-xs m-b-sm">
+                        <a href="#">Contacts</a>
+                        <span class="sep">/</span>
+                        Send business card
+                        <i class="fa fa-circle text-success pull-right text-xs m-t-sm"></i>
+                      </div>
+                      <span class="label label-warning pull-left m-r-sm">POST</span>
+                      <span class="label label-default pull-left">/api/v1/business_cards</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="panel-body">
+                  <div class="wrapper res-desc">
+                    <p>Lorem ipsum dolor sit amet, consecteter adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet.<p/>
+                    <p>There are a few easy ways to quickly get started with Bootstrap, each one appealing to a different skill level and use case. Read through to see what suits your particular needs.<p/>
+                  </div>
+
+                  <!-- <h4 class="padder">Parameters</h4> -->
+                  <!-- <div class="wrapper"> -->
+                  <h4 class="padder">Parameters</h4>
+                    <!-- <div class="panel panel-io no-radius"> -->
+                      <!-- <div class="panel-heading">Parameters</div> -->
+                      
+                  <table class="table table-striped m-b-none">
+                    <thead>
+                      <tr>
+                        <th class="text-center">Field</th>
+                        <th>Type</th>                    
+                        <th>Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>                    
+                        <td class="required">token</td>
+                        <td>String</td>
+                        <td>Let's say you have an User model configured to use authenticatable, confirmable and recoverable modules. After creating this inside your routes:</td>
+                      </tr>
+                      <tr>                    
+                        <td class="required">tag_name</td>
+                        <td>String</td>
+                        <td>Following Rails 3 routes DSL</td>
+                      </tr>
+                      <tr>                    
+                        <td>user_ids</td>
+                        <td>Number</td>
+                        <td>This method is going to look inside your User model and create the needed routes:</td>
+                      </tr>
+                      <tr>                    
+                        <td>stranger_ids</td>
+                        <td>Number</td>
+                        <td>You can configure your routes with some options:</td>
+                      </tr>
+                      <tr>                    
+                        <td>cluster_ids</td>
+                        <td>Number</td>
+                        <td>The only aspect not affect by the router configuration is the model name. The model name can be explicitly set via the :class_name option.</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                    <!-- </div> -->
+                  <!-- </div> -->
+
+                  <!-- <div class="wrapper"> -->
+                  <h4 class="padder">Respones</h4>
+                    <!-- <div class="panel panel-io no-radius"> -->
+                      <!-- <div class="panel-heading">Respones</div> -->
+
+                  <table class="table table-striped m-b-none">
+                    <thead>
+                      <tr>
+                        <th class="text-center">Field</th>
+                        <th>Type</th>                    
+                        <th>Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>                    
+                        <td class="required">token</td>
+                        <td>String</td>
+                        <td>Let's say you have an User model configured to use authenticatable, confirmable and recoverable modules. After creating this inside your routes:</td>
+                      </tr>
+                      <tr>                    
+                        <td class="required">tag_name</td>
+                        <td>String</td>
+                        <td>Following Rails 3 routes DSL</td>
+                      </tr>
+                      <tr>                    
+                        <td>user_ids</td>
+                        <td>Number</td>
+                        <td>This method is going to look inside your User model and create the needed routes:</td>
+                      </tr>
+                      <tr>                    
+                        <td>stranger_ids</td>
+                        <td>Number</td>
+                        <td>You can configure your routes with some options:</td>
+                      </tr>
+                      <tr>                    
+                        <td>cluster_ids</td>
+                        <td>Number</td>
+                        <td>The only aspect not affect by the router configuration is the model name. The model name can be explicitly set via the :class_name option.</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                    <!-- </div> -->
+                  <!-- </div> -->
+
+                </div>
+
+              </div>
+
+              <div class="panel panel-res m-b-none">
+                <div class="panel-heading">
+                  <div class="clearfix">
+                    <div class="clear">
+                      <div class="h3 m-t-xs m-b-sm">
+                        <a href="#">Contacts</a>
+                        <span class="sep">/</span>
+                        Dispose business card
+                        <i class="fa fa-circle text-success pull-right text-xs m-t-sm"></i>
+                      </div>
+                      <span class="label label-primary pull-left m-r-sm">PUT</span>
+                      <span class="label label-default pull-left">/api/v1/business_cards/:id</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="panel-body">
+                  <div class="wrapper res-desc">
+                    <p>Lorem ipsum dolor sit amet, consecteter adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet.<p/>
+                  </div>
+
+                  <h4 class="padder">Parameters</h4>
+                  <table class="table table-striped m-b-none">
+                    <thead>
+                      <tr>
+                        <th class="text-center">Field</th>
+                        <th>Type</th>                    
+                        <th>Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>                    
+                        <td class="required">token</td>
+                        <td>String</td>
+                        <td>Let's say you have an User model configured to use authenticatable, confirmable and recoverable modules. After creating this inside your routes:</td>
+                      </tr>
+                      <tr>                    
+                        <td class="required">id</td>
+                        <td>Number</td>
+                        <td>Card ID </td>
+                      </tr>
+                      <tr>                    
+                        <td class="required">event</td>
+                        <td>String</td>
+                        <td>This method is going to look inside your User model and create the needed routes:</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                
+              </div>
+
             </div>
           </div>
         </div>

@@ -1,7 +1,7 @@
 class Parameter < ApplicationRecord
   include Versionable
 
-  enum location: %i(path query header form body cookie)
+  enum location: %i(header path query form body cookie)
 
   belongs_to :resource
 
