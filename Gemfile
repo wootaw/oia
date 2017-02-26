@@ -45,6 +45,7 @@ gem 'sidekiq'
 # Sidekiq Web
 gem 'sinatra', '~> 2.0.0.beta2', require: false
 
+gem 'rack-cors', require: 'rack/cors'
 gem 'rack-attack'
 
 group :development, :test do

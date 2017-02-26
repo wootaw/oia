@@ -8,8 +8,8 @@ var ROOT = path.resolve(__dirname, '..');
 
 module.exports = {
   ROOT:   ROOT,                                
-  BUILD:  ROOT.join('build'),
+  BUILD:  ROOT.join('./build'),
   DIST:   ROOT.join('../public/assets'),
-  SRC:    ROOT.join('src'),
-  VENDOR: ROOT.join('vendor')
+  SRC:    ROOT.join('./src'),
+  VENDOR: ROOT.join('./vendor')
 };

@@ -17,6 +17,7 @@ module.exports = {
   resolve: {
     extensions: ['.js', '.vue', '.coffee', '.json'],
     alias: {
+      vue:        'vue/dist/vue.js',
       ASSET:      PATHS.SRC.join('assets'),
       COMPONENT:  PATHS.SRC.join('components'),
       FILTER:     PATHS.SRC.join('filters'),
@@ -39,10 +40,10 @@ module.exports = {
         test: require.resolve("jquery"), 
         loader: "expose-loader?$" 
       },
-      // {
-      //   test: /\.vue$/,
-      //   loader: 'vue'
-      // }, 
+      {
+        test: /\.vue$/,
+        loader: 'vue-loader'
+      }, 
       // {
       //   test: /\.js$/,
       //   loader: 'babel!eslint',
@@ -51,7 +52,8 @@ module.exports = {
       // }, 
       { 
         test: /\.js$/, 
-        loader: 'babel-loader'
+        loader: 'babel-loader',
+        exclude: /node_modules/
       },
       { 
         test: /\.(woff|woff2|eot|ttf|otf)\??.*$/, 
