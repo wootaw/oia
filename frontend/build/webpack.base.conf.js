@@ -1,34 +1,32 @@
-var path = require('path');
 var _ = require('lodash');
 var webpack = require('webpack');
-var assetPath = path.join(__dirname, '../', 'public', 'assets');
+var PATHS = require('./paths')
 // var ExtractTextPlugin = require("extract-text-webpack-plugin");
 var ManifestPlugin = require('webpack-manifest-plugin');
 
 module.exports = {
-  context: path.join(__dirname, '../'),
+  context: PATHS.ROOT,
 
-  entry: ['bootstrap-loader', '../frontend/javascripts/app.js'],
+  entry: ['bootstrap-loader', '../frontend/src/app.js'],
 
   output: {
-    path: assetPath
+    path: PATHS.DIST
     // publicPath: 'static/'
   },
   // devtool: 'cheap-module-eval-source-map'
   resolve: {
-    extensions: ['.js', '.vue', '.coffee', '.json']
-    // alias: {
-    //   // 自定义路径别名
-    //   MOCK: PATHS.MOCK,
-    //   ASSET: PATHS.SRC.join('assets'),
-    //   COMPONENT: PATHS.SRC.join('components'),
-    //   FILTER: PATHS.SRC.join('filters'),
-    //   MIXIN: PATHS.SRC.join('mixins'),
-    //   ROUTE: PATHS.SRC.join('routes'),
-    //   SERVICE: PATHS.SRC.join('services'),
-    //   UTIL: PATHS.SRC.join('utils'),
-    //   VIEW: PATHS.SRC.join('views')
-    // }
+    extensions: ['.js', '.vue', '.coffee', '.json'],
+    alias: {
+      ASSET:      PATHS.SRC.join('assets'),
+      COMPONENT:  PATHS.SRC.join('components'),
+      FILTER:     PATHS.SRC.join('filters'),
+      MIXIN:      PATHS.SRC.join('mixins'),
+      ROUTE:      PATHS.SRC.join('routes'),
+      SERVICE:    PATHS.SRC.join('services'),
+      UTIL:       PATHS.SRC.join('utils'),
+      VIEW:       PATHS.SRC.join('views'),
+      VENDOR:     PATHS.VENDOR
+    }
   },
 
   module: {
@@ -78,18 +76,6 @@ module.exports = {
       // { 
       //   test: /\.scss$/, 
       //   loader: ExtractTextPlugin.extract({ fallback: 'style-loader', use: ['css-loader', 'sass-loader'] }) 
-      // }
-      // {
-      //   test: /\.(png|jpe?g|gif|svg)$/,
-      //   loader: 'url',
-      //   query: {
-      //     limit: 10240, // 10KB 以下使用 base64
-      //     name: 'img/[name]-[hash:6].[ext]'
-      //   }
-      // }, 
-      // {
-      //   test: /\.(woff2?|eot|ttf|otf)$/,
-      //   loader: 'url-loader?limit=10240&name=fonts/[name]-[hash:6].[ext]'
       // }
     ]
   },
