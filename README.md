@@ -22,3 +22,14 @@ Things you may want to cover:
 * Deployment instructions
 
 * ...
+
+https://devblog.digimondo.io/building-a-json-tree-view-component-in-vue-js-from-scratch-in-six-steps-ce0c05c2fdd8#.8z8upthux
+
+https://github.com/arvidkahl/vue-json-tree-view
+
+https://github.com/miaolz123/vue-markdown
+
+webpack --config frontend/build/webpack.prod.conf.js -p
+
+./node_modules/.bin/webpack --config frontend/build/webpack.prod.conf.js -p
+./node_modules/.bin/webpack-dev-server --config frontend/build/webpack.dev.conf.js --hot --inline

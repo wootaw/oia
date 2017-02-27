@@ -1,3 +1,4 @@
+<%= webpack_javascript_include_tag 'project' %>
 <div class="app-content-body app-content-full h-full">
   <div class="hbox hbox-auto-xs">
     <!-- column -->
@@ -12,6 +13,11 @@
         <div class="row-row">
           <div class="cell">
             <div class="cell-inner">
+              <div id="app">
+                <div v-for="doc in documents">
+                  <document-group :resources="doc.resources" :summary="doc.summary"></document-group>
+                </div>
+              </div>
 
               <div class="panel panel-doc list m-b-none no-radius">
                 <div class="panel-heading">Contacts</div>

@@ -1,13 +1,19 @@
 var _ = require('lodash');
 var webpack = require('webpack');
-var PATHS = require('./paths')
+var PATHS = require('./paths');
 // var ExtractTextPlugin = require("extract-text-webpack-plugin");
 var ManifestPlugin = require('webpack-manifest-plugin');
+var CommonsChunkPlugin = require("webpack/lib/optimize/CommonsChunkPlugin");
 
 module.exports = {
   context: PATHS.ROOT,
 
-  entry: ['bootstrap-loader', '../frontend/src/app.js'],
+  // entry: ['bootstrap-loader', '../frontend/src/app.js'],
+
+  entry: {
+    main: ['bootstrap-loader', '../frontend/src/app.js'],
+    project: ['../frontend/src/project.js']
+  },
 
   output: {
     path: PATHS.DIST
@@ -90,6 +96,7 @@ module.exports = {
     //   __DEV__: env === 'development',
     //   __PROD__: env === 'production'
     // })
+    new CommonsChunkPlugin("commons"),
 
     new webpack.ProvidePlugin({
       $: 'jquery',
