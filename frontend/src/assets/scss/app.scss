@@ -740,6 +740,40 @@ fieldset[disabled] .btn-dark.active {
   background-color: #edf1f2;
 }
 
+.bg-green {
+  color: #a6a8b1;
+  background-color: #27a102;
+}
+
+.bg-green.lt,
+.bg-green .lt {
+  background-color: #1fea00;
+}
+
+.bg-green.lter,
+.bg-green .lter {
+  background-color: #cff0c5;
+}
+
+.bg-green.dk,
+.bg-green .dk {
+  .h3 {
+    color: #fff;
+  }
+  background-color: #1c6000;
+}
+
+.bg-green.dker,
+.bg-green .dker {
+  color: #cff0c5;
+  background-color: #002f06;
+}
+
+.bg-green.bg,
+.bg-green .bg {
+  background-color: #3a3f51;
+}
+
 .bg-dark {
   color: #a6a8b1;
   background-color: #252525;
@@ -994,6 +1028,10 @@ fieldset[disabled] .btn-dark.active {
   float: none;
 }
 
+.float-left {
+  float: left;
+}
+
 .rounded {
   border-radius: 500px;
 }
@@ -1073,10 +1111,37 @@ fieldset[disabled] .btn-dark.active {
   width: auto;
 }
 
-.float-left {
-  float: left;
+.h-xxs {
+  min-height: 60px;
 }
 
+.h-xs {
+  min-height: 90px;
+}
+
+.h-sm {
+  min-height: 150px;
+}
+
+.h {
+  min-height: 200px;
+}
+
+.h-md {
+  min-height: 240px;
+}
+
+.h-lg {
+  min-height: 280px;
+}
+
+.h-xl {
+  min-height: 320px;
+}
+
+.h-xxl {
+  min-height: 360px;
+}
 .h-auto {
   height: auto;
 }
@@ -1084,6 +1149,7 @@ fieldset[disabled] .btn-dark.active {
 .h-full {
   height: 100%;
 }
+
 .m-center {
   margin-left: auto;
   margin-right: auto;
@@ -1254,6 +1320,10 @@ fieldset[disabled] .btn-dark.active {
 
 .m-t-xxl {
   margin-top: 50px;
+}
+
+.m-t-xxxl {
+  margin-top: 100px;
 }
 
 .m-t-n-xxs {
@@ -1570,6 +1640,13 @@ fieldset[disabled] .btn-dark.active {
   text-decoration: underline;
 }
 
+.img-full {
+  width: 100%;
+  img {
+    width: 100%;
+  }
+}
+
 .sign-box {
   max-width: 440px;
 
@@ -1696,8 +1773,6 @@ fieldset[disabled] .btn-dark.active {
   border: 0;
 
   .panel-heading {
-    background-color: #002f06;
-
     .h3 {
       color: #cff0c5;
 
@@ -1720,7 +1795,7 @@ fieldset[disabled] .btn-dark.active {
 
     .res-desc {
       color: #002f06;
-      background-color: #1c6000;
+      // background-color: #1c6000;
     }
 
     h4 {
@@ -1738,6 +1813,137 @@ fieldset[disabled] .btn-dark.active {
       .panel-heading {
         background-color: transparent;
         color: #1c6000;
+      }
+    }
+  }
+}
+
+@keyframes in {
+  0% {
+    opacity: 0;
+    transform-origin: 50% 50%;
+    transform: scale(0.8, 0.8);
+    filter: blur(90px);
+  }
+
+  100% {
+    opacity: 1;
+    transform-origin: 50% 50%;
+    transform: scale(1,1);
+    filter: blur(0px);
+  }
+}
+
+@keyframes out {
+  0% {
+    opacity: 1;
+    transform-origin: 50% 50%;
+    transform: scale(1,1);
+    filter: blur(0px);
+  }
+
+  100% {
+    opacity: 0;
+    transform-origin: 50% 50%;
+    transform: scale(0.8, 0.8);
+    filter: blur(90px);
+    display: none;
+  }
+}
+
+@keyframes slide-out {
+  0% {
+    opacity: 0;
+    transform-origin: 0 0;
+    // transform: translateY(0%);
+    transform: scale(0.5, 0.5);
+  }
+
+  100% {
+    opacity: 1;
+    transform-origin: 0 0;
+    // transform: translateY(100%);
+    transform: scale(1,1);
+  }
+}
+
+.panel {
+  &.over-bd {
+    .backdrop {
+      animation-name: out;
+      animation-duration: 0.5s;
+      animation-fill-mode: both;
+    }
+
+    .dd-over {
+      position: absolute;
+      z-index: 1100;
+      display: none;
+
+      &.open {
+        display: block;
+        .dropdown-menu {
+          animation-name: slide-out;
+          animation-duration: 100ms;
+          animation-fill-mode: both;
+        }
+      }
+
+      &.right {
+        right: 0;
+      }
+    }
+
+    &:hover {
+      .backdrop,
+      .dd-over {
+        display: block;
+        animation-name: in;
+        animation-duration: 120ms;
+        animation-fill-mode: both;
+      }
+    }
+  }
+}
+
+.backdrop {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1050;
+
+  &.fade, .fade {
+    opacity: 0;
+    filter: alpha(opacity=0);
+  }
+
+  &.in, .in {
+    opacity: 0.8;
+    filter: alpha(opacity=80);
+  }
+
+  .lowest {
+    position: absolute;
+    z-index: -1;
+    top: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .btn {
+    &.center {
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    &.btn-success.no-bg {
+      color: #398439;
+
+      &:hover {
+        color: #fff;
       }
     }
   }
