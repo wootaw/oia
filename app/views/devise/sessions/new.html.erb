@@ -15,7 +15,7 @@
       <%= f.password_field :password, autocomplete: "off", class: "form-control input-lg", placeholder: "Password" %>
     </div>
     <div class="m-b-md txt-right">
-      <%= link_to "Forgotten password?", new_user_password_path %>
+      <a href="#" v-on:click.stop="setPath('<%= new_user_password_path %>')">Forgotten password?</a>
     </div>
     <div class="m-b">
       <%= f.submit "Sign in", class: "btn-lg btn-success w-full" %>
@@ -38,7 +38,7 @@
       <a class="btn btn-dark btn-lg btn-github w-full"><i class="fa fa-github"></i> GitHub</a>
     </div>
     <div class="col-md-6 m-b">
-      <%= link_to "Sign up", new_user_registration_path, class: "btn btn-info btn-lg btn-github w-full" %>
+      <button class="btn btn-info btn-lg btn-github w-full" v-on:click.stop="setPath('<%= new_user_registration_path %>')">Sign up</button>
     </div>
   </div>
 </div>

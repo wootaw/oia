@@ -8,15 +8,18 @@
     <%= webpack_javascript_include_tag 'main' %>
     <%= webpack_stylesheet_link_tag 'main' %>
   </head>
-
   <body>
     <div class="app app-header-fixed app-aside-fixed">
-      <header id="header" class="app-header navbar box-shadow" role="menu">
-      </header>
-
+      <%= render partial: "shared/header" %>
       <div id="content" class="app-content" role="main">
-        <%= yield %>
+      <% if content_for?(:content) %>
+        <%= yield(:content) %>
+      <% end %>
       </div>
     </div>
+    <% unless user_signed_in? %>
+      <%= render partial: "shared/sign_modal" %>
+    <% end %>
+    <%= yield :modals %>
   </body>
 </html>

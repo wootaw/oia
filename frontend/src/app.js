@@ -4,34 +4,47 @@ import 'VENDOR/font-awesome/css/font-awesome.min.css'
 
 // // import router from 'ROUTE/'
 // import App from 'COMPONENT/App'
+import Vue from 'vue'
+import signService from 'SERVICE/SignService'
 
-// import documentsService from 'SERVICE/documentsService'
-// import DocumentGroup from 'COMPONENT/sidebars/DocumentGroup'
+$(function() {
+  ['users-sign_in', 'users-sign_up', 'users-password-new'].forEach((name) => {
+    let path = name.replace(/\-/g, '/')
+    Vue.component(name, function (resolve, reject) {
 
+      signService.getPage(`/${path}`).then((d) => {
+        resolve({
 
-// $(function() {
-//   new Vue({
-//     el: '#app',
-//     components: { DocumentGroup },
+          methods: {
+            setPath(p) {
+              this.$emit('gopage', p)
+            }
+          },
 
-//     mounted () {
-//       this.fetchList()
-//     },
+          template: d
+        })
+      })
 
-//     methods: {
-//       fetchList () {
-//         documentsService.fetchList().then(function(d) {
-//           this.documents = d.docs
-//         }.bind(this))
-//       }
-//     },
+    })
+  })
 
-//     data() {
-//       return {
-//         documents: []
-//       }
-//     }
-//   })
-// });
+  let signVue = new Vue({
+    el: '#sign-modal',
+
+    methods: {
+      openPage(path) {
+        this.type = path.replace(/^\//, '').replace(/\//g, '-')
+      }
+    },
+
+    data: {
+      type: 0,
+    }
+  })
+
+  $('.btn-sign').click((e) => {
+    signVue.openPage($(e.target).attr('data-path'))
+  })
+});
 
 // router.start(App, '#app')

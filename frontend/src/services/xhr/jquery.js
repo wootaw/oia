@@ -1,24 +1,23 @@
-import { rootPath, errHandler } from './config'
+import { rootPaths, errHandler } from './config'
 
-const xhr = ({ method = 'get', url, body = null }) => {
-  // 由于引入了 es6-shim，因此这里完全可以使用原生 Promise
+const xhr = ({ method = 'get', url, body = null, prefix = 'api' }) => {
   const defer = $.Deferred()
 
   $.ajax({
     type: method,
-    url: rootPath + url,
+    url: rootPaths[prefix] + url,
     data: body
     // crossDomain: true, // 跨域
     // xhrFields: { withCredentials: true } // 跨域允许带上 cookie
   })
-  .done(({ success, errMsg, data }) => {
+  .done((data, success, jqxhr) => {
     // if (!success) return $.toast({
     //   heading: '操作失败',
     //   text: errMsg,
     //   icon: 'warning',
     //   stack: false
     // })
-    if (!success) console.warn(errMsg)
+    // if (!success) console.warn(errMsg)
     defer.resolve(data)
   })
   .fail(errHandler)
