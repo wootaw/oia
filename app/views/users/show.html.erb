@@ -1,5 +1,39 @@
+<% content_for :modals do %>
+<div class="modal fade modal-full" id="myModal" tabindex="-1" role="dialog">
+  <button class="btn btn-rounded btn-lg btn-icon btn-default btn-close" data-dismiss="modal">
+    <i class="fa fa-times"></i>
+  </button>
+  <div class="grid-over h-full">
+    <div class="dp-table h-full item">
+      <div class="cell w-half v-middle wrapper-md">
+        <div class="modal-dialog" role="document">
+          <h2 class="txt-center">Create Project</h2>
+          <%= form_for(:project, html: { class: "m-b-xl" }) do |f| %>
+            <div class="input-group m-b">
+              <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
+              <%= f.email_field :email, autofocus: true, class: "form-control input-lg", placeholder: "Email" %>
+            </div>
+            <div class="input-group m-b">
+              <span class="input-group-addon"><i class="fa fa-lock"></i></span>
+              <%= f.password_field :password, autocomplete: "off", class: "form-control input-lg", placeholder: "Password" %>
+            </div>
+            <div class="m-b-md txt-right">
+              <%= link_to "Forgotten password?", new_user_password_path %>
+            </div>
+            <div class="m-b">
+              <%= f.submit "Sign in", class: "btn-lg btn-success w-full" %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<% end %>
+
+<% content_for :content do %>
 <div class="app-content-body ">
-      
+
 
   <div class="hbox hbox-auto-xs hbox-auto-sm">
     <!-- main -->
@@ -11,23 +45,8 @@
             <h1 class="m-n font-thin h3 text-black"><%= params[:login] %></h1>
             <small class="text-muted">Welcome to angulr application</small>
           </div>
-          <div class="col-sm-6 text-right hidden-xs">
-            <div class="inline m-r text-left">
-              <div class="m-b-xs">1290 <span class="text-muted">items</span></div>
-              <div ng-init="d3_1=[ 106,108,110,105,110,109,105,104,107,109,105,100,105,102,101,99,98 ]" 
-                ui-jq="sparkline" 
-                ui-options="[ 106,108,110,105,110,109,105,104,107,109,105,100,105,102,101,99,98 ], {type:'bar', height:20, barWidth:5, barSpacing:1, barColor:'#dce5ec'}" 
-                class="sparkline inline">loading...
-              </div>
-            </div>
-            <div class="inline text-left">
-              <div class="m-b-xs">$30,000 <span class="text-muted">revenue</span></div>
-              <div ng-init="d3_2=[ 105,102,106,107,105,104,101,99,98,109,105,100,108,110,105,110,109 ]" 
-                ui-jq="sparkline" 
-                ui-options="[ 105,102,106,107,105,104,101,99,98,109,105,100,108,110,105,110,109 ], {type:'bar', height:20, barWidth:5, barSpacing:1, barColor:'#dce5ec'}" 
-                class="sparkline inline">loading...
-              </div>
-            </div>
+          <div class="col-sm-6 col-xs-12 text-right">
+            <button class="btn btn-success btn-lg" data-toggle="modal" data-target="#myModal">Create Project</button>
           </div>
         </div>
       </div>
@@ -47,7 +66,13 @@
                   <div ng-init="x = 3" class="top text-right padder m-t-xs w-full">
                     <rating ng-model="x" max="5" state-on="'fa fa-star text-white'" state-off="'fa fa-star-o text-white'"></rating>
                   </div>
-                  <div class="bottom wrapper bg-gd-dk text-white w-full">            
+                  <div class="top text-left m-l m-t-sm">
+                    <span class="badge bg-primary m-r-xxs"><i class="fa fa-home text"></i></span>
+                    <span class="badge bg-primary m-r-xxs"><i class="fa fa-users text"></i></span>
+                    <span class="badge bg-info m-r-xxs"><i class="fa fa-eye text"></i></span>
+                    <span class="badge bg-success m-r-xxs"><i class="fa fa-bookmark text"></i></span>
+                  </div>
+                  <div class="bottom wrapper bg-gd-dk text-white w-full">
                     <div class="text-u-c h3 m-b-sm text-primary-lter">Coffee</div>
                     <div>Restaurant</div>
                     <div>9:00 am - 12:00 pm</div>
@@ -90,13 +115,16 @@
               </div>
               <div class="backdrop">
                 <a class="btn btn-success no-bg btn-lg center w-sm m-t-xxxl" href="#">View Project</a>
-                <div class="in bg-dark dker lowest"></div>
+                <div class="in bg-dark lowest"></div>
               </div>
               <div class="panel-heading no-border no-padder dk">
                 <!-- <span class="text-lt">The Restaurant</span> -->
                 <div class="item h">
-                  <div ng-init="x = 3" class="top text-right padder m-t-xs w-full">
-                    <rating ng-model="x" max="5" state-on="'fa fa-star text-white'" state-off="'fa fa-star-o text-white'"></rating>
+                  <div class="top text-left m-l m-t-sm">
+                    <span class="badge bg-primary m-r-xxs"><i class="fa fa-home text"></i></span>
+                    <span class="badge bg-primary m-r-xxs"><i class="fa fa-users text"></i></span>
+                    <span class="badge bg-info m-r-xxs"><i class="fa fa-eye text"></i></span>
+                    <span class="badge bg-success m-r-xxs"><i class="fa fa-bookmark text"></i></span>
                   </div>
                   <div class="bottom wrapper bg-gd-dk text-white w-full">
                     <div class="h3 m-b-sm text-primary-lter">Hot Module Replacement enabled.</div>
@@ -113,11 +141,11 @@
               </div>
               <ul class="list-group">
                 <li class="list-group-item">
-                  <span class="pull-right">45,000</span>
+                  <span class="pull-right">1.10.9.1</span>
                   Lastest Version
                 </li>
                 <li class="list-group-item">
-                  <span class="pull-right">23,200</span>
+                  <span class="pull-right"><%= distance_of_time_in_words_to_now(DateTime.new(2017,2,13,4,5,6)) %> ago</span>
                   Recent Updated
                 </li>
                 <li class="list-group-item">
@@ -556,3 +584,4 @@
     </div>
   </div>
 </div>
+<% end %>
