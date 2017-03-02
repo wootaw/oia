@@ -8,7 +8,7 @@
   <%= form_for(resource, as: resource_name, url: session_path(resource_name), html: { class: "m-b-xl" }) do |f| %>
     <div class="input-group m-b">
       <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
-      <%= f.email_field :email, autofocus: true, class: "form-control input-lg", placeholder: "Email" %>
+      <%= f.text_field :login, autofocus: true, class: "form-control input-lg", placeholder: "Email or Username" %>
     </div>
     <div class="input-group m-b">
       <span class="input-group-addon"><i class="fa fa-lock"></i></span>

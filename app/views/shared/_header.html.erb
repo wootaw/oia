@@ -232,7 +232,7 @@
           </li>
           <li class="divider"></li>
           <li>
-            <a ui-sref="access.signin">Logout</a>
+            <%= link_to "Logout", destroy_user_session_path, method: :delete %>
           </li>
         </ul>
         <!-- / dropdown -->

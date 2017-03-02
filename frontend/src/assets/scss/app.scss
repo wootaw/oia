@@ -2012,8 +2012,11 @@ fieldset[disabled] .btn-dark.active {
 .modal-full {
   background-image: url("../images/black_paper.jpg");
   
-  .win-over .container {
-    z-index: -2;
+  .win-over {
+    z-index: -1;
+    .container {
+      z-index: -2;
+    }
   }
   .grid-over {
     z-index: -1;

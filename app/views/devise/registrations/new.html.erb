@@ -7,16 +7,16 @@
   </div>
   <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { class: "m-b-xl" }) do |f| %>
     <div class="input-group m-b">
+      <span class="input-group-addon"><i class="fa fa-user"></i></span>
+      <%= f.text_field :username, autofocus: true, class: "form-control input-lg", placeholder: "Username" %>
+    </div>
+    <div class="input-group m-b">
       <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
-      <%= f.email_field :email, autofocus: true, class: "form-control input-lg", placeholder: "Email" %>
+      <%= f.email_field :email, class: "form-control input-lg", placeholder: "Email" %>
     </div>
     <div class="input-group m-b">
       <span class="input-group-addon"><i class="fa fa-lock"></i></span>
       <%= f.password_field :password, autocomplete: "off", class: "form-control input-lg", placeholder: "Password(#{@minimum_password_length} characters minimum)" %>
-    </div>
-    <div class="input-group m-b">
-      <span class="input-group-addon"><i class="fa fa-check"></i></span>
-      <%= f.password_field :password_confirmation, autocomplete: "off", class: "form-control input-lg", placeholder: "Input again" %>
     </div>
     <div class="m-b">
       <%= devise_error_messages! %>

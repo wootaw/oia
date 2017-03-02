@@ -1,4 +1,5 @@
 import 'es6-shim'
+import 'jquery-ujs'
 import 'ASSET/scss/app.scss'
 import 'VENDOR/font-awesome/css/font-awesome.min.css'
 
@@ -10,7 +11,7 @@ import signService from 'SERVICE/SignService'
 $(function() {
   ['users-sign_in', 'users-sign_up', 'users-password-new'].forEach((name) => {
     let path = name.replace(/\-/g, '/')
-    Vue.component(name, function (resolve, reject) {
+    Vue.component(name, (resolve, reject) => {
 
       signService.getPage(`/${path}`).then((d) => {
         resolve({
@@ -28,23 +29,27 @@ $(function() {
     })
   })
 
-  let signVue = new Vue({
-    el: '#sign-modal',
+  if($('#sign-modal').length > 0) {
+    let signVue = new Vue({
+      el: '#sign-modal',
 
-    methods: {
-      openPage(path) {
-        this.type = path.replace(/^\//, '').replace(/\//g, '-')
+      methods: {
+        openPage(path) {
+          this.type = path.replace(/^\//, '').replace(/\//g, '-')
+        }
+      },
+
+      data: {
+        type: 0,
       }
-    },
+    })
 
-    data: {
-      type: 0,
-    }
-  })
+    $('.btn-sign').click((e) => {
+      signVue.openPage($(e.target).attr('data-path'))
+    })
+  } else {
 
-  $('.btn-sign').click((e) => {
-    signVue.openPage($(e.target).attr('data-path'))
-  })
+  }
 });
 
 // router.start(App, '#app')
