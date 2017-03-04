@@ -9,12 +9,12 @@ class User::SessionsController < Devise::SessionsController
 
   # POST /resource/sign_in
   def create
-    resource = User.find_for_database_authentication(email: params[:user][:email])
+    resource = User.find_for_database_authentication(params[:user])
     return invalid_login_attempt unless resource
 
     if resource.valid_password?(params[:user][:password])
       sign_in :user, resource
-      return render nothing: true
+      return render body: nil
     end
 
     invalid_login_attempt

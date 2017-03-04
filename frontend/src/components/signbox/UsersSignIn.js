@@ -2,11 +2,7 @@ import Vue from 'vue';
 import signService from 'SERVICE/SignService';
 import { Validator } from 'vee-validate';
 import isEmail from 'validator/lib/isEmail'
-// import { Validator } from 'vee-validate'
-// import Rules from 'vee-validate/rules';
-// import isEmail from 'validator/lib/isEmail';
 
-// console.log(Validator);
 Validator.extend('account', {
     getMessage: field => 'The account must be an email or username you registered with.',
     validate: value => /^[a-zA-Z0-9_-]*$/.test(value) || isEmail(String(value))
@@ -19,11 +15,17 @@ const elements = {
 
 const UsersSignIn = Vue.component('users-sign_in', (resolve, reject) => {
 
-  signService.getPage('/users/sign_in').then((d) => {
+  signService.getPage('/users/sign_in').then(d => {
     resolve({
       template: d.data,
 
       validator: null,
+
+      computed: {
+        disabledSubmit() {
+          return this.alert || this.errors.has('account') || this.errors.has('password');
+        }
+      },
 
       methods: {
         setPath(p) {
@@ -31,28 +33,43 @@ const UsersSignIn = Vue.component('users-sign_in', (resolve, reject) => {
         },
 
         trySignIn(e) {
-          let form = $(e.target)
-          signService.signIn(form.attr('action'), form.serialize()).then((resp) => {
-            switch(resp.code) {
-              case 401:
-                this.alert = true;
-                this.msg = resp.data.msg;
-                break;
+          this.validator.validateAll({
+            account: this.account,
+            password: this.password
+          }).then(success => {
+            if (success) {
+              let form = $(e.target)
+              signService.signIn(form.attr('action'), form.serialize()).then((resp) => {
+                switch(resp.code) {
+                  case 200:
+                    location.reload();
+                    break;
+                  case 401:
+                    this.alert = true;
+                    this.msg = resp.data.msg;
+                    break;
+                }
+              });
             }
-          })
+          });
         },
 
-        initElements() {
-          if(elements.account == null || elements.password == null) {
-            elements.account = $('#user_account').parent('.input-group');
-            elements.password = $('#user_password').parent('.input-group');
+        initElements(field) {
+          if(elements[field] == null) {
+            elements[field] = $(`#user_${field}`).parent('.input-group');
+          }
+        },
+
+        clearAlert() {
+          if (this.alert) {
+            this.alert = false;
           }
         }
       },
 
       watch: {
         account(value) {
-          // this.initElements();
+          this.clearAlert();
           let ov = this.errors.has('account');
           if(this.validator.validate('account', value)) {
             this.account_error_changed = ov ? 'hide' : null;
@@ -60,8 +77,9 @@ const UsersSignIn = Vue.component('users-sign_in', (resolve, reject) => {
             this.account_error_changed = ov ? null : 'show';
           }
         },
+
         password(value) {
-          // this.initElements();
+          this.clearAlert();
           let ov = this.errors.has('password');
           if(this.validator.validate('password', value)) {
             this.password_error_changed = ov ? 'hide' : null;
@@ -74,7 +92,6 @@ const UsersSignIn = Vue.component('users-sign_in', (resolve, reject) => {
       created() {
         this.validator = new Validator({
           account: 'required|account',
-          // login: "{ rules: ['alpha_dash', 'email'] }",
           password: 'required|min:6'
         });
         this.$set(this, 'errors', this.validator.errorBag);
@@ -82,12 +99,12 @@ const UsersSignIn = Vue.component('users-sign_in', (resolve, reject) => {
 
       updated() {
         if (this.account_error_changed != null) {
-          this.initElements();
+          this.initElements('account');
           elements.account.tooltip(this.account_error_changed);
           this.account_error_changed = null;
         }
         if (this.password_error_changed != null) {
-          this.initElements();
+          this.initElements('password');
           elements.password.tooltip(this.password_error_changed);
           this.password_error_changed = null;
         }
@@ -95,7 +112,6 @@ const UsersSignIn = Vue.component('users-sign_in', (resolve, reject) => {
 
       data() {
         return {
-          test: 0,
           alert: false,
           msg: '',
           errors: null,
