@@ -2,10 +2,10 @@ class User < ApplicationRecord
   include AASM
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
-  attr_accessor :login
+  attr_accessor :account
 
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable, authentication_keys: [:login]
+         :recoverable, :rememberable, :trackable, :validatable, authentication_keys: [:account]
 
   has_many :members, dependent: :destroy
   has_many :personal_projects, as: :owner, dependent: :destroy, class_name: "Project"
@@ -31,8 +31,8 @@ class User < ApplicationRecord
 
   def self.find_for_database_authentication(warden_conditions)
     conditions = warden_conditions.dup
-    if login = conditions.delete(:login)
-      where(conditions.to_h).where(["username = :value OR lower(email) = :value", { value: login.downcase }]).first
+    if account = conditions.delete(:account)
+      where(conditions.to_h).where("username = ? OR lower(email) = ?", account, account.downcase).first
     elsif conditions.has_key?(:username) || conditions.has_key?(:email)
       where(conditions.to_h).first
     end

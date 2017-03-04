@@ -1,6 +1,5 @@
-import { rootPaths, errHandler } from './config'
-
-const xhr = ({ method = 'get', url, body = null, prefix = 'api' }) => {
+const rootPaths = { api: '/api/v1', page: '' }
+const xhr = ({ method='get', url, body=null, prefix='api' }) => {
   const defer = $.Deferred()
 
   $.ajax({
@@ -10,17 +9,13 @@ const xhr = ({ method = 'get', url, body = null, prefix = 'api' }) => {
     // crossDomain: true, // 跨域
     // xhrFields: { withCredentials: true } // 跨域允许带上 cookie
   })
-  .done((data, success, jqxhr) => {
-    // if (!success) return $.toast({
-    //   heading: '操作失败',
-    //   text: errMsg,
-    //   icon: 'warning',
-    //   stack: false
-    // })
-    // if (!success) console.warn(errMsg)
-    defer.resolve(data)
+  .always((data, textStatus, jqxhr) => {
+    if (textStatus == 'success') {
+      defer.resolve({ data: data, code: jqxhr.status })
+    } else {
+      defer.resolve({ data: data.responseJSON, code: data.status })
+    }
   })
-  .fail(errHandler)
 
   return defer.promise()
 }

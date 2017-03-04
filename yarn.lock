@@ -2962,7 +2962,7 @@ jodid25519@^1.0.0:
   dependencies:
     jsbn "~0.1.0"
 
-jquery-ujs@^1.2.2:
+jquery-ujs:
   version "1.2.2"
   resolved "http://registry.npm.taobao.org/jquery-ujs/download/jquery-ujs-1.2.2.tgz#6a8ef1020e6b6dda385b90a4bddc128c21c56397"
   dependencies:
@@ -5313,9 +5313,17 @@ validate-npm-package-license@^3.0.1:
     spdx-correct "~1.0.0"
     spdx-expression-parse "~1.0.0"
 
+validator:
+  version "7.0.0"
+  resolved "http://registry.npm.taobao.org/validator/download/validator-7.0.0.tgz#c74deb8063512fac35547938e6f0b1504a282fd2"
+
 vary@~1.1.0:
   version "1.1.0"
   resolved "http://registry.npm.taobao.org/vary/download/vary-1.1.0.tgz#e1e5affbbd16ae768dd2674394b9ad3022653140"
+
+vee-validate:
+  version "2.0.0-beta.23"
+  resolved "http://registry.npm.taobao.org/vee-validate/download/vee-validate-2.0.0-beta.23.tgz#c8f6db2047653dc15ed0d256e15553d3d107a2ce"
 
 vendors@^1.0.0:
   version "1.0.1"

@@ -6,28 +6,39 @@ import 'VENDOR/font-awesome/css/font-awesome.min.css'
 // // import router from 'ROUTE/'
 // import App from 'COMPONENT/App'
 import Vue from 'vue'
-import signService from 'SERVICE/SignService'
+// import Vuelidate from 'vuelidate'
+// import VeeValidate from 'vee-validate'
+// import { Validator } from 'vee-validate';
+// import signService from 'SERVICE/SignService'
+import UsersSignIn from 'COMPONENT/signbox/UsersSignIn'
+import UsersSignUp from 'COMPONENT/signbox/UsersSignUp'
+// require('COMPONENT/signbox/UsersSignIn')
+
+// require('./jquery')
 
 $(function() {
-  ['users-sign_in', 'users-sign_up', 'users-password-new'].forEach((name) => {
-    let path = name.replace(/\-/g, '/')
-    Vue.component(name, (resolve, reject) => {
+  // Vue.use(VeeValidate);
+  // console.log(Vuelidate);
+  // Vue.use(window.vuelidate.default);
+  // const signPanels = [{
+  //   name: 'users-sign_in',
+  //   validator: new Validator({
+  //     login: 'required',
+  //     password: 'required|min:6'
+  //   })
+  // }, {
+  //   name: 'users-sign_up',
+  //   validator: null
+  // }, {
+  //   name: 'users-password-new',
+  //   validator: null
+  // }]
 
-      signService.getPage(`/${path}`).then((d) => {
-        resolve({
+  // signPanels.forEach((panel) => {
+  //   let path = panel.name.replace(/\-/g, '/')
 
-          methods: {
-            setPath(p) {
-              this.$emit('gopage', p)
-            }
-          },
-
-          template: d
-        })
-      })
-
-    })
-  })
+    
+  // })
 
   if($('#sign-modal').length > 0) {
     let signVue = new Vue({
@@ -36,9 +47,22 @@ $(function() {
       methods: {
         openPage(path) {
           this.type = path.replace(/^\//, '').replace(/\//g, '-')
-        }
-      },
+        },
 
+        // fuckIt(resp) {
+        //   console.log('fucking...')
+        //   console.log(resp)
+        // }
+      },
+      // created() {
+      //         this.$watch('errors', (errors) => {
+      //             // this.errors.clear();
+      //             // errors.forEach(e => {
+      //             //     this.errors.add(e.field, e.msg, e.rule, e.scope);
+      //             // });
+      //             console.log(errors)
+      //         })
+      //     },
       data: {
         type: 0,
       }

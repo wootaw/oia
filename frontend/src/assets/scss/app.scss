@@ -1907,6 +1907,28 @@ fieldset[disabled] .btn-dark.active {
   }
 }
 
+@keyframes alert-in {
+  0% {
+    opacity: 0;
+    transform-origin: 50% 50%;
+    transform: scale(0.8, 0.8);
+    // filter: blur(90px);
+  }
+
+  100% {
+    opacity: 1;
+    transform-origin: 50% 50%;
+    transform: scale(1, 1);
+    // filter: blur(0px);
+  }
+}
+
+.alert {
+  animation-name: alert-in;
+  animation-duration: 100ms;
+  animation-fill-mode: both;
+}
+
 .panel {
   &.over-bd {
     .backdrop {

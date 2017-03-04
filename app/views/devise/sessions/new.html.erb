@@ -5,14 +5,17 @@
   <div class="txt-center m-b-xl">
     <span>Sign into your account here:</span>
   </div>
-  <%= form_for(resource, as: resource_name, url: session_path(resource_name), html: { class: "m-b-xl" }) do |f| %>
-    <div class="input-group m-b">
+  <%= form_for(resource, as: resource_name, url: session_path(resource_name), html: { class: "m-b-xl", "v-on:submit.prevent" => "trySignIn" }) do |f| %>
+    <div :class="{ 'input-group': true, 'm-b': true, 'has-error': errors.has('account') }" data-toggle="tooltip" data-placement="left" v-bind:data-original-title="errors.first('account')">
       <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
-      <%= f.text_field :login, autofocus: true, class: "form-control input-lg", placeholder: "Email or Username" %>
+      <%= f.text_field :account, autofocus: true, class: "form-control input-lg", "v-model" => "account", placeholder: "Account" %>
     </div>
-    <div class="input-group m-b">
+    <div :class="{ 'input-group': true, 'm-b': true, 'has-error': errors.has('password') }" data-toggle="tooltip" data-placement="left" v-bind:data-original-title="errors.first('password')">
       <span class="input-group-addon"><i class="fa fa-lock"></i></span>
-      <%= f.password_field :password, autocomplete: "off", class: "form-control input-lg", placeholder: "Password" %>
+      <%= f.password_field :password, autocomplete: "off", class: "form-control input-lg", "v-model" => "password", placeholder: "Password" %>
+    </div>
+    <div class="alert alert-danger alert-validate" v-if="alert">
+      <b>Oh snap!</b> {{msg}}
     </div>
     <div class="m-b-md txt-right">
       <a href="#" v-on:click.stop="setPath('<%= new_user_password_path %>')">Forgotten password?</a>
