@@ -9,14 +9,7 @@ class SignService {
     })
   }
 
-  // logout() {
-  //   return xhr({
-  //     url: '/users/sign_out',
-  //     method: 'delete'
-  //   })
-  // }
-
-  signIn(path, query) {
+  sign(path, query) {
     return xhr({
       url: path,
       body: query,

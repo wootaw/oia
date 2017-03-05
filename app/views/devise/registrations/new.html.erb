@@ -5,22 +5,22 @@
   <div class="txt-center m-b-xl">
     <span>Sign up for free API document!</span>
   </div>
-  <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { class: "m-b-xl" }) do |f| %>
-    <div class="input-group m-b">
+  <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { class: "m-b-xl", "v-on:submit.prevent" => "trySubmit" }) do |f| %>
+    <div :class="{ 'input-group': true, 'm-b': true, 'has-error': errors.has('username') }" data-toggle="tooltip" data-placement="left" v-bind:data-original-title="errors.first('username')">
       <span class="input-group-addon"><i class="fa fa-user"></i></span>
-      <%= f.text_field :username, autofocus: true, class: "form-control input-lg", placeholder: "Username" %>
+      <%= f.text_field :username, autofocus: true, class: "form-control input-lg", "v-model" => "form.username", placeholder: "Username(Combination of letters, numbers or underscores, dashes)" %>
     </div>
-    <div class="input-group m-b">
+    <div :class="{ 'input-group': true, 'm-b': true, 'has-error': errors.has('email') }" data-toggle="tooltip" data-placement="left" v-bind:data-original-title="errors.first('email')">
       <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
-      <%= f.email_field :email, class: "form-control input-lg", placeholder: "Email" %>
+      <%= f.email_field :email, class: "form-control input-lg", "v-model" => "form.email", placeholder: "Email" %>
     </div>
-    <div class="input-group m-b">
+    <div :class="{ 'input-group': true, 'm-b': true, 'has-error': errors.has('password') }" data-toggle="tooltip" data-placement="left" v-bind:data-original-title="errors.first('password')">
       <span class="input-group-addon"><i class="fa fa-lock"></i></span>
-      <%= f.password_field :password, autocomplete: "off", class: "form-control input-lg", placeholder: "Password(#{@minimum_password_length} characters minimum)" %>
+      <%= f.password_field :password, autocomplete: "off", class: "form-control input-lg", "v-model" => "form.password", placeholder: "Password(#{@minimum_password_length} characters minimum)" %>
     </div>
     <div class="m-b">
       <%= devise_error_messages! %>
-      <%= f.submit "Create your account", class: "btn-lg btn-success w-full" %>
+      <%= f.submit "Create your account", ":class" => "{'btn-lg': true, 'btn-success': true, 'w-full': true, disabled: disabledSubmit}".html_safe, "v-bind:disabled" => "disabledSubmit" %>
     </div>
   <% end %>
   <div class="m-b-md txt-center">

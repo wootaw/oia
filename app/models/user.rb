@@ -15,7 +15,7 @@ class User < ApplicationRecord
   has_many :roles, through: :members, source: :roles
   has_many :groups, through: :roles, source: :group
 
-  validates_format_of :username, with: /^[a-zA-Z0-9_]*$/, multiline: true
+  validates_format_of :username, with: /^[a-zA-Z0-9_-]*$/, multiline: true
   validate :validate_username
 
 
