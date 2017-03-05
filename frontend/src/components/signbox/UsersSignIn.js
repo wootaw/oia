@@ -5,13 +5,13 @@ import isEmail from 'validator/lib/isEmail'
 import ValidatableForm from 'MIXIN/ValidatableForm'
 
 Validator.extend('account', {
-    getMessage: field => 'The account must be an email or username you registered with.',
-    validate: value => /^[a-zA-Z0-9_-]*$/.test(value) || isEmail(String(value))
+  getMessage: field => 'The account must be an email or username you registered with.',
+  validate: value => /^[a-zA-Z0-9_-]*$/.test(value) || isEmail(String(value))
 });
 
 const UsersSignIn = Vue.component('users-sign_in', (resolve, reject) => {
 
-  signService.getPage('/users/sign_in').then(d => {
+  signService.getSignInForm().then(d => {
     resolve({
       mixins: [ValidatableForm],
 

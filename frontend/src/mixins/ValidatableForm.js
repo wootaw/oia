@@ -5,9 +5,9 @@ export default {
   
   computed: {
     disabledSubmit() {
-      return this.alert || Object.keys(this.form).reduce(function(pf, cf, idx) {
-        return (idx == 1 ? this.errors.has(pf) : pf) || this.errors.has(cf);
-      }.bind(this));
+      return this.alert || Object.keys(this.form).reduce(function(r, cf, idx) {
+        return r || this.errors.has(cf);
+      }.bind(this), false);
     }
   },
 
@@ -43,16 +43,6 @@ export default {
       });
     },
 
-    doValidate(field, value) {
-      this.clearAlert();
-      let ov = this.errors.has(field);
-      if(this.validator.validate(field, value)) {
-        this._errors_changed[field] = ov ? 'hide' : null;
-      } else {
-        this._errors_changed[field] = ov ? null : 'show';
-      }
-    },
-
     initVars(init=null) {
       return Object.keys(this.__fields).reduce(function(r, p) {
         r[p] = init;
@@ -66,18 +56,52 @@ export default {
     form: {
       deep: true,
       handler: function(value) {
-        Object.keys(value).forEach(function(k) {
-          this.doValidate(k, value[k]);
+        this.clearAlert();
+
+        if (this._old_form != null) {
+          Object.keys(value).forEach(function(k) {
+            if (this._old_form[k] != value[k]) {
+              this.validator.validate(k, value[k]);
+            }
+          }.bind(this));
+        }
+
+        this._old_form = Object.keys(value).reduce(function(r, p) {
+          r[p] = value[p];
+          return r;
+        }, {});
+      }
+    },
+
+    errors: {
+      deep: true,
+      handler: function(value) {
+        Object.keys(this.__fields).forEach(function(k) {
+          if (value.has(k)) {
+            this._errors_changed[k] = this._old_errors.indexOf(k) >= 0 ? null : 'show';
+          } else {
+            this._errors_changed[k] = this._old_errors.indexOf(k) >= 0 ? 'hide' : null;
+          }
         }.bind(this));
+
+        this._old_errors = Object.keys(this.__fields).reduce(function(r, c) {
+          if (value.has(c)) {
+            r.push(c);
+          }
+          return r;
+        }, []);
       }
     }
+
   },
 
   created() {
     this.validator = new Validator(this.__fields);
     this.$set(this, 'errors', this.validator.errorBag);
-    this._errors_changed = this.initVars();
     this._elements = this.initVars();
+    this._errors_changed = this.initVars();
+    this._old_form = null;
+    this._old_errors = [];
   },
 
   updated() {
