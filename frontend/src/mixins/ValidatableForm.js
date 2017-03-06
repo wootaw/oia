@@ -3,6 +3,16 @@ import { Validator } from 'vee-validate';
 export default {
   validator: null,
   
+  directives: {
+    toggleTooltip: {
+      update(el, binding) {
+        if (binding.value != binding.oldValue && binding.value != null) {
+          $(el).tooltip(binding.value);
+        }
+      }
+    }
+  },
+
   computed: {
     disabledSubmit() {
       return this.alert || Object.keys(this.form).reduce(function(r, cf, idx) {
@@ -14,12 +24,6 @@ export default {
   methods: {
     setPath(p) {
       this.$emit('gopage', p);
-    },
-
-    initElements(field) {
-      if(this._elements[field] == null) {
-        this._elements[field] = $(`#user_${field}`).parent('.input-group');
-      }
     },
 
     clearAlert() {
@@ -78,9 +82,9 @@ export default {
       handler: function(value) {
         Object.keys(this.__fields).forEach(function(k) {
           if (value.has(k)) {
-            this._errors_changed[k] = this._old_errors.indexOf(k) >= 0 ? null : 'show';
+            this.errors_changed[k] = this._old_errors.indexOf(k) >= 0 ? null : 'show';
           } else {
-            this._errors_changed[k] = this._old_errors.indexOf(k) >= 0 ? 'hide' : null;
+            this.errors_changed[k] = this._old_errors.indexOf(k) >= 0 ? 'hide' : null;
           }
         }.bind(this));
 
@@ -98,20 +102,8 @@ export default {
   created() {
     this.validator = new Validator(this.__fields);
     this.$set(this, 'errors', this.validator.errorBag);
-    this._elements = this.initVars();
-    this._errors_changed = this.initVars();
     this._old_form = null;
     this._old_errors = [];
-  },
-
-  updated() {
-    Object.keys(this._errors_changed).forEach(function(key) {
-      if (key != null) {
-        this.initElements(key);
-        this._elements[key].tooltip(this._errors_changed[key]);
-        this._errors_changed[key] = null;
-      }
-    }.bind(this));
   },
 
   data() {
@@ -120,6 +112,7 @@ export default {
       msg: '',
       errors: null,
       form: this.initVars(''),
+      errors_changed: this.initVars()
     };
   },
 }
