@@ -9,7 +9,7 @@ Validator.extend('exists', {
     setTimeout(() => {
       signService.exists(value, type[0]).then(resp => {
         resolve({ valid: !resp.data.exists });
-      })
+      });
     }, 500);
   })
 });

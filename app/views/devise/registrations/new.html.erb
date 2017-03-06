@@ -20,7 +20,7 @@
     </div>
     <div class="m-b">
       <%= devise_error_messages! %>
-      <%= f.submit "Create your account", ":class" => "{'btn-lg': true, 'btn-success': true, 'w-full': true, disabled: disabledSubmit}".html_safe, "v-bind:disabled" => "disabledSubmit" %>
+      <%= f.submit "Create your account", ":class" => "{'btn-lg': true, 'btn-success': !loading && !disabledSubmit, 'w-full': true, disabled: disabledSubmit, 'bg-loading': loading}".html_safe, "v-bind:disabled" => "disabledSubmit" %>
     </div>
   <% end %>
   <div class="m-b-md txt-center">

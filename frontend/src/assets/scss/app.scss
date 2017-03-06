@@ -749,7 +749,10 @@ fieldset[disabled] .btn-dark.active {
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#0028323c', endColorstr='#8028323c', GradientType=0);
   filter: none;
 }
-
+.bg-loading {
+  background-image: url("../images/loading.svg");
+  background-repeat: no-repeat;
+}
 .bg-light {
   color: #58666e;
   background-color: #edf1f2;
@@ -813,7 +816,7 @@ fieldset[disabled] .btn-dark.active {
 
 .bg-green.bg,
 .bg-green .bg {
-  background-color: #3a3f51;
+  background-color: #27a102;
 }
 
 .bg-dark {
@@ -2011,6 +2014,11 @@ fieldset[disabled] .btn-dark.active {
   &:hover {
     color: #fff;
   }
+}
+
+.btn-lg.bg-loading {
+  background-position-y: center;
+  background-position-x: 20px;
 }
 
 .table-striped > tbody > tr {

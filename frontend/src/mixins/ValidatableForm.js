@@ -1,4 +1,5 @@
 import { Validator } from 'vee-validate';
+import signService from 'SERVICE/SignService';
 
 export default {
   validator: null,
@@ -54,7 +55,9 @@ export default {
 
     trySubmit(e) {
       let form = $(e.target)
+      this.loading = true;
       signService.sign(form.attr('action'), form.serialize()).then((resp) => {
+        this.loading = false;
         switch(resp.code) {
           case 200:
             location.reload();
@@ -78,32 +81,13 @@ export default {
   watch: {
     formData(nv, ov) {
       this.clearAlert();
-      // let keys = Object.keys(this.__fields);
       nv.forEach((v, idx) => {
         if (v != ov[idx]) {
           this.validator.validate(this.formFields()[idx], v);
         }
       });
     },
-    // form: {
-    //   deep: true,
-    //   handler: function(value) {
-    //     this.clearAlert();
 
-    //     if (this._old_form != null) {
-    //       Object.keys(value).forEach(function(k) {
-    //         if (this._old_form[k] != value[k]) {
-    //           this.validator.validate(k, value[k]);
-    //         }
-    //       }.bind(this));
-    //     }
-
-    //     this._old_form = Object.keys(value).reduce(function(r, p) {
-    //       r[p] = value[p];
-    //       return r;
-    //     }, {});
-    //   }
-    // },
     errorFields(nv, ov) {
       this.formFields().forEach((k) => {
         if (nv.indexOf(k) < 0) {
@@ -113,27 +97,6 @@ export default {
         }
       });
     },
-
-    // errors: {
-    //   deep: true,
-    //   handler: function(value) {
-    //     this.formFields().forEach(function(k) {
-    //       if (value.has(k)) {
-    //         this.errors_changed[k] = this._old_errors.indexOf(k) >= 0 ? null : 'show';
-    //       } else {
-    //         this.errors_changed[k] = this._old_errors.indexOf(k) >= 0 ? 'hide' : null;
-    //       }
-    //     }.bind(this));
-
-    //     this._old_errors = this.formFields().reduce(function(r, c) {
-    //       if (value.has(c)) {
-    //         r.push(c);
-    //       }
-    //       return r;
-    //     }, []);
-    //   }
-    // }
-
   },
 
   created() {
@@ -146,8 +109,9 @@ export default {
       alert: false,
       msg: '',
       errors: null,
+      loading: false,
       form: this.initVars(''),
       errors_changed: this.initVars()
     };
-  },
+  }
 }
