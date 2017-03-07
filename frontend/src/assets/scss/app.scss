@@ -1892,7 +1892,7 @@ fieldset[disabled] .btn-dark.active {
     transform-origin: 50% 50%;
     transform: scale(0.8, 0.8);
     filter: blur(90px);
-    display: none;
+    // display: none;
   }
 }
 
@@ -1930,6 +1930,25 @@ fieldset[disabled] .btn-dark.active {
   animation-name: alert-in;
   animation-duration: 100ms;
   animation-fill-mode: both;
+}
+
+.dropdown {
+  .dropdown-menu {
+    animation-duration: 0.5s;
+    animation-fill-mode: both;
+  }
+  
+  .dropdown-menu {
+    animation-name: out;
+  }
+
+  &.open {
+
+    .dropdown-menu {
+      animation-name: in;
+      animation-duration: 200ms;
+    }
+  }
 }
 
 .panel {

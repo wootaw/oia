@@ -1,5 +1,4 @@
 import { Validator } from 'vee-validate';
-import signService from 'SERVICE/SignService';
 
 export default {
   validator: null,
@@ -40,7 +39,10 @@ export default {
 
   methods: {
     formFields() {
-      return Object.keys(this.__fields);
+      if (this._cache_fields == undefined) {
+        this._cache_fields = Object.keys(this.__fields);
+      }
+      return this._cache_fields;
     },
 
     setPath(p) {
@@ -56,17 +58,9 @@ export default {
     trySubmit(e) {
       let form = $(e.target)
       this.loading = true;
-      signService.sign(form.attr('action'), form.serialize()).then((resp) => {
+      this.service()(form.attr('action'), form.serialize()).then((resp) => {
         this.loading = false;
-        switch(resp.code) {
-          case 200:
-            location.reload();
-            break;
-          case 401:
-            this.alert = true;
-            this.msg = resp.data.msg;
-            break;
-        }
+        this.processResponse(resp);
       });
     },
 

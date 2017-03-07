@@ -17,6 +17,22 @@ const UsersSignIn = Vue.component('users-sign_in', (resolve, reject) => {
 
       template: d.data,
 
+      methods: {
+        service: () => signService.sign,
+
+        processResponse(resp) {
+          switch(resp.code) {
+          case 200:
+            location.reload();
+            break;
+          case 401:
+            this.alert = true;
+            this.msg = resp.data.msg;
+            break;
+          }
+        }
+      },
+
       beforeCreate() {
         this.__fields = {
           account: 'required|account',

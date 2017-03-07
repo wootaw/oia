@@ -1,7 +1,8 @@
 Rails.application.routes.draw do
   # devise_for :users
   devise_for :users, controllers: {
-    sessions: 'user/sessions'
+    sessions: 'user/sessions',
+    registrations: 'user/registrations'
   }
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   root to: 'home#index'
@@ -19,7 +20,7 @@ Rails.application.routes.draw do
     end
   end
 
-  match "/:login" => "users#show", via: [:get]
+  match "/:login" => "users#show", via: [:get], as: :user_profile
   match "/:login/:project_name" => "projects#index", via: [:get]
   match "/:login/:project_name/:resource_key" => "projects#index", via: [:get]
 end

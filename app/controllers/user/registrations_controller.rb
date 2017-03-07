@@ -8,9 +8,16 @@ class User::RegistrationsController < Devise::RegistrationsController
   # end
 
   # POST /resource
-  # def create
-  #   super
-  # end
+  def create
+    self.resource = User.new(user_params)
+    if resource.save
+      sign_in :user, resource
+      return render body: nil
+    else
+      clean_up_passwords resource
+      render json: { code: 401, msg: resource.errors.full_messages.join(",") }, status: 401
+    end
+  end
 
   # GET /resource/edit
   # def edit
@@ -57,4 +64,11 @@ class User::RegistrationsController < Devise::RegistrationsController
   # def after_inactive_sign_up_path_for(resource)
   #   super(resource)
   # end
+
+  protected
+
+  def user_params
+    params.require(:user).permit(:username, :email, :password)
+  end
+
 end

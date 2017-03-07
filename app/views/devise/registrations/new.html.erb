@@ -27,6 +27,6 @@
     By creating an account, you agree to our <a href="#">Terms</a>
   </div>
   <div class="m-b-md txt-center">
-    Already have an account? <a href="#" v-on:click.stop="setPath('<%= new_user_session_path %>')">Sign in</a>
+    Already have an account? <a href="#" @click.prevent="setPath('<%= new_user_session_path %>')">Sign in</a>
   </div>
 </div>

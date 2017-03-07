@@ -46,12 +46,14 @@
             <small class="text-muted">Welcome to angulr application</small>
           </div>
           <div class="col-sm-6 col-xs-12 text-right">
+            <% if my_home? %>
             <button class="btn btn-success btn-lg" data-toggle="modal" data-target="#myModal">Create Project</button>
+            <% end %>
           </div>
         </div>
       </div>
       <!-- / main header -->
-      <div class="wrapper-md" ng-controller="FlotChartDemoCtrl">
+      <div class="wrapper-md">
         <!-- stats -->
         <div class="row">
           <div class="col-md-3 col-xs-12 col-sm-4">
@@ -63,9 +65,6 @@
               <div class="panel-heading no-border no-padder dk">
                 <!-- <span class="text-lt">The Restaurant</span> -->
                 <div class="item h">
-                  <div ng-init="x = 3" class="top text-right padder m-t-xs w-full">
-                    <rating ng-model="x" max="5" state-on="'fa fa-star text-white'" state-off="'fa fa-star-o text-white'"></rating>
-                  </div>
                   <div class="top text-left m-l m-t-sm">
                     <span class="badge bg-primary m-r-xxs"><i class="fa fa-home text"></i></span>
                     <span class="badge bg-primary m-r-xxs"><i class="fa fa-users text"></i></span>
@@ -165,9 +164,6 @@
               <div class="panel-heading no-border no-padder dk">
                 <!-- <span class="text-lt">The Restaurant</span> -->
                 <div class="item h">
-                  <div ng-init="x = 3" class="top text-right padder m-t-xs w-full">
-                    <rating ng-model="x" max="5" state-on="'fa fa-star text-white'" state-off="'fa fa-star-o text-white'"></rating>
-                  </div>
                   <div class="bottom wrapper bg-gd-dk text-white w-full">            
                     <div class="h3 m-b-sm text-primary-lter">Short title for the example</div>
                     <div>Restaurant</div>
@@ -205,9 +201,6 @@
               <div class="panel-heading no-border no-padder dk">
                 <!-- <span class="text-lt">The Restaurant</span> -->
                 <div class="item h">
-                  <div ng-init="x = 3" class="top text-right padder m-t-xs w-full">
-                    <rating ng-model="x" max="5" state-on="'fa fa-star text-white'" state-off="'fa fa-star-o text-white'"></rating>
-                  </div>
                   <div class="bottom wrapper bg-gd-dk text-white w-full">            
                     <div class="h3 m-b-sm text-primary-lter">Unique name of the permission</div>
                     <div>Restaurant</div>
@@ -245,9 +238,6 @@
               <div class="panel-heading no-border no-padder dk">
                 <!-- <span class="text-lt">The Restaurant</span> -->
                 <div class="item h">
-                  <div ng-init="x = 3" class="top text-right padder m-t-xs w-full">
-                    <rating ng-model="x" max="5" state-on="'fa fa-star text-white'" state-off="'fa fa-star-o text-white'"></rating>
-                  </div>
                   <div class="bottom wrapper bg-gd-dk text-white w-full">            
                     <div class="h3 m-b-sm text-primary-lter">Mandatory Lastname</div>
                     <div>Restaurant</div>
