@@ -10,7 +10,9 @@
         <div class="dp-table w-full h-full item">
           <div class="cell w-half v-middle wrapper-md">
             <div class="padder-xl" v-if="type != 0">
-              <component v-bind:is="type" v-on:gopage="openPage"></component>
+              <transition name="form-fade" mode="out-in">
+                <component v-bind:is="type" v-on:gopage="openPage"></component>
+              </transition>
             </div>
           </div>
         </div>

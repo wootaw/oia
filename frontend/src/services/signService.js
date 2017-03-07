@@ -2,14 +2,14 @@ import xhr from './xhr/'
 
 class SignService {
 
-  getSignInForm () {
+  getSignInForm() {
     return xhr({
       url: '/users/sign_in',
       prefix: 'page'
     });
   }
 
-  getSignUpForm () {
+  getSignUpForm() {
     return xhr({
       url: '/users/sign_up',
       prefix: 'page'
@@ -25,12 +25,21 @@ class SignService {
     });
   }
 
-  exists (value, type) {
+  exists(value, type) {
     return xhr({
       url: '/users/exists',
       body: { type: type, value: value },
       prefix: 'page'
     });
+  }
+
+  signOut(path, body) {
+    return xhr({
+      url: path,
+      body: body,
+      method: 'post',
+      prefix: 'page'
+    })
   }
 }
 

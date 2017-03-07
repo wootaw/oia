@@ -2096,3 +2096,10 @@ fieldset[disabled] .btn-dark.active {
     color: #a94442;
   }
 }
+
+.form-fade-enter-active, .form-fade-leave-active {
+  transition: opacity .3s ease;
+}
+.form-fade-enter, .form-fade-leave-active {
+  opacity: 0;
+}

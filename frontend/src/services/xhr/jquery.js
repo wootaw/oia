@@ -10,7 +10,7 @@ const xhr = ({ method='get', url, body=null, prefix='api' }) => {
     // xhrFields: { withCredentials: true } // 跨域允许带上 cookie
   })
   .always((data, textStatus, jqxhr) => {
-    if (textStatus == 'success') {
+    if (/^(nocontent|success)$/.test(textStatus)) {
       defer.resolve({ data: data, code: jqxhr.status })
     } else {
       defer.resolve({ data: data.responseJSON, code: data.status })

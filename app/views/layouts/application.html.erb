@@ -9,17 +9,17 @@
     <%= webpack_stylesheet_link_tag 'main' %>
   </head>
   <body>
-    <div class="app app-header-fixed app-aside-fixed">
+    <div id="app" class="app app-header-fixed app-aside-fixed">
       <%= render partial: "shared/header" %>
       <div id="content" class="app-content" role="main">
       <% if content_for?(:content) %>
         <%= yield(:content) %>
       <% end %>
       </div>
+      <% unless user_signed_in? %>
+        <%= render partial: "shared/sign_modal" %>
+      <% end %>
+      <%= yield :modals %>
     </div>
-    <% unless user_signed_in? %>
-      <%= render partial: "shared/sign_modal" %>
-    <% end %>
-    <%= yield :modals %>
   </body>
 </html>

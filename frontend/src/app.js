@@ -1,32 +1,42 @@
 import 'es6-shim'
-import 'jquery-ujs'
 import 'ASSET/scss/app.scss'
 import 'VENDOR/font-awesome/css/font-awesome.min.css'
 
+import Vue from 'vue'
 import 'COMPONENT/signbox/UsersSignIn'
 import 'COMPONENT/signbox/UsersSignUp'
-import Vue from 'vue'
+import signService from 'SERVICE/SignService';
 
 $(function() {
-  if($('#sign-modal').length > 0) {
-    let signVue = new Vue({
-      el: '#sign-modal',
+  new Vue({
+    el: '#app',
 
-      methods: {
-        openPage(path) {
-          this.type = path.replace(/^\//, '').replace(/\//g, '-')
-        },
+    methods: {
+      openPage(path) {
+        this.type = path.replace(/^\//, '').replace(/\//g, '-');
       },
 
-      data: {
-        type: 0,
+      csrfToken: x => $('meta[name=csrf-token]').attr('content'),
+
+      csrfParam: x => $('meta[name=csrf-param]').attr('content'),
+
+      signOut(path) {
+        let body = { '_method': 'delete' };
+        body[this.csrfParam()] = this.csrfToken();
+        signService.signOut(path, body).then((resp) => {
+          switch(resp.code) {
+            case 204:
+              location.reload();
+              break;
+            case 401:
+              break;
+          }
+        });
       }
-    })
+    },
 
-    $('.btn-sign').click((e) => {
-      signVue.openPage($(e.target).attr('data-path'))
-    })
-  } else {
-
-  }
+    data: {
+      type: 0,
+    }
+  });
 });
