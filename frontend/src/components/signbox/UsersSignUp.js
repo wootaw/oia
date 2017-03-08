@@ -2,15 +2,23 @@ import Vue from 'vue';
 import signService from 'SERVICE/SignService';
 import { Validator } from 'vee-validate';
 import ValidatableForm from 'MIXIN/ValidatableForm'
+import Timer from 'UTIL/Timer';
 
 Validator.extend('exists', {
-  getMessage: (field) => `${field} already exists.`,
+  getMessage: (field) => `${field} already exists, or is reserved word.`,
   validate: (value, type) => new Promise(resolve => {
-    setTimeout(() => {
+    if (this.timers == undefined) {
+      this.timers = {};
+    }
+    if (this.timers[type[0]] == undefined) {
+      this.timers[type[0]] = new Timer(800);
+    }
+
+    this.timers[type[0]].restart().then((d) => {
       signService.exists(value, type[0]).then(resp => {
         resolve({ valid: !resp.data.exists });
       });
-    }, 500);
+    });
   })
 });
 
