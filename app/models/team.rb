@@ -7,7 +7,10 @@ class Team < ApplicationRecord
 
   has_many :users, through: :members, source: :user
 
+  validates_format_of :name, with: /\A[a-zA-Z0-9_-]*\Z/
   validates :name, presence: true, length: { minimum: 2, maximum: 50 }, uniqueness: true
+  validates :name, exclusion: { in: A::RESERVED_WORDS, message: "%{value} is reserved." }
+  validates :summary, presence: true
 
   enum state: {
     mounted: 1,

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170210084351) do
+ActiveRecord::Schema.define(version: 20170210084352) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -136,6 +136,7 @@ ActiveRecord::Schema.define(version: 20170210084351) do
     t.datetime "updated_at",                  null: false
     t.string   "access_key"
     t.string   "secret_key"
+    t.string   "summary"
     t.index ["changes_version"], name: "index_projects_on_changes_version", using: :btree
     t.index ["major_version"], name: "index_projects_on_major_version", using: :btree
     t.index ["minor_version"], name: "index_projects_on_minor_version", using: :btree
@@ -219,6 +220,7 @@ ActiveRecord::Schema.define(version: 20170210084351) do
     t.integer  "state"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string   "summary"
     t.index ["name"], name: "index_teams_on_name", using: :btree
     t.index ["state"], name: "index_teams_on_state", using: :btree
   end
