@@ -1,0 +1,41 @@
+<div class="modal-dialog" role="document">
+  <h2 class="txt-center">Create Project</h2>
+  <%= form_for(:project, html: { class: "m-b-xl" }) do |f| %>
+    <div class="form-inline m-b">
+      <div class="form-group">
+        <label>Owner</label>
+        <div class="input-group-btn dropdown">
+          <button type="button" class="btn btn-default r-2x dropdown-toggle" data-toggle="dropdown" @click.prevent.stop="drop=true" v-toggle-dropdown="drop">
+            <span><%= current_user.username %></span>
+            <span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu pull-left">
+            <li><a href="#">Action</a></li>
+            <li><a href="#">Another action</a></li>
+            <li><a href="#">Something else here</a></li>
+            <li class="divider"></li>
+            <li><a href="#">Separated link</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="form-group m-l-xs m-r-xs">
+        <label class="block">&nbsp;</label>
+        <span class="text-xl text-white"><b>/</b></span>
+      </div>
+      <div :class="{ 'form-group': true, 'has-error': errors.has('name') }" data-toggle="tooltip" data-placement="top" v-bind:data-original-title="errors.first('name')" v-toggle-tooltip="errors_changed.name">
+        <label>Project name</label>
+        <%= f.text_field :name, autofocus: true, class: "form-control block w-lg", "v-model" => "form.name" %>
+      </div>
+    </div>
+    <div :class="{ 'form-group': true, 'has-error': errors.has('summary') }" data-toggle="tooltip" data-placement="bottom" v-bind:data-original-title="errors.first('summary')" v-toggle-tooltip="errors_changed.summary">
+      <label>Summary</label>
+      <%= f.text_field :summary, class: "form-control", "v-model" => "form.summary" %>
+    </div>
+    <div class="alert alert-danger alert-validate" v-if="alert">
+      <b>Oh snap!</b> {{msg}}
+    </div>
+    <div class="m-b">
+      <%= f.submit "Create Project", class: "btn-lg btn-success pull-right" %>
+    </div>
+  <% end %>
+</div>

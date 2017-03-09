@@ -20,7 +20,7 @@ export default {
       }, false);
     },
 
-    formData() {
+    validateValues() {
       return this.formFields().reduce((r, c) => {
         r.push(this.form[c]);
         return r;
@@ -69,11 +69,22 @@ export default {
         r[p] = init;
         return r;
       }, {});
+    },
+
+    defaultValidateData() {
+      return {
+        alert: false,
+        msg: '',
+        errors: null,
+        loading: false,
+        form: this.initVars(''),
+        errors_changed: this.initVars()
+      };
     }
   },
 
   watch: {
-    formData(nv, ov) {
+    validateValues(nv, ov) {
       this.clearAlert();
       nv.forEach((v, idx) => {
         if (v != ov[idx]) {
@@ -99,13 +110,6 @@ export default {
   },
 
   data() {
-    return {
-      alert: false,
-      msg: '',
-      errors: null,
-      loading: false,
-      form: this.initVars(''),
-      errors_changed: this.initVars()
-    };
+    return this.defaultValidateData();
   }
 }

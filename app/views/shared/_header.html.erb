@@ -252,10 +252,10 @@
         <i class="fa fa-dedent fa-fw text"></i>
         <i class="fa fa-indent fa-fw text-active"></i>
       </a>
-      <button class="btn btn-success btn-rounded btn-sign no-bg m-r-sm" data-toggle="modal" data-target="#sign-modal" @click="openPage('<%= new_user_session_path %>')">
+      <button class="btn btn-success btn-rounded btn-sign no-bg m-r-sm" data-toggle="modal" data-target="#sign-modal" @click="openPage('<%= new_user_session_path %>', 'sign')">
         Sign In
       </button>
-      <button class="btn btn-info btn-rounded btn-sign m-r" data-toggle="modal" data-target="#sign-modal" @click="openPage('<%= new_user_registration_path %>')">
+      <button class="btn btn-info btn-rounded btn-sign m-r" data-toggle="modal" data-target="#sign-modal" @click="openPage('<%= new_user_registration_path %>', 'sign')">
         Sign Up
       </button>
     </div>

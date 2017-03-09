@@ -4,27 +4,9 @@
     <i class="fa fa-times"></i>
   </button>
   <div class="grid-over h-full">
-    <div class="dp-table h-full item">
-      <div class="cell w-half v-middle wrapper-md">
-        <div class="modal-dialog" role="document">
-          <h2 class="txt-center">Create Project</h2>
-          <%= form_for(:project, html: { class: "m-b-xl" }) do |f| %>
-            <div class="input-group m-b">
-              <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
-              <%= f.email_field :email, autofocus: true, class: "form-control input-lg", placeholder: "Email" %>
-            </div>
-            <div class="input-group m-b">
-              <span class="input-group-addon"><i class="fa fa-lock"></i></span>
-              <%= f.password_field :password, autocomplete: "off", class: "form-control input-lg", placeholder: "Password" %>
-            </div>
-            <div class="m-b-md txt-right">
-              <%= link_to "Forgotten password?", new_user_password_path %>
-            </div>
-            <div class="m-b">
-              <%= f.submit "Sign in", class: "btn-lg btn-success w-full" %>
-            </div>
-          <% end %>
-        </div>
+    <div class="dp-table w-full h-full item">
+      <div class="cell w-half v-middle wrapper-md" v-if="modal != 0">
+        <component v-bind:is="modal"></component>
       </div>
     </div>
   </div>
@@ -42,12 +24,12 @@
       <div class="bg-green dker b-b wrapper-md">
         <div class="row">
           <div class="col-sm-6 col-xs-12">
-            <h1 class="m-n font-thin h3 text-black"><%= params[:login] %></h1>
+            <h1 class="m-n font-thin h3"><%= params[:login] %></h1>
             <small class="text-muted">Welcome to angulr application</small>
           </div>
           <div class="col-sm-6 col-xs-12 text-right">
             <% if my_home? %>
-            <button class="btn btn-success btn-lg" data-toggle="modal" data-target="#myModal">Create Project</button>
+            <button class="btn btn-success btn-lg" data-toggle="modal" data-target="#myModal" @click="openPage('<%= new_project_path %>', 'modal')">Create Project</button>
             <% end %>
           </div>
         </div>

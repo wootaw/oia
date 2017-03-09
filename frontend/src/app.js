@@ -5,6 +5,7 @@ import 'VENDOR/font-awesome/css/font-awesome.min.css'
 import Vue from 'vue'
 import 'COMPONENT/signbox/UsersSignIn'
 import 'COMPONENT/signbox/UsersSignUp'
+import 'VIEW/projects/new'
 import signService from 'SERVICE/SignService';
 
 $(function() {
@@ -12,8 +13,8 @@ $(function() {
     el: '#app',
 
     methods: {
-      openPage(path) {
-        this.type = path.replace(/^\//, '').replace(/\//g, '-');
+      openPage(path, is) {
+        this[is] = path.replace(/^\//, '').replace(/\//g, '-');
       },
 
       csrfToken: x => $('meta[name=csrf-token]').attr('content'),
@@ -36,7 +37,9 @@ $(function() {
     },
 
     data: {
-      type: 0,
+      sign: 0,
+      modal: 0
     }
   });
+
 });

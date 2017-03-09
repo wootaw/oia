@@ -46,7 +46,8 @@
     "webpack-manifest-plugin": "^1.1.0"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "./node_modules/.bin/webpack-dev-server --devtool eval-source-map --progress --colors --hot --inline --config frontend/build/webpack.dev.conf.js"
   },
   "repository": {
     "type": "git",

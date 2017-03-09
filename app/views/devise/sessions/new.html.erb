@@ -18,7 +18,7 @@
       <b>Oh snap!</b> {{msg}}
     </div>
     <div class="m-b-md txt-right">
-      <a href="#" @click.prevent="setPath('<%= new_user_password_path %>')">Forgotten password?</a>
+      <a href="#" @click.prevent="setPath('<%= new_user_password_path %>', 'sign')">Forgotten password?</a>
     </div>
     <div class="m-b">
       <%= f.submit "Sign in", ":class" => "{'btn-lg': true, 'btn-success': !loading && !disabledSubmit, 'w-full': true, disabled: disabledSubmit, 'bg-loading': loading }".html_safe, "v-bind:disabled" => "disabledSubmit" %>
@@ -41,7 +41,7 @@
       <a class="btn btn-dark btn-lg btn-github w-full"><i class="fa fa-github"></i> GitHub</a>
     </div>
     <div class="col-md-6 m-b">
-      <button class="btn btn-info btn-lg btn-github w-full" v-on:click.stop="setPath('<%= new_user_registration_path %>')">Sign up</button>
+      <button class="btn btn-info btn-lg btn-github w-full" v-on:click.stop="setPath('<%= new_user_registration_path %>'), 'sign'">Sign up</button>
     </div>
   </div>
 </div>

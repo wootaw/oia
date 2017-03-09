@@ -1,7 +1,7 @@
 var config = require('./webpack.base.conf');
 var ExtractTextPlugin = require("extract-text-webpack-plugin");
 
-config.devtool = 'cheap-module-eval-source-map';
+config.devtool = 'eval-source-map';
 
 config.output.filename = '[name]_bundle.js';
 config.output.publicPath = 'http://localhost:8080/assets/';
