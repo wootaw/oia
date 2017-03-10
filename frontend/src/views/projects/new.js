@@ -11,11 +11,9 @@ const New = Vue.component('projects-new', (resolve, reject) => {
       template: d.data,
 
       directives: {
-        toggleDropdown: {
-          update(el, binding) {
-            if (binding.value) {
-              $(el).dropdown('toggle');
-            }
+        toggleDd: {
+          bind(el, binding) {
+            $(el).dropdown();
           }
         }
       },
