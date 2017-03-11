@@ -21,7 +21,7 @@ Rails.application.routes.draw do
     end
   end
 
-  match "/:login" => "users#show", via: [:get], as: :user_profile
-  match "/:login/:project_name" => "projects#index", via: [:get]
-  match "/:login/:project_name/:resource_key" => "projects#index", via: [:get]
+  match "/:owner_name" => "owners#show", via: [:get], as: :user_profile
+  match "/:owner_name/:project_name" => "projects#index", via: [:get]
+  match "/:owner_name/:project_name/:resource_key" => "projects#index", via: [:get]
 end

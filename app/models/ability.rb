@@ -28,11 +28,6 @@ class Ability
     #
     # See the wiki for details:
     # https://github.com/CanCanCommunity/cancancan/wiki/Defining-Abilities
-    # @owner = User
-    # ap '==+++++===='
-    # ap @owner
-    # @owner = User.find_by(username: params[:owner])
-    # @owner = Team.find_by(name: params[:owner]) if @owner.nil?
 
     @owner = owner
     @user  = user

@@ -15,7 +15,7 @@ export default {
 
   computed: {
     disabledSubmit() {
-      return this.alert || this.formFields().reduce((r, cf, idx) => {
+      return this.alert || this.loading || this.formFields().reduce((r, cf, idx) => {
         return r || this.errors.has(cf);
       }, false);
     },

@@ -12,16 +12,16 @@ class Project < ApplicationRecord
   has_many :version_changes, dependent: :destroy, class_name: 'Change'
 
   validates :name, presence: true, length: { minimum: 2, maximum: 50 }, uniqueness: { scope: :owner }
-  validates :summary, presence: true
+  # validates :summary, presence: true
   validates :access_key, presence: true, uniqueness: true
   validates :secret_key, presence: true
 
   accepts_nested_attributes_for :documents
 
-  # enum state: {
-  #   mounted: 1,
-  #   running: 99
-  # }
+  enum clazz: {
+    jpublic:  40,
+    jprivate: 90
+  }
 
   # aasm column: :state, enum: true do
   #   state :mounted, initial: true
@@ -32,5 +32,10 @@ class Project < ApplicationRecord
     "#{major_version}.#{minor_version}.#{patch_version}.#{changes_version}"
   end
 
-  
+  def assign_keys
+    if access_key.nil? || secret_key.nil?
+      self.access_key = SecureRandom.hex(12)
+      self.secret_key = SecureRandom.hex(12)
+    end
+  end
 end

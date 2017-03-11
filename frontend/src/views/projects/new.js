@@ -11,9 +11,17 @@ const New = Vue.component('projects-new', (resolve, reject) => {
       template: d.data,
 
       directives: {
-        toggleDd: {
+        dropdown: {
           bind(el, binding) {
             $(el).dropdown();
+          }
+        },
+
+        modal: {
+          update(el, binding) {
+            if (binding.value != binding.oldValue) {
+              $(el).parents('.modal').modal('hide')
+            }
           }
         }
       },
@@ -23,8 +31,10 @@ const New = Vue.component('projects-new', (resolve, reject) => {
 
         processResponse(resp) {
           switch(resp.code) {
+          // case 204:
+          //   this.success += 1;
           case 200:
-            location.reload();
+            this.success += 1;
             break;
           case 401:
             this.alert = true;
@@ -44,7 +54,7 @@ const New = Vue.component('projects-new', (resolve, reject) => {
 
       data() {
         let dvd = this.defaultValidateData();
-        dvd.drop = false;
+        dvd.success = 0;
         return dvd
       }
 

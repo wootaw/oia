@@ -1,0 +1,53 @@
+<div class="col-md-3 col-xs-12 col-sm-4">
+  <div class="panel b-a bg-green pos-rlt over-bd">
+    <div class="btn-group dropdown dd-over right m-r-sm m-t-sm">
+      <button class="btn btn-success btn-xs dropdown-toggle" data-toggle="dropdown">
+        <i class="fa fa-cog text"></i><span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu">
+        <li><a href>Profile</a></li>
+        <li><a href>Deploy Key</a></li>
+        <li class="divider"></li>
+        <li><a href>Delete Project</a></li>
+      </ul>
+    </div>
+    <div class="backdrop">
+      <a class="btn btn-success no-bg btn-lg center w-sm m-t-xxxl" href="#">View Project</a>
+      <div class="in bg-dark lowest"></div>
+    </div>
+    <div class="panel-heading no-border no-padder dk">
+      <div class="item h">
+        <div class="top text-left m-l m-t-sm">
+          <span class="badge bg-primary m-r-xxs"><i class="fa fa-home text"></i></span>
+          <span class="badge bg-primary m-r-xxs"><i class="fa fa-users text"></i></span>
+          <span class="badge bg-info m-r-xxs"><i class="fa fa-eye text"></i></span>
+          <span class="badge bg-success m-r-xxs"><i class="fa fa-bookmark text"></i></span>
+        </div>
+        <div class="bottom wrapper bg-gd-dk text-white w-full">
+          <div class="h3 m-b-sm text-primary-lter">Hot Module Replacement enabled.</div>
+          <div class="m-b-xs">
+            <span class="badge bg-primary m-r-xxs"><i class="fa fa-file text"></i> 15</span>
+            <span class="badge bg-primary m-r-xxs"><i class="fa fa-circle text"></i> 15</span>
+            <span class="badge bg-info m-r-xxs"><i class="fa fa-eye text"></i> 15</span>
+            <span class="badge bg-success m-r-xxs"><i class="fa fa-bookmark text"></i> 29</span>
+          </div>
+          <div>Created <%= distance_of_time_in_words_to_now(DateTime.new(2017,2,3,4,5,6)) %> ago</div>
+        </div>
+      </div>
+    </div>
+    <ul class="list-group">
+      <li class="list-group-item">
+        <span class="pull-right">1.10.9.1</span>
+        Lastest Version
+      </li>
+      <li class="list-group-item">
+        <span class="pull-right"><%= distance_of_time_in_words_to_now(DateTime.new(2017,2,13,4,5,6)) %> ago</span>
+        Recent Updated
+      </li>
+      <li class="list-group-item">
+        <span class="pull-right">21,000</span>
+        Starup
+      </li>
+    </ul>
+  </div>
+</div>
