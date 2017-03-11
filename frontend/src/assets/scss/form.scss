@@ -1,0 +1,46 @@
+.form-group, .input-group {
+
+  &.has-error {
+    input {
+      background-color: #f2dede;
+    }
+    + .tooltip {
+      &.top .tooltip-arrow {
+        border-top-color: #f2dede;
+      }
+      &.top-left .tooltip-arrow {
+        border-top-color: #f2dede;
+      }
+      &.top-right .tooltip-arrow {
+        border-top-color: #f2dede;
+      }
+      &.right .tooltip-arrow {
+        border-right-color: #f2dede;
+      }
+      &.left .tooltip-arrow {
+        border-left-color: #f2dede;
+      }
+      &.bottom .tooltip-arrow {
+        border-bottom-color: #f2dede;
+      }
+      &.bottom-left .tooltip-arrow {
+        border-bottom-color: #f2dede;
+      }
+      &.bottom-right .tooltip-arrow {
+        border-bottom-color: #f2dede;
+      }
+      .tooltip-inner {
+        background-color: #f2dede;
+        border-color: #ebccd1;
+        color: #a94442;
+      }
+    }
+  }
+}
+
+.form-fade-enter-active, .form-fade-leave-active {
+  transition: opacity .3s ease;
+}
+.form-fade-enter, .form-fade-leave-active {
+  opacity: 0;
+}

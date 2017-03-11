@@ -1,3 +1,5 @@
+@import "variables.scss";
+
 html.bg {
   background-image: url("../images/black_paper.jpg");
   background-attachment: fixed;
@@ -9,13 +11,13 @@ body {
   font-size: 14px;
   -webkit-font-smoothing: antialiased;
   line-height: 1.42857143;
-  color: #58666e;
+  color: #fff;
   // background-color: transparent;
   background-image: url("../images/black_paper.jpg");
 }
 
 a {
-  color: #167e2e;
+  color: $primary_color;
   &:hover {
     color: #1a9637;
   }
@@ -463,14 +465,14 @@ body {
 
     &:checked {
       + i {
-        border-color: #23b7e5;
+        border-color: $primary_color;
 
         &:before {
           top: 4px;
           left: 4px;
           width: 10px;
           height: 10px;
-          background-color: #23b7e5;
+          background-color: $primary_color;
         }
       }
 
@@ -508,6 +510,10 @@ body {
       content: "";
       -webkit-transition: all 0.2s;
               transition: all 0.2s;
+    }
+
+    &.lg {
+      margin-top: 10px;
     }
   }
 
@@ -787,7 +793,7 @@ fieldset[disabled] .btn-dark.active {
 
 .bg-green {
   color: #a6a8b1;
-  background-color: #27a102;
+  background-color: $primary_color;
 }
 
 .bg-green.lt,
@@ -797,7 +803,7 @@ fieldset[disabled] .btn-dark.active {
 
 .bg-green.lter,
 .bg-green .lter {
-  background-color: #cff0c5;
+  background-color: $primary_color_lter;
 }
 
 .bg-green.dk,
@@ -810,13 +816,13 @@ fieldset[disabled] .btn-dark.active {
 
 .bg-green.dker,
 .bg-green .dker {
-  color: #cff0c5;
+  color: $primary_color_lter;
   background-color: #002f06;
 }
 
 .bg-green.bg,
 .bg-green .bg {
-  background-color: #27a102;
+  background-color: $primary_color;
 }
 
 .bg-dark {
@@ -1650,6 +1656,10 @@ fieldset[disabled] .btn-dark.active {
   font-size: 24px;
 }
 
+.text-xxl {
+  font-size: 30px;
+}
+
 .text-md {
   font-size: 16px;
 }
@@ -1690,15 +1700,15 @@ fieldset[disabled] .btn-dark.active {
 }
 
 .text-primary {
-  color: #7266ba;
+  color: $primary_color;
 }
 
 .text-primary-lt {
-  color: #8278c2;
+  color: $primary_color_lt;
 }
 
 .text-primary-lter {
-  color: #9289ca;
+  color: $primary_color_lter;
 }
 
 .text-primary-dk {
@@ -1927,7 +1937,7 @@ a.text-#000000:hover {
       outline: none;
       outline-width: 0;
       outline-offset: 0;
-      border-color: #27a102;
+      border-color: $primary_color;
       border-left: 0;
     }
   }
@@ -2000,11 +2010,11 @@ a.text-#000000:hover {
       }
 
       h5 {
-        color: #cff0c5;
+        color: $primary_color_lter;
       }
 
       &:hover {
-        background-color: #cff0c5;
+        background-color: $primary_color_lter;
         h5 {
           color: #000;
         }
@@ -2023,7 +2033,7 @@ a.text-#000000:hover {
 
   .panel-heading {
     .h3 {
-      color: #cff0c5;
+      color: $primary_color_lter;
 
       a {
         color: #1c6000;
@@ -2048,7 +2058,7 @@ a.text-#000000:hover {
     }
 
     h4 {
-      color: #27a102;
+      color: $primary_color;
       font-size: 130%
     }
 
@@ -2138,6 +2148,7 @@ a.text-#000000:hover {
 
 .dropdown {
   .dropdown-menu {
+    // display: block;
     animation-duration: 0.5s;
     animation-fill-mode: both;
   }
@@ -2253,7 +2264,7 @@ a.text-#000000:hover {
 .table {
   > thead > tr > th, 
   > tbody > tr > td {
-    color: #cff0c5;
+    color: $primary_color_lter;
     border-color: #151515;
   }
   > thead > tr > th {
@@ -2282,54 +2293,10 @@ a.text-#000000:hover {
 
     &:hover {
       color: #fff;
-      background-color: #27a102;
+      background-color: $primary_color;
       border-color: #1c6000;
     }
   }
 }
-.form-group, .input-group {
+// @import "form.scss";
 
-  &.has-error {
-    input {
-      background-color: #f2dede;
-    }
-    + .tooltip {
-      &.top .tooltip-arrow {
-        border-top-color: #f2dede;
-      }
-      &.top-left .tooltip-arrow {
-        border-top-color: #f2dede;
-      }
-      &.top-right .tooltip-arrow {
-        border-top-color: #f2dede;
-      }
-      &.right .tooltip-arrow {
-        border-right-color: #f2dede;
-      }
-      &.left .tooltip-arrow {
-        border-left-color: #f2dede;
-      }
-      &.bottom .tooltip-arrow {
-        border-bottom-color: #f2dede;
-      }
-      &.bottom-left .tooltip-arrow {
-        border-bottom-color: #f2dede;
-      }
-      &.bottom-right .tooltip-arrow {
-        border-bottom-color: #f2dede;
-      }
-      .tooltip-inner {
-        background-color: #f2dede;
-        border-color: #ebccd1;
-        color: #a94442;
-      }
-    }
-  }
-}
-
-.form-fade-enter-active, .form-fade-leave-active {
-  transition: opacity .3s ease;
-}
-.form-fade-enter, .form-fade-leave-active {
-  opacity: 0;
-}

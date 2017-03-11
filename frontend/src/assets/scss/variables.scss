@@ -1,0 +1,90 @@
+
+// Variables
+// -------------------------
+
+$primary_color: #27a102;
+// #27a102
+// #167e2e
+
+$dangerColor: #bd362f;
+$successColor: #0eaf53;
+$warningColor: #ab7a4b;
+$inverseColor: #45484d;
+$infoColor: #5cc7dd;
+$spacing: 15px;
+$titleColor: #0eaf53;
+
+
+$primary_color_lter: lighten($primary_color, 58%);
+$primary_color_lt: lighten($primary_color, 25%);
+$primary_color_dk: darken($primary_color, 10%);
+$primary_color_dker: darken($primary_color, 16%);
+// #002f06
+
+$primary_color_flt: fade_in($primary_color, 0.02);
+$primary_color_fdk: fade_in($primary_color, 0.1);
+$primary_color_fbd: fade_in($primary_color, 0.2);
+
+// General Layout
+// -------------------------
+
+$bodyBg: #f0f0f0;
+$bodyText: #7c7c7c;
+$bodyText2: #7c7c7c;
+$containerBorder: #d8d8d8;
+$containerBg: #f0f0f0;
+$linkHover: #333333;
+$bodyTextShadow: 0 1px 0 #fff;
+$sidebarQuickWidth: 65px;
+$sidebarFullWidth: 170px;
+
+// Top menus
+// -------------------------
+
+$topnavBorder1: #0eaf53;
+$topnavBorder2: #17d468;
+$topnavBorder3: #0eaf53;
+$navbarBg: $primary_color;
+$navbarText: #ffffff;
+$navbarActiveBg: #17d468;
+$navbarGlypsText: #fff;
+$navbarGlypsActiveBg: #17d468;
+$navbarSearchBg: #17d468;
+$navbarSearchText: #17d468;
+$navbarSecondaryBg: #275b87;
+
+// Sidebar Menu
+// -------------------------
+
+$menuBg: #17d468;
+$menuAppbrand: #ffffff;
+$menuText: #4c4d4f;
+$menuBorder1: #161718;
+$menuBorder2: #2a2c2e;
+$menuActiveBg: #161718;
+$menuActiveText: #737474;
+
+// Content
+// -------------------------
+
+$contentGradient1: #fdfdfd;
+$contentGradient2: #f4f4f4;
+$contentBorder: #d8d8d8;
+$contentShadow1: #dbdbdb;
+$contentShadow2: #f6f6f6;
+$widgetBg: #ffffff;
+$widgetBgGray: #e5e5e5;
+$contentBg1: #fafafa;
+$contentBorder: #dbdbdb;
+$contentBorder2: #ebebeb;
+$subheadingText: lighten($bodyText, 20%);
+
+// Widget specific
+// -------------------------
+
+$listActiveHoverBg: #f2f2f2;
+$listActiveHoverBoxShadow: 0 1px 0 0 #fff inset;
+$preBg1: #f8f8f8;
+$preBg2: #eeeeee;
+$wellBg: #fafafa;
+
