@@ -1,5 +1,5 @@
 <% content_for :modals do %>
-<div class="modal fade modal-full" id="myModal" tabindex="-1" role="dialog">
+<div class="modal fade modal-full" id="normal-modal" tabindex="-1" role="dialog">
   <button class="btn btn-rounded btn-lg btn-icon btn-default btn-close" data-dismiss="modal">
     <i class="fa fa-times"></i>
   </button>
@@ -15,8 +15,6 @@
 
 <% content_for :content do %>
 <div class="app-content-body ">
-
-
   <div class="hbox hbox-auto-xs hbox-auto-sm">
     <!-- main -->
     <div class="col">
@@ -24,20 +22,28 @@
       <div class="bg-green dker b-b wrapper-md">
         <div class="row">
           <div class="col-sm-6 col-xs-12">
-            <h1 class="m-n font-thin h3"><%= params[:login] %></h1>
+            <h1 class="m-n font-thin h3"><%= params[:owner_name] %></h1>
             <small class="text-muted">Welcome to angulr application</small>
           </div>
           <div class="col-sm-6 col-xs-12 text-right">
-            <% if my_home? %>
-            <button class="btn btn-success btn-lg" data-toggle="modal" data-target="#myModal" @click="openPage('<%= new_project_path %>', 'modal')">Create Project</button>
+            <% if can?(:create, Project.new(owner: @owner)) %>
+            <button class="btn btn-success btn-lg" data-toggle="modal" data-target="#normal-modal" @click="openPage('<%= new_project_path %>', 'modal')">Create Project</button>
             <% end %>
           </div>
         </div>
       </div>
       <!-- / main header -->
       <div class="wrapper-md">
-        <!-- stats -->
+        <% if can?(:create, Project.new(owner: @owner)) %>
+          
+        <% else %>
+
+        <% end %>
+
         <div class="row">
+
+          <%= render partial: "projects/panel", locals: { project: nil } %>
+
           <div class="col-md-3 col-xs-12 col-sm-4">
             <div class="panel b-a bg-green pos-rlt over-bd">
               <div class="backdrop">
@@ -54,7 +60,7 @@
                     <span class="badge bg-success m-r-xxs"><i class="fa fa-bookmark text"></i></span>
                   </div>
                   <div class="bottom wrapper bg-gd-dk text-white w-full">
-                    <div class="text-u-c h3 m-b-sm text-primary-lter">Coffee</div>
+                    <div class="text-u-c h3 m-b-sm text-primary-lter">Coffee_is_cool_is_very_cool_is_very_very_cools_is_very_very_real_cools_are_your_crazy_ha_ha_ha_more_and_more_bla_bla_bla_more_and_more</div>
                     <div>Restaurant</div>
                     <div>9:00 am - 12:00 pm</div>
                   </div>
@@ -99,7 +105,6 @@
                 <div class="in bg-dark lowest"></div>
               </div>
               <div class="panel-heading no-border no-padder dk">
-                <!-- <span class="text-lt">The Restaurant</span> -->
                 <div class="item h">
                   <div class="top text-left m-l m-t-sm">
                     <span class="badge bg-primary m-r-xxs"><i class="fa fa-home text"></i></span>
@@ -117,7 +122,6 @@
                     </div>
                     <div>Created <%= distance_of_time_in_words_to_now(DateTime.new(2017,2,3,4,5,6)) %> ago</div>
                   </div>
-                  <!-- <img src="/assets/woods-7c20d2.jpg" class="img-full"> -->
                 </div>
               </div>
               <ul class="list-group">
@@ -327,7 +331,6 @@
             </div>
           </div>
         </div>
-        <!-- / stats -->
 
         <!-- service -->
         <div class="panel hbox hbox-auto-xs no-border">

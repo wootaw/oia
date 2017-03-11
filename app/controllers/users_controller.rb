@@ -1,9 +1,5 @@
 class UsersController < ApplicationController
 
-  def show
-    @home_user = User.find_by(username: params[:login])
-  end
-
   def exists
     case params[:type]
     when "username"

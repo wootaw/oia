@@ -28,8 +28,4 @@ module ApplicationHelper
     "<link rel=\"stylesheet\" href=\"#{src}\">".html_safe
   end
 
-  def my_home?
-    !@home_user.nil? && !current_user.nil? && @home_user.id == current_user.id
-  end
-
 end
