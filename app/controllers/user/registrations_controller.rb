@@ -15,7 +15,7 @@ class User::RegistrationsController < Devise::RegistrationsController
       return render body: nil
     else
       clean_up_passwords resource
-      render json: { code: 401, msg: resource.errors.full_messages.join(",") }, status: 401
+      render json: { code: 401, msgs: resource.errors.full_messages }, status: 401
     end
   end
 

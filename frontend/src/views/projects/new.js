@@ -32,9 +32,13 @@ const New = Vue.component('projects-new', (resolve, reject) => {
         processResponse(resp) {
           switch(resp.code) {
           // case 204:
-          //   this.success += 1;
           case 200:
-            this.success += 1;
+            if (resp.data.code == 201) {
+              this.success += 1;
+            } else {
+              this.alert = true;
+              this.msgs = resp.data.msgs;
+            }
             break;
           case 401:
             this.alert = true;
@@ -47,8 +51,8 @@ const New = Vue.component('projects-new', (resolve, reject) => {
 
       beforeCreate() {
         this.__fields = {
-          name: 'required|alpha_dash',
-          summary: 'required'
+          name: 'required|alpha_dash|min:2',
+          // summary: 'required'
         };
       },
 

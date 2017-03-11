@@ -27,7 +27,7 @@ const UsersSignIn = Vue.component('users-sign_in', (resolve, reject) => {
             break;
           case 401:
             this.alert = true;
-            this.msg = resp.data.msg;
+            this.msgs = resp.data.msgs;
             break;
           }
         }

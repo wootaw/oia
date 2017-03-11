@@ -9,6 +9,7 @@ class User::SessionsController < Devise::SessionsController
 
   # POST /resource/sign_in
   def create
+    # sleep(3)
     resource = User.find_for_database_authentication(params[:user])
     return invalid_login_attempt unless resource
 
@@ -34,6 +35,6 @@ class User::SessionsController < Devise::SessionsController
 
   def invalid_login_attempt
     set_flash_message(:alert, :invalid)
-    render json: { code: 401, msg: flash[:alert] }, status: 401
+    render json: { code: 401, msgs: [flash[:alert]] }, status: 401
   end
 end

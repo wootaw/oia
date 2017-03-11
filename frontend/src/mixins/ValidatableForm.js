@@ -56,12 +56,14 @@ export default {
     },
 
     trySubmit(e) {
-      let form = $(e.target)
-      this.loading = true;
-      this.service()(form.attr('action'), form.serialize()).then((resp) => {
-        this.loading = false;
-        this.processResponse(resp);
-      });
+      this.validator.validateAll(this.form).then(() => {
+        let form = $(e.target)
+        this.loading = true;
+        this.service()(form.attr('action'), form.serialize()).then((resp) => {
+          this.loading = false;
+          this.processResponse(resp);
+        });
+      }).catch(() => {});
     },
 
     initVars(init=null) {
@@ -74,7 +76,7 @@ export default {
     defaultValidateData() {
       return {
         alert: false,
-        msg: '',
+        msgs: [],
         errors: null,
         loading: false,
         form: this.initVars(''),

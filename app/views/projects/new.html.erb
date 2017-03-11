@@ -30,11 +30,11 @@
       </div>
     </div>
     <div :class="{ 'form-group': true, 'has-error': errors.has('summary') }" data-toggle="tooltip" data-placement="bottom" v-bind:data-original-title="errors.first('summary')" v-toggle-tooltip="errors_changed.summary">
-      <label class="text-primary">Summary</label>
+      <label class="text-primary">Summary(optional)</label>
       <%= f.text_field :summary, class: "form-control", "v-model" => "form.summary" %>
     </div>
     <div class="alert alert-danger alert-validate" v-if="alert">
-      <b>Oh snap!</b> {{msg}}
+      <b>Oh snap!</b><span v-for="msg in msgs">{{msg}}</span>
     </div>
     <div class="radio">
       <label class="i-checks">

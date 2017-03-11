@@ -15,7 +15,7 @@
       <%= f.password_field :password, autocomplete: "off", class: "form-control input-lg", "v-model" => "form.password", placeholder: "Password" %>
     </div>
     <div class="alert alert-danger alert-validate" v-if="alert">
-      <b>Oh snap!</b> {{msg}}
+      <b>Oh snap!</b><span v-for="msg in msgs">{{msg}}</span>
     </div>
     <div class="m-b-md txt-right">
       <a href="#" @click.prevent="setPath('<%= new_user_password_path %>', 'sign')">Forgotten password?</a>
