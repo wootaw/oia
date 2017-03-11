@@ -4,6 +4,7 @@ class CreateProjects < ActiveRecord::Migration[5.0]
       t.string      :name, index: true
       t.string      :summary
       t.integer     :state, index: true
+      t.integer     :clazz, index: true
       t.string      :access_key, index: true
       t.string      :secret_key
       t.integer     :major_version, default: 0, index: true
