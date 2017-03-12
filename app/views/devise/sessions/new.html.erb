@@ -15,13 +15,13 @@
       <%= f.password_field :password, autocomplete: "off", class: "form-control input-lg", "v-model" => "form.password", placeholder: "Password" %>
     </div>
     <div class="alert alert-danger alert-validate" v-if="alert">
-      <b>Oh snap!</b><span v-for="msg in msgs">{{msg}}</span>
+      <b>Oh snap!</b> <span v-for="msg in msgs">{{msg}}</span>
     </div>
     <div class="m-b-md txt-right">
       <a href="#" @click.prevent="setPath('<%= new_user_password_path %>', 'sign')">Forgotten password?</a>
     </div>
     <div class="m-b">
-      <%= f.submit "Sign in", ":class" => "{'btn-lg': true, 'btn-success': !loading && !disabledSubmit, 'w-full': true, disabled: disabledSubmit, 'bg-loading': loading }".html_safe, "v-bind:disabled" => "disabledSubmit" %>
+      <%= f.submit "Sign in", ":class" => "{'btn-lg': true, 'btn-success': !loading && !disabledSubmit, 'w-full': true, disabled: disabledSubmit, 'bg-loading': loading, 'x-md-y-c': true }".html_safe, "v-bind:disabled" => "disabledSubmit" %>
     </div>
     <% if devise_mapping.rememberable? -%>
       <div class="checkbox">

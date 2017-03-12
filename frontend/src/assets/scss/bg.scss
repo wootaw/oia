@@ -1,0 +1,146 @@
+.bg {
+  &.cover {
+    // background-attachment: fixed;
+    background-size: cover;
+  }
+  &.woods {
+    background-position: 50%;
+    background-image: url("../images/woods.jpg");
+  }
+}
+// .bg-light-a5 {
+//   background-color: rgba(255, 255, 255, 0.05);
+// }
+
+.bg-gd {
+  background-image: -webkit-gradient(linear, left 0, left 100%, from(rgba(40, 50, 60, 0)), to(rgba(40, 50, 60, 0.075)));
+  background-image: -webkit-linear-gradient(top, rgba(40, 50, 60, 0), 0, rgba(40, 50, 60, 0.075), 100%);
+  background-image: -moz-linear-gradient(top, rgba(40, 50, 60, 0) 0, rgba(40, 50, 60, 0.075) 100%);
+  background-image: linear-gradient(to bottom, rgba(40, 50, 60, 0) 0, rgba(40, 50, 60, 0.075) 100%);
+  background-repeat: repeat-x;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#0028323c', endColorstr='#1328323c', GradientType=0);
+  filter: none;
+}
+
+.bg-gd-dk {
+  background-image: -webkit-gradient(linear, left 10%, left 100%, from(rgba(40, 50, 60, 0)), to(rgba(40, 50, 60, 0.5)));
+  background-image: -webkit-linear-gradient(top, rgba(40, 50, 60, 0), 10%, rgba(40, 50, 60, 0.5), 100%);
+  background-image: -moz-linear-gradient(top, rgba(40, 50, 60, 0) 10%, rgba(40, 50, 60, 0.5) 100%);
+  background-image: linear-gradient(to bottom, rgba(40, 50, 60, 0) 10%, rgba(40, 50, 60, 0.5) 100%);
+  background-repeat: repeat-x;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#0028323c', endColorstr='#8028323c', GradientType=0);
+  filter: none;
+}
+.bg-loading {
+  background-image: url("../images/loading.svg");
+  background-repeat: no-repeat;
+
+  &.x-md-y-c {
+    background-position: 20px center;
+  }
+
+  &.x-c-y-c {
+    background-position: center center;
+  }
+}
+
+.bg-light {
+  color: #58666e;
+  background-color: #edf1f2;
+  // background-color: rgba(100, 100, 100, 0.1);
+}
+
+.bg-light.lt,
+.bg-light .lt {
+  background-color: #f3f5f6;
+}
+
+.bg-light.lter,
+.bg-light .lter {
+  background-color: #f6f8f8;
+}
+
+.bg-light.dk,
+.bg-light .dk {
+  background-color: #e4eaec;
+}
+
+.bg-light.dker,
+.bg-light .dker {
+  background-color: #dde6e9;
+  // background-color: rgba(0, 0, 0, 0.8);
+}
+
+.bg-light.bg,
+.bg-light .bg {
+  background-color: #edf1f2;
+}
+
+.bg-green {
+  color: #a6a8b1;
+  background-color: $primary_color;
+}
+
+.bg-green.lt,
+.bg-green .lt {
+  background-color: #1fea00;
+}
+
+.bg-green.lter,
+.bg-green .lter {
+  background-color: $primary_color_lter;
+}
+
+.bg-green.dk,
+.bg-green .dk {
+  .h3 {
+    color: #fff;
+  }
+  background-color: #1c6000;
+}
+
+.bg-green.dker,
+.bg-green .dker {
+  color: $primary_color_lter;
+  background-color: #002f06;
+}
+
+.bg-green.bg,
+.bg-green .bg {
+  background-color: $primary_color;
+}
+
+.bg-dark {
+  color: #a6a8b1;
+  background-color: #252525;
+}
+
+.bg-dark.lt,
+.bg-dark .lt {
+  background-color: #303030;
+}
+
+.bg-dark.lter,
+.bg-dark .lter {
+  background-color: #54596a;
+}
+
+.bg-dark.dk,
+.bg-dark .dk {
+  background-color: #2e3344;
+}
+
+.bg-dark.dker,
+.bg-dark .dker {
+  background-color: #232735;
+}
+
+.bg-dark.bg,
+.bg-dark .bg {
+  background-color: #3a3f51;
+}
+
+.no-bg {
+  color: inherit;
+  background-color: transparent;
+}

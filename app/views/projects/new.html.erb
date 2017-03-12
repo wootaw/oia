@@ -34,7 +34,7 @@
       <%= f.text_field :summary, class: "form-control", "v-model" => "form.summary" %>
     </div>
     <div class="alert alert-danger alert-validate" v-if="alert">
-      <b>Oh snap!</b><span v-for="msg in msgs">{{msg}}</span>
+      <b>Oh snap!</b> <span v-for="msg in msgs">{{msg}}</span>
     </div>
     <div class="radio">
       <label class="i-checks">
@@ -68,7 +68,7 @@
     </div>
     <div class="m-b">
       <%= f.submit "Create Project", ":class" => "{'btn-lg': true, 'btn-success': !loading && !disabledSubmit, disabled: disabledSubmit, 'pull-left': true }".html_safe, "v-bind:disabled" => "disabledSubmit" %>
-      <div :class="{ 'bg-loading': loading, 'w-xs': true, 'h-xxs': true, 'pull-left': true, 'm-l-md': true }"></div>
+      <div :class="{ 'bg-loading': loading, 'w-xs': true, 'h-xxs': true, 'pull-left': true, 'm-l-md': true, 'x-md-y-c': true }"></div>
     </div>
   <% end %>
 </div>

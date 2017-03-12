@@ -15,6 +15,7 @@ class Project < ApplicationRecord
   # validates :summary, presence: true
   validates :access_key, presence: true, uniqueness: true
   validates :secret_key, presence: true
+  validates :clazz, presence: true
 
   accepts_nested_attributes_for :documents
 

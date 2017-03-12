@@ -6,15 +6,21 @@ class OwnersController < ApplicationController
                   @owner.personal_projects.order("created_at DESC")
                 end
 
-    respond_to do |format|
-      format.html
-      format.json { render template: "owners/show.json.jbuilder" }
+    if can?(:create, Project.new(owner: @owner))
+      # render template: "owners/show.json.jbuilder"
+      
+    else
+      @projects = @projects.where(clazz: :jpublic)
     end
 
-    # if can?(:create, Project.new(owner: @owner))
-    #   render template: "owners/show.json.jbuilder"
-    # else
+    respond_to do |format|
+      format.html
+      format.json { 
+        sleep(3)
+        render template: "owners/show.json.jbuilder" 
+      }
+    end
 
-    # end
+    
   end
 end

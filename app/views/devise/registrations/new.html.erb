@@ -19,10 +19,10 @@
       <%= f.password_field :password, autocomplete: "off", class: "form-control input-lg", "v-model" => "form.password", placeholder: "Password(#{@minimum_password_length} characters minimum)" %>
     </div>
     <div class="alert alert-danger alert-validate" v-if="alert">
-      <b>Oh snap!</b><span v-for="msg in msgs">{{msg}}</span>
+      <b>Oh snap!</b> <span v-for="msg in msgs">{{msg}}</span>
     </div>
     <div class="m-b">
-      <%= f.submit "Create your account", ":class" => "{'btn-lg': true, 'btn-success': !loading && !disabledSubmit, 'w-full': true, disabled: disabledSubmit, 'bg-loading': loading}".html_safe, "v-bind:disabled" => "disabledSubmit" %>
+      <%= f.submit "Create your account", ":class" => "{'btn-lg': true, 'btn-success': !loading && !disabledSubmit, 'w-full': true, disabled: disabledSubmit, 'bg-loading': loading, 'x-md-y-c': true}".html_safe, "v-bind:disabled" => "disabledSubmit" %>
     </div>
   <% end %>
   <div class="m-b-md txt-center">

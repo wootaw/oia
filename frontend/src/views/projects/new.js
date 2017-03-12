@@ -39,12 +39,12 @@ const New = Vue.component('projects-new', (resolve, reject) => {
               this.$emit('projectcreated', data.projects);
             } else {
               this.alert = true;
-              this.msgs = resp.data.msgs;
+              this.msgs = data.msgs;
             }
             break;
           case 401:
             this.alert = true;
-            this.msg = resp.data.msg;
+            this.msg = resp.msg;
             break;
           }
         },
