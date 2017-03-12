@@ -1906,6 +1906,11 @@ a.text-#000000:hover {
   }
 }
 
+.fixed-block {
+  word-break: break-word;
+    overflow: hidden;
+}
+
 .sign-box {
   max-width: 440px;
 

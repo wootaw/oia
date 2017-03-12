@@ -1,3 +1,8 @@
+<% content_for :assets do %>
+<%= webpack_javascript_include_tag 'owners' %>
+<%= webpack_stylesheet_link_tag 'owners' %>
+<% end %>
+
 <% content_for :modals do %>
 <div class="modal fade modal-full" id="normal-modal" tabindex="-1" role="dialog">
   <button class="btn btn-rounded btn-lg btn-icon btn-default btn-close" data-dismiss="modal">
@@ -32,17 +37,19 @@
           </div>
         </div>
       </div>
-      <!-- / main header -->
+      
       <div class="wrapper-md">
-        <% if can?(:create, Project.new(owner: @owner)) %>
-          
-        <% else %>
-
+      <% if can?(:create, Project.new(owner: @owner)) %>
+        <projects-list></projects-list>
+      <% else %>
+        <div class="row">
+        <% @projects.each do |project| %>
+          <%= render partial: "projects/panel", locals: { project: project } %>
         <% end %>
+        </div>
+      <% end %>
 
         <div class="row">
-
-          <%= render partial: "projects/panel", locals: { project: nil } %>
 
           <div class="col-md-3 col-xs-12 col-sm-4">
             <div class="panel b-a bg-green pos-rlt over-bd">
