@@ -8,7 +8,12 @@ Rails.application.routes.draw do
   root to: 'home#index'
 
   resources :documents
-  resources :projects
+  resources :projects do
+    collection do
+      get :templates
+    end
+  end
+  
   resources :users do
     collection do
       get :exists

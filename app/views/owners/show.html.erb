@@ -11,7 +11,7 @@
   <div class="grid-over h-full">
     <div class="dp-table w-full h-full item">
       <div class="cell w-half v-middle wrapper-md" v-if="modal != 0">
-        <component v-bind:is="modal"></component>
+        <component :is="modal" v-on:projectcreated="projectCreated"></component>
       </div>
     </div>
   </div>
@@ -37,14 +37,16 @@
           </div>
         </div>
       </div>
-      
+
       <div class="wrapper-md">
       <% if can?(:create, Project.new(owner: @owner)) %>
-        <projects-list></projects-list>
+        <projects-list :lastest="lastest"></projects-list>
       <% else %>
         <div class="row">
         <% @projects.each do |project| %>
-          <%= render partial: "projects/panel", locals: { project: project } %>
+          <div class="col-md-3 col-xs-12 col-sm-4">
+            <%= render partial: "projects/panel", locals: { project: project } %>
+          </div>
         <% end %>
         </div>
       <% end %>
@@ -473,28 +475,24 @@
               <ul class="list-group list-group-lg m-b-none">
                 <li class="list-group-item">
                   <a href class="thumb-sm m-r">
-                    <img src="img/a1.jpg" class="r r-2x">
                   </a>
                   <span class="pull-right label bg-primary inline m-t-sm">Admin</span>
                   <a href>Damon Parker</a>
                 </li>
                 <li class="list-group-item">
                   <a href class="thumb-sm m-r">
-                    <img src="img/a2.jpg" class="r r-2x">
                   </a>
                   <span class="pull-right label bg-info inline m-t-sm">Member</span>
                   <a href>Joe Waston</a>
                 </li>
                 <li class="list-group-item">
                   <a href class="thumb-sm m-r">
-                    <img src="img/a3.jpg" class="r r-2x">
                   </a>
                   <span class="pull-right label bg-warning inline m-t-sm">Editor</span>
                   <a href>Jannie Dvis</a>
                 </li>
                 <li class="list-group-item">
                   <a href class="thumb-sm m-r">
-                    <img src="img/a4.jpg" class="r r-2x">
                   </a>
                   <span class="pull-right label bg-warning inline m-t-sm">Editor</span>
                   <a href>Emma Welson</a>
@@ -510,7 +508,6 @@
             <div class="list-group list-group-lg list-group-sp">
               <a herf class="list-group-item clearfix">
                 <span class="pull-left thumb-sm avatar m-r">
-                  <img src="img/a4.jpg" alt="...">
                   <i class="on b-white right"></i>
                 </span>
                 <span class="clear">
@@ -520,7 +517,6 @@
               </a>
               <a herf class="list-group-item clearfix">
                 <span class="pull-left thumb-sm avatar m-r">
-                  <img src="img/a5.jpg" alt="...">
                   <i class="on b-white right"></i>
                 </span>
                 <span class="clear">
@@ -530,7 +526,6 @@
               </a>
               <a herf class="list-group-item clearfix">
                 <span class="pull-left thumb-sm avatar m-r">
-                  <img src="img/a6.jpg" alt="...">
                   <i class="busy b-white right"></i>
                 </span>
                 <span class="clear">
@@ -540,7 +535,6 @@
               </a>
               <a herf class="list-group-item clearfix">
                 <span class="pull-left thumb-sm avatar m-r">
-                  <img src="img/a7.jpg" alt="...">
                   <i class="busy b-white right"></i>
                 </span>
                 <span class="clear">
@@ -550,7 +544,6 @@
               </a>
               <a herf class="list-group-item clearfix">
                 <span class="pull-left thumb-sm avatar m-r">
-                  <img src="img/a8.jpg" alt="...">
                   <i class="away b-white right"></i>
                 </span>
                 <span class="clear">

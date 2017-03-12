@@ -8,10 +8,9 @@ import 'COMPONENT/signbox/UsersSignUp'
 import 'VIEW/projects/new'
 import Sign from 'MIXIN/Sign'
 import ProjectsList from 'VIEW/owners/ProjectsList'
-// import signService from 'SERVICE/SignService';
 
 $(function() {
-  new Vue({
+  let app = new Vue({
     el: '#app',
 
     mixins: [Sign],
@@ -20,10 +19,16 @@ $(function() {
       'projects-list':  ProjectsList
     },
 
+    methods: {
+      projectCreated(project) {
+        this.lastest = project;
+      }
+    },
+
     data: {
       sign: 0,
-      modal: 0
+      modal: 0,
+      lastest: null
     }
   });
-
 });

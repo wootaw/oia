@@ -33,8 +33,10 @@ const New = Vue.component('projects-new', (resolve, reject) => {
           switch(resp.code) {
           // case 204:
           case 200:
-            if (resp.data.code == 201) {
+            let data = JSON.parse(resp.data);
+            if (data.code == 201) {
               this.success += 1;
+              this.$emit('projectcreated', data.projects);
             } else {
               this.alert = true;
               this.msgs = resp.data.msgs;

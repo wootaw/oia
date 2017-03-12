@@ -1,14 +1,43 @@
 <template>
   <div class="row">
-    <div class="col-md-3 col-xs-12 col-sm-4"></div>
+    <div class="col-md-3 col-xs-12 col-sm-4" v-for="project in projects">
+      <project-panel :project="project"></project-panel>
+    </div>
   </div>
 </template>
 
 <script>
-// import ResourceItem from 'COMPONENT/sidebars/ResourceItem'
-module.exports = {
-  props: ['summary', 'resources']
+import projectsService from 'SERVICE/ProjectsService';
+import ProjectPanel from 'VIEW/owners/ProjectPanel'
+export default {
 
-  // components: { ResourceItem }
+  props: ['lastest'],
+
+  components: { ProjectPanel },
+
+  watch: {
+    lastest(nv, ov) {
+      this.projects.splice(0, 0, nv);
+    }
+  },
+
+  created() {
+    let path = `${location.pathname}.json${location.search}`;
+    projectsService.getListByOwner(path).then((resp) => {
+      switch(resp.code) {
+        case 200:
+          this.projects = resp.data.projects;
+          break;
+        case 401:
+          break;
+      }
+    });
+  },
+
+  data() {
+    return {
+      projects: []
+    }
+  }
 }
 </script>
