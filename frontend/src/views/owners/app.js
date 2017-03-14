@@ -1,3 +1,5 @@
+import 'bootstrap/dist/css/bootstrap.css'
+import 'bootstrap/dist/js/bootstrap'
 import 'es6-shim'
 import 'ASSET/scss/app.scss'
 import 'VENDOR/font-awesome/css/font-awesome.min.css'

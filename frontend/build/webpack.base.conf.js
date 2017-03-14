@@ -11,9 +11,8 @@ module.exports = {
   // entry: ['bootstrap-loader', '../frontend/src/app.js'],
 
   entry: {
-    // main: ['bootstrap-loader', '../frontend/src/app.js'],
-    owners: ['bootstrap-loader', '../frontend/src/views/owners/app.js'],
-    project: ['../frontend/src/project.js']
+    owners:   ['../frontend/src/views/owners/app.js'],
+    projects: ['../frontend/src/views/projects/app.js']
   },
 
   output: {

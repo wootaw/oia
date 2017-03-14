@@ -4,8 +4,7 @@
   "description": "This README would normally document whatever steps are necessary to get the application up and running.",
   "main": "index.js",
   "dependencies": {
-    "bootstrap-loader": "^2.0.0-beta.21",
-    "bootstrap-sass": "^3.3.7",
+    "bootstrap": "3.3.7",
     "es6-shim": "^0.35.3",
     "jquery": "^3.1.1",
     "lodash": "^4.17.4",
