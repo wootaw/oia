@@ -5,6 +5,7 @@
     <title>Apiwoods</title>
     <%= csrf_meta_tags %>
     <%= webpack_javascript_include_tag 'commons' %>
+    <%= webpack_stylesheet_link_tag 'commons' %>
     <% if content_for?(:assets) %>
       <%= yield(:assets) %>
     <% end %>

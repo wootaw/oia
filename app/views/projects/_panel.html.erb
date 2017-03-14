@@ -16,7 +16,7 @@
   <% if defined?(project) %>
   <%= link_to "View Project", project_documents_path(owner_name: @owner.username, project_name: project.name), class: "btn btn-success no-bg btn-lg center w-sm m-t-xxxl" %>
   <% else %>
-    <a class="btn btn-success no-bg btn-lg center w-sm m-t-xxxl" href="#">View Project</a>
+    <a class="btn btn-success no-bg btn-lg center w-sm m-t-xxxl" :href="detailUrl">View Project</a>
   <% end %>
     <div class="in bg-dark lowest"></div>
   </div>

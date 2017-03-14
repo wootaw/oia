@@ -1,8 +1,8 @@
 <template>
   <div class="row">
     <div class="col-md-12 bg-loading h-xxs x-c-y-c m-b" v-if="loading"></div>
-    <div class="col-md-3 col-xs-12 col-sm-4" v-for="project in projects">
-      <project-panel :project="project"></project-panel>
+    <div class="col-md-3 col-xs-12 col-sm-4" v-for="project in projects" :key="project.id">
+      <project-panel :project="project" :owner="owner"></project-panel>
     </div>
   </div>
 </template>
@@ -12,7 +12,7 @@ import projectsService from 'SERVICE/ProjectsService';
 import ProjectPanel from 'VIEW/owners/ProjectPanel'
 export default {
 
-  props: ['lastest'],
+  props: ['lastest', 'owner'],
 
   components: { ProjectPanel },
 

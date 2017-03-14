@@ -2118,24 +2118,6 @@ a.text-#000000:hover {
   }
 }
 
-.table-striped > tbody > tr {
-  &:nth-of-type(odd) {
-    background-color: rgba(255, 255, 255, 0.05);
-  }
-}
-
-.table {
-  > thead > tr > th, 
-  > tbody > tr > td {
-    color: $primary_color_lter;
-    border-color: #151515;
-  }
-  > thead > tr > th {
-    color: #fff;
-    background-color: #151515;
-  }
-}
-
 .modal-full {
   background-image: url("../images/black_paper.jpg");
   

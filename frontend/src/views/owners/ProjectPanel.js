@@ -6,9 +6,15 @@ const ProjectPanel = Vue.component('project-panel', (resolve, reject) => {
   projectsService.getTemplate('panel').then(d => {
     resolve({
 
-      props: ['project'],
+      props: ['project', 'owner'],
 
       template: d.data,
+
+      computed: {
+        detailUrl() {
+          return `/${this.owner}/${this.project.name}`;
+        }
+      }
 
     });
   });

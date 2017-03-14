@@ -1,5 +1,5 @@
 class ProjectsController < ApplicationController
-  before_action :authenticate_user!
+  before_action :authenticate_user!, except: [:show]
   authorize_resource :project
   include ActionView::Helpers::DateHelper
 
@@ -28,6 +28,10 @@ class ProjectsController < ApplicationController
     else
       render json: { code: 403, msgs: 'Unknown type' }, status: 403
     end
+  end
+
+  def show
+    
   end
 
   def templates
