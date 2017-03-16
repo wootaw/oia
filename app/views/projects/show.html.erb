@@ -14,8 +14,12 @@
         <div class="bg-green dker b-b wrapper-md">
           <div class="row">
             <div class="col-sm-6 col-xs-12">
-              <h1 class="m-n font-thin h3">Dashboard</h1>
-              <small class="text-muted">Welcome to angulr application</small>
+              <h1 class="m-n font-thin h3">
+                <a href="#"><%= params[:owner_name] %></a>
+                <span class="text-lg text-white"><b>/</b></span>
+                <a href="#"><%= params[:project_name] %></a>
+              </h1>
+              <small class="text-muted"><%= @project.summary %></small>
             </div>
             <div class="col-sm-6 text-right hidden-xs">
               <div class="inline m-r text-left">
@@ -40,98 +44,33 @@
         <!-- / main header -->
         <div class="wrapper-md">
           <div class="row">
+            <% @change.parts(@project, :documents).each do |doc| %>
             <div class="col-sm-12">
               <div class="panel panel-default bg-dark">
                 <div class="panel-heading dker bg-gd">
                   <span class="label bg-danger pull-right m-t-xs">4 left</span>
-                  <b>Tasks</b>
+                  <b><%= doc.summary %></b>
                 </div>
                 <table class="table table-striped m-b-none">
                   <tbody>
+                    <% @change.parts(doc, :resources).each do |res| %>
                     <tr>
-                      <td>
-                        <span class="label label-success pull-left w-xxs">GET</span>
+                      <td class="w-xs">
+                        <span class="label <%= method_color(res.method) %> pull-left w-xxs"><%= res.method %></span>
                       </td>
-                      <td>/api/v1/stranger_tag_classes</td>
-                      <td><a href="#">App prototype design</a></td>
-                      <td class="txt-right"><%= distance_of_time_in_words_to_now(DateTime.new(2017,3,3,4,5,6)) %> ago</td>
-                    </tr>
-                    <tr>                    
-                      <td>
-                        <span class="label label-warning pull-left w-xxs">POST</span>
+                      <td><%= res.path %></td>
+                      <td class="txt-right w-md">
+                        <%= link_to res.summary, document_resources_path(owner_name: @owner.username, project_name: @project.name, resource_slug: res.slug) %>
                       </td>
-                      <td>/api/v1/business_cards</td>
-                      <td><a href="#">Design documents</a></td>
-                      <td class="txt-right"><%= distance_of_time_in_words_to_now(DateTime.new(2017,2,23,4,5,6)) %> ago</td>
+                      <td class="txt-right w-sm"><%= distance_of_time_in_words_to_now(res.updated_at) %> ago</td>
                     </tr>
-                    <tr>                    
-                      <td>
-                        <span class="label label-danger pull-left w-xxs">DEL</span>
-                      </td>
-                      <td>/api/v1/im/conferences/:conv_id</td>
-                      <td><a href="#">UI toolkit</a></td>
-                      <td class="txt-right"><%= distance_of_time_in_words_to_now(DateTime.new(2017,3,10,4,5,6)) %> ago</td>
-                    </tr>
-                    <tr>                    
-                      <td>
-                        <span class="label label-primary pull-left w-xxs">PUT</span>
-                      </td>
-                      <td>/api/v1/im/conferences/:conv_id</td>
-                      <td><a href="#">Testing</a></td>
-                      <td class="txt-right"><%= distance_of_time_in_words_to_now(DateTime.new(2017,2,13,4,5,6)) %> ago</td>
-                    </tr>
+                    <% end %>
                   </tbody>
                 </table>
               </div>
             </div>
-
-            <div class="col-sm-12">
-              <div class="panel panel-default bg-dark">
-                <div class="panel-heading dker bg-gd">
-                  <span class="label bg-danger pull-right m-t-xs">4 left</span>
-                  <b>Tasks</b>
-                </div>
-                <table class="table table-striped m-b-none">
-                  <tbody>
-                    <tr>
-                      <td>
-                        <span class="label label-success pull-left w-xxs">GET</span>
-                      </td>
-                      <td>/api/v1/stranger_tag_classes</td>
-                      <td><a href="#">App prototype design</a></td>
-                      <td class="txt-right"><%= distance_of_time_in_words_to_now(DateTime.new(2017,3,3,4,5,6)) %> ago</td>
-                    </tr>
-                    <tr>                    
-                      <td>
-                        <span class="label label-warning pull-left w-xxs">POST</span>
-                      </td>
-                      <td>/api/v1/business_cards</td>
-                      <td><a href="#">Design documents</a></td>
-                      <td class="txt-right"><%= distance_of_time_in_words_to_now(DateTime.new(2017,2,23,4,5,6)) %> ago</td>
-                    </tr>
-                    <tr>                    
-                      <td>
-                        <span class="label label-danger pull-left w-xxs">DEL</span>
-                      </td>
-                      <td>/api/v1/im/conferences/:conv_id</td>
-                      <td><a href="#">UI toolkit</a></td>
-                      <td class="txt-right"><%= distance_of_time_in_words_to_now(DateTime.new(2017,3,10,4,5,6)) %> ago</td>
-                    </tr>
-                    <tr>                    
-                      <td>
-                        <span class="label label-primary pull-left w-xxs">PUT</span>
-                      </td>
-                      <td>/api/v1/im/conferences/:conv_id</td>
-                      <td><a href="#">Testing</a></td>
-                      <td class="txt-right"><%= distance_of_time_in_words_to_now(DateTime.new(2017,2,13,4,5,6)) %> ago</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
+            <% end %>
           </div>
-
         </div>
       </div>
     <!-- / main -->

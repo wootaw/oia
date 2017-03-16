@@ -1,5 +1,6 @@
 class ProjectsController < ApplicationController
   before_action :authenticate_user!, except: [:show]
+  before_action :set_owner, only: [:show]
   authorize_resource :project
   include ActionView::Helpers::DateHelper
 
@@ -8,12 +9,13 @@ class ProjectsController < ApplicationController
   # end
 
   def new
+    # sleep(3)
     @project = Project.new(clazz: :jpublic, owner: current_user)
     render layout: false
   end
 
   def create
-    sleep(1)
+    # sleep(1)
     @project = Project.new(project_params)
 
     if /\AUser|Team\Z/ === project_params[:owner_type] && can?(:create, @project)
@@ -31,7 +33,18 @@ class ProjectsController < ApplicationController
   end
 
   def show
-    
+    if @owner.nil?
+      render_404
+    else
+      set_project
+      if @project.nil?
+        render_404
+      elsif can?(:read, @project)
+        @change  = @project.lastest_change
+      else
+        render_404
+      end
+    end
   end
 
   def templates

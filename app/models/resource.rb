@@ -15,8 +15,9 @@ class Resource < ApplicationRecord
 
   validates :method, :path, presence: true
   validates :key, presence: true, uniqueness: { scope: :document_id }
-  validates :summary, presence: true, length: { minimum: 2, maximum: 50 }, uniqueness: { scope: :document_id }
+  validates :summary, presence: true, length: { minimum: 2, maximum: 50 }#, uniqueness: { scope: :document_id }
   validates :position, presence: true
+  validates :slug, presence: true
 
   # acts_as_list scope: [:document_id]
 
@@ -37,11 +38,16 @@ class Resource < ApplicationRecord
   #   state :running
   # end
 
+  def self.generate_slug(m, path)
+    ([m.downcase] + path.split('/').select { |i| !i.blank? }.map { |e| e.gsub(/\A:/, '') }).join('-')
+  end
+
   def self.attributes_by_json(data)
     data.symbolize_keys!
     attrs = data.slice(:path, :summary).merge({ 
       key: Digest::MD5.hexdigest("#{data[:method].upcase}|#{data[:path]}"),
       method: data[:method].upcase,
+      slug: generate_slug(data[:method], data[:path])
     })
     [:description, :flag, :parameter, :response].each { |f| init_association(data, attrs, f) }
     attrs

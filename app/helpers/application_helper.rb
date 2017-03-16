@@ -28,4 +28,12 @@ module ApplicationHelper
     "<link rel=\"stylesheet\" href=\"#{src}\">".html_safe
   end
 
+  def method_color(m)
+    {
+      'GET'    => 'label-success', 
+      'POST'   => 'label-warning', 
+      'PUT'    => 'label-primary', 
+      'DELETE' => 'label-danger' 
+    }[m.to_s]
+  end
 end

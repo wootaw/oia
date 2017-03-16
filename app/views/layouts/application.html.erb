@@ -13,7 +13,7 @@
   <body>
     <div id="app" class="app app-header-fixed app-aside-fixed">
       <%= render partial: "shared/header" %>
-      <div id="content" class="app-content" role="main">
+      <div class="app-content" role="main">
       <% if content_for?(:content) %>
         <%= yield(:content) %>
       <% end %>

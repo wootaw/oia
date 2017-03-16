@@ -111,11 +111,6 @@
 }
 
 .bg-dark {
-  .table-striped > tbody > tr {
-    &:nth-of-type(odd) {
-      background-color: lighten($dark_color, 1%);
-    }
-  }
   
   &.panel {
     border-color: $dark_color_lt;
@@ -124,15 +119,28 @@
       border-color: $dark_color_lt;
     }
   }
+
+  .table-striped > tbody > tr {
+    &:nth-of-type(odd) {
+      background-color: lighten($dark_color, 1%);
+    }
+  }
+
   .table {
     > thead > tr, 
     > tbody > tr {
-      // color: $primary_color_lter;
+
       > td {
         border-color: $dark_color_lt;
       }
       
       background-color: $dark_color;
+
+      &:hover {
+        // font-weight: bold;
+        color: $primary_color_dker;
+        background-color: $primary_color_lter;
+      }
     }
     // > thead > tr > th {
     //   color: #fff;
