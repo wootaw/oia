@@ -16,6 +16,7 @@ class Resource < ApplicationRecord
   validates :method, :path, presence: true
   validates :key, presence: true, uniqueness: { scope: :document_id }
   validates :summary, presence: true, length: { minimum: 2, maximum: 50 }, uniqueness: { scope: :document_id }
+  validates :position, presence: true
 
   # acts_as_list scope: [:document_id]
 

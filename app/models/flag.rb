@@ -6,6 +6,7 @@ class Flag < ApplicationRecord
   has_many :descriptions, as: :owner, dependent: :destroy
 
   validates :name, presence: true, length: { minimum: 2, maximum: 20 }
+  validates :position, presence: true
 
   accepts_nested_attributes_for :descriptions
   

@@ -11,7 +11,8 @@ class Response < ApplicationRecord
 
   validates :name, :location, :position, presence: true
   validates :key, presence: true, uniqueness: { scope: :resource }
-  validates :summary, length: { minimum: 1, maximum: 50 }
+  validates :position, presence: true
+  # validates :summary, length: { minimum: 1, maximum: 50 }
 
   accepts_nested_attributes_for :descriptions
 

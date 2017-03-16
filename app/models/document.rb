@@ -12,7 +12,8 @@ class Document < ApplicationRecord
   delegate :lastest_change, to: :project, prefix: false
 
   validates :name, presence: true, length: { minimum: 2, maximum: 20 }, uniqueness: { scope: :project_id }
-  validates :summary, presence: true, length: { minimum: 2, maximum: 50 }, uniqueness: { scope: :project }
+  validates :position, presence: true
+  # validates :summary, presence: true, length: { minimum: 2, maximum: 50 }, uniqueness: { scope: :project }
 
   accepts_nested_attributes_for :flags
   accepts_nested_attributes_for :descriptions

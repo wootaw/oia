@@ -4,6 +4,7 @@ class Change < ApplicationRecord
   belongs_to :project
 
   validates :version, presence: true, uniqueness: { scope: :project }
+  validates :position, presence: true
 
   acts_as_list scope: [:project_id]
   
