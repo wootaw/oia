@@ -8,6 +8,8 @@ import Vue from 'vue'
 import 'COMPONENT/signbox/UsersSignIn'
 import 'COMPONENT/signbox/UsersSignUp'
 import 'VIEW/projects/new'
+import 'UTIL/sticky-kit'
+import smoothscroll from 'smoothscroll'
 import Sign from 'MIXIN/Sign'
 // import ProjectsList from 'VIEW/owners/ProjectsList'
 
@@ -24,6 +26,20 @@ $(function() {
         }
       },
 
+      smoothscroll: {
+        bind(el, binding) {
+          $(el).on('click', function(e) {
+            e.preventDefault();
+            smoothscroll($($(this).attr('href'))[0], 500, undefined, $(binding.value)[0]);
+          })
+        }
+      },
+
+      sticky: {
+        inserted(el, binding) {
+          $(el).stick_in_parent(binding.value);
+        }
+      }
     },
     // components: {
     //   'projects-list':  ProjectsList

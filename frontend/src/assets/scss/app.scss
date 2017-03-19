@@ -1982,7 +1982,7 @@ a.text-#000000:hover {
       &.active,
       &:hover {
         a.media {
-          background-color: $primary_color_lter;
+          background-color: $primary_color_lter !important;
           h5 {
             color: $primary_color_dker;
           }
@@ -2015,6 +2015,20 @@ a.text-#000000:hover {
 
     .label {
       font-size: 100%
+    }
+
+    &.is_stuck {
+      background-color: $primary_color_dker;
+      box-shadow: 0 2px 2px rgba($primary_color_dk, 0.2), 0 1px 0 rgba($primary_color_dk, 0.2);
+      border-bottom-left-radius: 3px;
+      border-bottom-right-radius: 3px;
+      background-image: -webkit-gradient(linear, left 10%, left 100%, from(rgba(40, 50, 60, 0)), to(rgba(40, 50, 60, 0.5)));
+      background-image: -webkit-linear-gradient(top, rgba(40, 50, 60, 0), 10%, rgba(40, 50, 60, 0.5), 100%);
+      background-image: -moz-linear-gradient(top, rgba(40, 50, 60, 0) 10%, rgba(40, 50, 60, 0.5) 100%);
+      background-image: linear-gradient(to bottom, rgba(40, 50, 60, 0) 10%, rgba(40, 50, 60, 0.5) 100%);
+      background-repeat: repeat-x;
+      filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#0028323c', endColorstr='#8028323c', GradientType=0);
+      filter: none;
     }
   }
 
@@ -2243,6 +2257,18 @@ a.text-#000000:hover {
       border-color: #1c6000;
     }
   }
+}
+
+@for $i from 0 through 9 {
+  .resp-lv#{$i} {
+    color: darken($white_color, $i * 10%);
+    i.fa-lv {
+      width: $i * 15px + 10px;
+    }
+  }
+}
+i.fa-lv {
+  height: 10px;
 }
 @import "bg.scss";
 @import "form.scss";

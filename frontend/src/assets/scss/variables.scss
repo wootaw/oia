@@ -3,12 +3,13 @@
 // -------------------------
 
 $primary_color: #27a102;
+$white_color: #fff;
 // #27a102
 // #167e2e
 $primary_color_lter: lighten($primary_color, 58%);
 $primary_color_lt: lighten($primary_color, 25%);
 $primary_color_dk: darken($primary_color, 10%);
-$primary_color_dker: darken($primary_color, 16%);
+$primary_color_dker: darken($primary_color, 18%);
 // #002f06
 
 $primary_color_flt: fade_in($primary_color, 0.02);

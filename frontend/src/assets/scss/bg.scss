@@ -127,8 +127,13 @@
   }
 
   .table {
+
     > thead > tr, 
     > tbody > tr {
+
+      > th {
+        border-bottom: 1px;
+      }
 
       > td {
         border-color: $dark_color_lt;
@@ -136,11 +141,11 @@
       
       background-color: $dark_color;
 
-      &:hover {
-        // font-weight: bold;
-        color: $primary_color_dker;
-        background-color: $primary_color_lter;
-      }
+      // &:hover {
+      //   // font-weight: bold;
+      //   color: $primary_color_dker;
+      //   background-color: $primary_color_lter;
+      // }
     }
     // > thead > tr > th {
     //   color: #fff;

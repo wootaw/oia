@@ -27,11 +27,11 @@
               <ul class="nav nav-cata bg-dark dker">
               <% @change.parts(@project, :documents).each do |doc| %>
                 <li class="heading">
-                  <a href="#<%= doc.name %>"><%= doc.summary %></a>
+                  <a href="#<%= doc.name %>" v-smoothscroll="'#scroll-container'"><%= doc.summary %></a>
                   <ul class="nav list-group alt">
                     <% @change.parts(doc, :resources).each do |res| %>
                     <li class="list-group-item lt">
-                      <a class="media" href="#<%= res.slug %>">
+                      <a class="media" href="#<%= res.slug %>" v-smoothscroll="'#scroll-container'">
                         <span class="label <%= method_color(res.method) %> pull-left"><%= res.method.size > 4 ? res.method[0..2] : res.method %></span>
                         <div class="media-body">
                           <h5><%= res.summary %></h5>
@@ -336,7 +336,7 @@
     <div class="col">
       <div class="vbox">
         <div class="row-row">
-          <div class="cell" v-scrollspy="{target: '#nav-cata', offset: 50}">
+          <div id='scroll-container' class="cell" v-scrollspy="{target: '#nav-cata', offset: 50}">
             <div>
               <% @change.parts(@project, :documents).each do |doc| %>
               <div id="<%= doc.name %>" class="panel panel-doc m-b-none no-radius">
@@ -351,21 +351,22 @@
               </div>
               <% @change.parts(doc, :resources).each do |res| %>
               <div id="<%= res.slug %>" class="panel panel-res">
-                <div class="panel-heading bg-green dker">
+                <div class="panel-heading bg-green dk" v-sticky="{ offset_top: 50, container: '#scroll-container' }">
                   <div class="clearfix">
                     <div class="clear">
                       <div class="h3 m-t-xs m-b-sm">
-                        <a href="#"><%= doc.summary %></a>
-                        <span class="sep">/</span><%= res.summary %>
+                        <span><%= doc.summary %></span>
+                        <span class="sep">/</span>
+                        <span><%= res.summary %></span>
                         <i class="fa fa-circle text-success pull-right text-xs m-t-sm"></i>
                       </div>
-                      <span class="label label-warning pull-left m-r-sm"><%= res.method %></span>
+                      <span class="label <%= method_color(res.method) %> pull-left m-r-sm"><%= res.method %></span>
                       <span class="label label-default pull-left"><%= res.path %></span>
                     </div>
                   </div>
                 </div>
                 <div class="panel-body">
-                  <div class="wrapper res-desc bg-green dk">
+                  <div class="wrapper res-desc bg-green">
                     <div class="panel-body">
                       <% @change.parts(res, :descriptions).each do |desc| %>
                       <p><%= desc.content %></p>
@@ -418,8 +419,8 @@
                       </thead>
                       <tbody>
                         <% @change.parts(res, :responses).each do |resp| %>
-                        <tr>
-                          <td><%= resp.name %></td>
+                        <tr class="resp-lv<%= resp.ancestor.to_s.split('.').size %>">
+                          <td><i class="fa fa-lv"></i><span><%= resp.name %></span></td>
                           <td><%= resp.data_type %></td>
                           <td>
                             <b><%= resp.summary %></b><br/>
