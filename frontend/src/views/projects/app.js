@@ -17,6 +17,14 @@ $(function() {
 
     mixins: [Sign],
 
+    directives: {
+      scrollspy: {
+        bind(el, binding) {
+          $(el).scrollspy(binding.value);
+        }
+      },
+
+    },
     // components: {
     //   'projects-list':  ProjectsList
     // },

@@ -4,139 +4,646 @@
 <% end %>
 
 <% content_for :content do %>
-<div class="app-content-body ">
-      
-
-  <div class="hbox hbox-auto-xs hbox-auto-sm">
-    <!-- main -->
-      <div class="col">
-        <!-- main header -->
-        <div class="bg-green dker b-b wrapper-md">
-          <div class="row">
-            <div class="col-sm-6 col-xs-12">
-              <h1 class="m-n font-thin h3">
-                <a href="#"><%= params[:owner_name] %></a>
-                <span class="text-lg text-white"><b>/</b></span>
-                <a href="#"><%= params[:project_name] %></a>
-              </h1>
-              <small class="text-muted"><%= @project.summary %></small>
-            </div>
-            <div class="col-sm-6 text-right hidden-xs">
-              <div class="inline m-r text-left">
-                <div class="m-b-xs">1290 <span class="text-muted">items</span></div>
-                <div ng-init="d3_1=[ 106,108,110,105,110,109,105,104,107,109,105,100,105,102,101,99,98 ]" 
-                  ui-jq="sparkline" 
-                  ui-options="[ 106,108,110,105,110,109,105,104,107,109,105,100,105,102,101,99,98 ], {type:'bar', height:20, barWidth:5, barSpacing:1, barColor:'#dce5ec'}" 
-                  class="sparkline inline">loading...
-                </div>
-              </div>
-              <div class="inline text-left">
-                <div class="m-b-xs">$30,000 <span class="text-muted">revenue</span></div>
-                <div ng-init="d3_2=[ 105,102,106,107,105,104,101,99,98,109,105,100,108,110,105,110,109 ]" 
-                  ui-jq="sparkline" 
-                  ui-options="[ 105,102,106,107,105,104,101,99,98,109,105,100,108,110,105,110,109 ], {type:'bar', height:20, barWidth:5, barSpacing:1, barColor:'#dce5ec'}" 
-                  class="sparkline inline">loading...
-                </div>
-              </div>
-            </div>
+<div class="app-content-body app-content-full h-full">
+  <div class="hbox hbox-auto-xs">
+    <!-- column -->
+    <div class="col w-xl b-r">
+      <div class="vbox">
+        <div class="b-b">
+          <div class="font-thin padder-sm padder-v bg-dark lt">
+            <input class="w-full bg-dark lt b-none" type="text" placeholder="Input and search">
           </div>
         </div>
-        <!-- / main header -->
-        <div class="wrapper-md">
-          <div class="row">
-            <% @change.parts(@project, :documents).each do |doc| %>
-            <div class="col-sm-12">
-              <div class="panel panel-default bg-dark">
-                <div class="panel-heading dker bg-gd">
-                  <span class="label bg-danger pull-right m-t-xs">4 left</span>
-                  <b><%= doc.summary %></b>
+
+        <div class="row-row">
+          <div id="nav-cata" class="cell">
+            <div class="cell-inner">
+              <!-- <div id="app">
+                <div v-for="doc in documents">
+                  <document-group :resources="doc.resources" :summary="doc.summary"></document-group>
                 </div>
-                <table class="table table-striped m-b-none">
-                  <tbody>
+              </div> -->
+
+              <ul class="nav nav-cata bg-dark dker">
+              <% @change.parts(@project, :documents).each do |doc| %>
+                <li class="heading">
+                  <a href="#<%= doc.name %>"><%= doc.summary %></a>
+                  <ul class="nav list-group alt">
                     <% @change.parts(doc, :resources).each do |res| %>
-                    <tr>
-                      <td class="w-xs">
-                        <span class="label <%= method_color(res.method) %> pull-left w-xxs"><%= res.method %></span>
-                      </td>
-                      <td><%= res.path %></td>
-                      <td class="txt-right w-md">
-                        <%= link_to res.summary, document_resources_path(owner_name: @owner.username, project_name: @project.name, resource_slug: res.slug) %>
-                      </td>
-                      <td class="txt-right w-sm"><%= distance_of_time_in_words_to_now(res.updated_at) %> ago</td>
-                    </tr>
+                    <li class="list-group-item lt">
+                      <a class="media" href="#<%= res.slug %>">
+                        <span class="label <%= method_color(res.method) %> pull-left"><%= res.method.size > 4 ? res.method[0..2] : res.method %></span>
+                        <div class="media-body">
+                          <h5><%= res.summary %></h5>
+                          <small class="text-muted"><%= res.path %></small>
+                        </div>
+                      </a>
+                    </li>
                     <% end %>
-                  </tbody>
-                </table>
+                  </ul>
+                </li>
+              <% end %>
+              </ul>
+<!-- 
+              <div class="panel panel-doc list m-b-none no-radius">
+                <div class="panel-heading">Contacts</div>
+                <ul class="list-group alt">
+                  <li class="list-group-item">
+                    <div class="media">
+                      <span class="label label-success pull-left">GET</span>
+                      <a href="#" class="more pull-right m-t-sm">
+                        <i class="fa fa-ellipsis-h"></i>
+                      </a>
+                      <div class="media-body">
+                        <a href="#">
+                          <h5>Stranger tag class list</h5>
+                          <small class="text-muted">/api/v1/stranger_tag_classes</small>
+                        </a>
+                      </div>
+                    </div>
+                  </li>
+                  <li class="list-group-item">
+                    <div class="media">
+                      <span class="label label-warning pull-left">POST</span>
+                      <a href="#" class="more pull-right m-t-sm">
+                        <i class="fa fa-ellipsis-h"></i>
+                      </a>
+                      <div class="media-body">
+                        <a href="#">
+                          <h5>Send business card</h5>
+                          <small class="text-muted">/api/v1/business_cards</small>
+                        </a>
+                      </div>
+                    </div>
+                  </li>
+                  <li class="list-group-item">
+                    <div class="media">
+                      <span class="label label-success pull-left">GET</span>
+                      <a href="#" class="more pull-right m-t-sm">
+                        <i class="fa fa-ellipsis-h"></i>
+                      </a>
+                      <div class="media-body">
+                        <a href="#">
+                          <h5>Browse business card</h5>
+                          <small class="text-muted">/api/v1/business_cards</small>
+                        </a>
+                      </div>
+                    </div>
+                  </li>
+                  <li class="list-group-item">
+                    <div class="media">
+                      <span class="label label-primary pull-left">PUT</span>
+                      <a href="#" class="more pull-right m-t-sm">
+                        <i class="fa fa-ellipsis-h"></i>
+                      </a>
+                      <div class="media-body">
+                        <a href="#">
+                          <h5>Dispose business card</h5>
+                          <small class="text-muted">/api/v1/business_cards/:id</small>
+                        </a>
+                      </div>
+                    </div>
+                  </li>
+                </ul>
               </div>
-            </div>
-            <% end %>
-          </div>
-        </div>
-      </div>
-    <!-- / main -->
-    <!-- right col -->
-      <div class="col w-xl bg-white-only b-l bg-auto no-border-xs">
-        <div class="padder-md">      
-          <!-- streamline -->
-          <div class="m-b m-t text-md">Recent Activity</div>
-          <div class="streamline b-l m-b">
-            <div class="sl-item">
-              <div class="m-l">
-                <div class="text-muted">5 minutes ago</div>
-                <p><a href class="text-info">Jessi</a> commented your post.</p>
-              </div>
-            </div>
-            <div class="sl-item">
-              <div class="m-l">
-                <div class="text-muted">11:30</div>
-                <p>Join comference</p>
-              </div>
-            </div>
-            <div class="sl-item b-success b-l">
-              <div class="m-l">
-                <div class="text-muted">10:30</div>
-                <p>Call to customer <a href class="text-info">Jacob</a> and discuss the detail.</p>
-              </div>
-            </div>
-            <div class="bg-info wrapper-sm m-l-n m-r-n m-b r r-2x">
-              Create tasks for the team
-            </div>
-            <div class="sl-item b-primary b-l">
-              <div class="m-l">
-                <div class="text-muted">Wed, 25 Mar</div>
-                <p>Finished task <a href class="text-info">Testing</a>.</p>
-              </div>
-            </div>
-            <div class="sl-item b-warning b-l">
-              <div class="m-l">
-                <div class="text-muted">Thu, 10 Mar</div>
-                <p>Trip to the moon</p>
-              </div>
-            </div>
-            <div class="sl-item b-info b-l">
-              <div class="m-l">
-                <div class="text-muted">Sat, 5 Mar</div>
-                <p>Prepare for presentation</p>
-              </div>
-            </div>
-            <div class="sl-item b-l">
-              <div class="m-l">
-                <div class="text-muted">Sun, 11 Feb</div>
-                <p><a href class="text-info">Jessi</a> assign you a task <a href class="text-info">Mockup Design</a>.</p>
-              </div>
-            </div>
-            <div class="sl-item b-l">
-              <div class="m-l">
-                <div class="text-muted">Thu, 17 Jan</div>
-                <p>Follow up to close deal</p>
-              </div>
-            </div>
-          </div>
-          <!-- / streamline -->
-        </div>
-      </div>
-    <!-- / right col -->
-  </div>
 
+              <div class="panel panel-doc list m-b-none no-radius">
+                <div class="panel-heading">IM</div>
+                <ul class="list-group alt">
+                  <li class="list-group-item">
+                    <div class="media">
+                      <span class="label label-success pull-left">GET</span>
+                      <a href="#" class="more pull-right m-t-sm">
+                        <i class="fa fa-ellipsis-h"></i>
+                      </a>
+                      <div class="media-body">
+                        <a href="#">
+                          <h5>Get sign</h5>
+                          <small class="text-muted">/api/v1/im/sign</small>
+                        </a>
+                      </div>
+                    </div>
+                  </li>
+                  <li class="list-group-item">
+                    <div class="media">
+                      <span class="label label-success pull-left">GET</span>
+                      <a href="#" class="more pull-right m-t-sm">
+                        <i class="fa fa-ellipsis-h"></i>
+                      </a>
+                      <div class="media-body">
+                        <a href="#">
+                          <h5>List conferences</h5>
+                          <small class="text-muted">/api/v1/im/conferences</small>
+                        </a>
+                      </div>
+                    </div>
+                  </li>
+                  <li class="list-group-item">
+                    <div class="media">
+                      <span class="label label-warning pull-left">POST</span>
+                      <a href="#" class="more pull-right m-t-sm">
+                        <i class="fa fa-ellipsis-h"></i>
+                      </a>
+                      <div class="media-body">
+                        <a href="#">
+                          <h5>Create conference</h5>
+                          <small class="text-muted">/api/v1/im/conferences</small>
+                        </a>
+                      </div>
+                    </div>
+                  </li>
+                  <li class="list-group-item">
+                    <div class="media">
+                      <span class="label label-primary pull-left">PUT</span>
+                      <a href="#" class="more pull-right m-t-sm">
+                        <i class="fa fa-ellipsis-h"></i>
+                      </a>
+                      <div class="media-body">
+                        <a href="#">
+                          <h5>Update conference</h5>
+                          <small class="text-muted">/api/v1/im/conferences/:conv_id</small>
+                        </a>
+                      </div>
+                    </div>
+                  </li>
+                  <li class="list-group-item">
+                    <div class="media">
+                      <span class="label label-danger pull-left">DEL</span>
+                      <a href="#" class="more pull-right m-t-sm">
+                        <i class="fa fa-ellipsis-h"></i>
+                      </a>
+                      <div class="media-body">
+                        <a href="#">
+                          <h5>Remove conference</h5>
+                          <small class="text-muted">/api/v1/im/conferences/:conv_id</small>
+                        </a>
+                      </div>
+                    </div>
+                  </li>
+                  <li class="list-group-item">
+                    <div class="media">
+                      <span class="label label-success pull-left">GET</span>
+                      <a href="#" class="more pull-right m-t-sm">
+                        <i class="fa fa-ellipsis-h"></i>
+                      </a>
+                      <div class="media-body">
+                        <a href="#">
+                          <h5>Detail conference</h5>
+                          <small class="text-muted">/api/v1/im/conferences/:conv_id/detail</small>
+                        </a>
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+
+              <div class="panel panel-doc list m-b-none no-radius">
+                <div class="panel-heading">
+                  Connection
+                </div>
+                <ul class="list-group alt">
+                  <li class="list-group-item">
+                    <div class="media">
+                      <span class="label label-success pull-left">GET</span>
+                      <div class="pull-right text-success m-t-sm">
+                        <i class="fa fa-circle"></i>
+                      </div>
+                      <div class="media-body">
+                        <a href="#">
+                          <h5>Chris Fox</h5>
+                          <small class="text-muted">about 2 minutes ago</small>
+                        </a>
+                      </div>
+                    </div>
+                  </li>
+                  <li class="list-group-item">
+                    <div class="media">
+                      <span class="label label-warning pull-left">POST</span>
+                      <div class="pull-right text-muted m-t-sm">
+                        <i class="fa fa-circle"></i>
+                      </div>
+                      <div class="media-body">
+                        <a href="#">
+                          <h5>Amanda Conlan</h5>
+                          <small class="text-muted">about 2 minutes ago</small>
+                        </a>
+                      </div>
+                    </div>
+                  </li>
+                  <li class="list-group-item">
+                    <div class="media">
+                      <span class="label label-danger pull-left">DEL</span>
+                      <div class="pull-right text-warning m-t-sm">
+                        <i class="fa fa-circle"></i>
+                      </div>
+                      <div class="media-body">
+                        <a href="#">
+                          <h5>Dan Doorack</h5>
+                          <small class="text-muted">about 2 minutes ago</small>
+                        </a>
+                      </div>
+                    </div>
+                  </li>
+                  <li class="list-group-item">
+                    <div class="media">
+                      <span class="label label-primary pull-left">PUT</span>
+                      <div class="pull-right text-danger m-t-sm">
+                        <i class="fa fa-circle"></i>
+                      </div>
+                      <div class="media-body">
+                        <a href="#">
+                          <h5>Lauren Taylor</h5>
+                          <small class="text-muted">about 2 minutes ago</small>
+                        </a>
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+
+              <div class="panel panel-doc list m-b-none no-radius">
+                <div class="panel-heading">
+                  Connection
+                </div>
+                <ul class="list-group alt">
+                  <li class="list-group-item">
+                    <div class="media">
+                      <span class="label label-success pull-left">GET</span>
+                      <div class="pull-right text-success m-t-sm">
+                        <i class="fa fa-circle"></i>
+                      </div>
+                      <div class="media-body">
+                        <a href="#">
+                          <h5>Chris Fox</h5>
+                          <small class="text-muted">about 2 minutes ago</small>
+                        </a>
+                      </div>
+                    </div>
+                  </li>
+                  <li class="list-group-item">
+                    <div class="media">
+                      <span class="label label-warning pull-left">POST</span>
+                      <div class="pull-right text-muted m-t-sm">
+                        <i class="fa fa-circle"></i>
+                      </div>
+                      <div class="media-body">
+                        <a href="#">
+                          <h5>Amanda Conlan</h5>
+                          <small class="text-muted">about 2 minutes ago</small>
+                        </a>
+                      </div>
+                    </div>
+                  </li>
+                  <li class="list-group-item">
+                    <div class="media">
+                      <span class="label label-danger pull-left">DEL</span>
+                      <div class="pull-right text-warning m-t-sm">
+                        <i class="fa fa-circle"></i>
+                      </div>
+                      <div class="media-body">
+                        <a href="#">
+                          <h5>Dan DoorackDan DoorackDan DoorackDan DoorackDan DoorackDan DoorackDan DoorackDan DoorackDan Doorack</h5>
+                          <small class="text-muted">about 2 minutes ago</small>
+                        </a>
+                      </div>
+                    </div>
+                  </li>
+                  <li class="list-group-item">
+                    <div class="media">
+                      <span class="label label-primary pull-left">PUT</span>
+                      <div class="pull-right text-danger m-t-sm">
+                        <i class="fa fa-circle"></i>
+                      </div>
+                      <div class="media-body">
+                        <a href="#">
+                          <h5>Lauren Taylor</h5>
+                          <small class="text-muted">about 2 minutes ago</small>
+                        </a>
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+ -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- /column -->
+
+    <!-- column -->
+    <div class="col">
+      <div class="vbox">
+        <div class="row-row">
+          <div class="cell" v-scrollspy="{target: '#nav-cata', offset: 50}">
+            <div>
+              <% @change.parts(@project, :documents).each do |doc| %>
+              <div id="<%= doc.name %>" class="panel panel-doc m-b-none no-radius">
+                <div class="panel-heading">
+                  <h2><%= doc.summary %></h2>
+                </div>
+                <div class="panel-body">
+                  <% @change.parts(doc, :descriptions).each do |desc| %>
+                  <p><%= desc.content %></p>
+                  <% end %>
+                </div>
+              </div>
+              <% @change.parts(doc, :resources).each do |res| %>
+              <div id="<%= res.slug %>" class="panel panel-res">
+                <div class="panel-heading bg-green dker">
+                  <div class="clearfix">
+                    <div class="clear">
+                      <div class="h3 m-t-xs m-b-sm">
+                        <a href="#"><%= doc.summary %></a>
+                        <span class="sep">/</span><%= res.summary %>
+                        <i class="fa fa-circle text-success pull-right text-xs m-t-sm"></i>
+                      </div>
+                      <span class="label label-warning pull-left m-r-sm"><%= res.method %></span>
+                      <span class="label label-default pull-left"><%= res.path %></span>
+                    </div>
+                  </div>
+                </div>
+                <div class="panel-body">
+                  <div class="wrapper res-desc bg-green dk">
+                    <div class="panel-body">
+                      <% @change.parts(res, :descriptions).each do |desc| %>
+                      <p><%= desc.content %></p>
+                      <% end %>
+                    </div>
+                  </div>
+
+                  <div class="panel panel-default bg-dark no-radius no-border">
+                    <div class="panel-heading dker bg-gd">
+                      <span class="label bg-danger pull-right m-t-xs">4 left</span>
+                      <b>Parameters</b>
+                    </div>
+                    <table class="table table-striped m-b-none">
+                      <thead>
+                        <tr>
+                          <th class="text-center">Field</th>
+                          <th>Type</th>
+                          <th>Description</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <% @change.parts(res, :parameters).each do |param| %>
+                        <tr>
+                          <td><%= param.name %></td>
+                          <td><%= param.data_type %></td>
+                          <td>
+                            <b><%= param.summary %></b><br/>
+                            <% @change.parts(param, :descriptions).each do |desc| %>
+                            <p><%= desc.content %></p>
+                            <% end %>
+                          </td>
+                        </tr>
+                        <% end %>
+                      </tbody>
+                    </table>
+                  </div>
+
+                  <div class="panel panel-default bg-dark no-radius no-border">
+                    <div class="panel-heading dker bg-gd">
+                      <span class="label bg-danger pull-right m-t-xs">4 left</span>
+                      <b>Responses</b>
+                    </div>
+                    <table class="table table-striped m-b-none">
+                      <thead>
+                        <tr>
+                          <th class="text-center">Field</th>
+                          <th>Type</th>
+                          <th>Description</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <% @change.parts(res, :responses).each do |resp| %>
+                        <tr>
+                          <td><%= resp.name %></td>
+                          <td><%= resp.data_type %></td>
+                          <td>
+                            <b><%= resp.summary %></b><br/>
+                            <% @change.parts(resp, :descriptions).each do |desc| %>
+                            <p><%= desc.content %></p>
+                            <% end %>
+                          </td>
+                        </tr>
+                        <% end %>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+
+              </div>
+              <% end %>
+              <% end %>
+
+              <div class="panel panel-doc m-b-none no-radius">
+                <div class="panel-heading">
+                  <h2>Contacts</h2>
+                </div>
+                <div class="panel-body">
+                  <p>You can pass a block to devise_for that will add any routes defined in the block to Devise's list of known actions. This is important if you add a custom action to a controller that overrides an out of the box Devise controller. For example:<p/>
+                  <p>You can explicitly pass the name of the method which provides access to the enumeration mapping as a value of enum, or you can simply set it to true. In the latter case AASM will try to use pluralized column name to access possible enum states.<p/>
+                </div>
+              </div>
+
+              <div class="panel panel-res bg-green">
+                <div class="panel-heading dker">
+                  <div class="clearfix">
+                    <div class="clear">
+                      <div class="h3 m-t-xs m-b-sm">
+                        <a href="#">Contacts</a>
+                        <span class="sep">/</span>
+                        Send business card
+                        <i class="fa fa-circle text-success pull-right text-xs m-t-sm"></i>
+                      </div>
+                      <span class="label label-warning pull-left m-r-sm">POST</span>
+                      <span class="label label-default pull-left">/api/v1/business_cards</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="panel-body">
+                  <div class="wrapper res-desc dk">
+                    <p>Lorem ipsum dolor sit amet, consecteter adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet.<p/>
+                    <p>There are a few easy ways to quickly get started with Bootstrap, each one appealing to a different skill level and use case. Read through to see what suits your particular needs.<p/>
+                  </div>
+
+                  <!-- <h4 class="padder">Parameters</h4> -->
+                  <!-- <div class="wrapper"> -->
+                  <h4 class="padder">Parameters</h4>
+                    <!-- <div class="panel panel-io no-radius"> -->
+                      <!-- <div class="panel-heading">Parameters</div> -->
+                      
+                  <table class="table table-striped m-b-none">
+                    <thead>
+                      <tr>
+                        <th class="text-center">Field</th>
+                        <th>Type</th>                    
+                        <th>Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>                    
+                        <td class="required">token</td>
+                        <td>String</td>
+                        <td>Let's say you have an User model configured to use authenticatable, confirmable and recoverable modules. After creating this inside your routes:</td>
+                      </tr>
+                      <tr>                    
+                        <td class="required">tag_name</td>
+                        <td>String</td>
+                        <td>Following Rails 3 routes DSL</td>
+                      </tr>
+                      <tr>                    
+                        <td>user_ids</td>
+                        <td>Number</td>
+                        <td>This method is going to look inside your User model and create the needed routes:</td>
+                      </tr>
+                      <tr>                    
+                        <td>stranger_ids</td>
+                        <td>Number</td>
+                        <td>You can configure your routes with some options:</td>
+                      </tr>
+                      <tr>                    
+                        <td>cluster_ids</td>
+                        <td>Number</td>
+                        <td>The only aspect not affect by the router configuration is the model name. The model name can be explicitly set via the :class_name option.</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                    <!-- </div> -->
+                  <!-- </div> -->
+
+                  <!-- <div class="wrapper"> -->
+                  <h4 class="padder">Respones</h4>
+                    <!-- <div class="panel panel-io no-radius"> -->
+                      <!-- <div class="panel-heading">Respones</div> -->
+
+                  <table class="table table-striped m-b-none">
+                    <thead>
+                      <tr>
+                        <th class="text-center">Field</th>
+                        <th>Type</th>                    
+                        <th>Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>                    
+                        <td class="required">token</td>
+                        <td>String</td>
+                        <td>Let's say you have an User model configured to use authenticatable, confirmable and recoverable modules. After creating this inside your routes:</td>
+                      </tr>
+                      <tr>                    
+                        <td class="required">tag_name</td>
+                        <td>String</td>
+                        <td>Following Rails 3 routes DSL</td>
+                      </tr>
+                      <tr>                    
+                        <td>user_ids</td>
+                        <td>Number</td>
+                        <td>This method is going to look inside your User model and create the needed routes:</td>
+                      </tr>
+                      <tr>                    
+                        <td>stranger_ids</td>
+                        <td>Number</td>
+                        <td>You can configure your routes with some options:</td>
+                      </tr>
+                      <tr>                    
+                        <td>cluster_ids</td>
+                        <td>Number</td>
+                        <td>The only aspect not affect by the router configuration is the model name. The model name can be explicitly set via the :class_name option.</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                    <!-- </div> -->
+                  <!-- </div> -->
+
+                </div>
+
+              </div>
+
+              <div class="panel panel-res m-b-none">
+                <div class="panel-heading">
+                  <div class="clearfix">
+                    <div class="clear">
+                      <div class="h3 m-t-xs m-b-sm">
+                        <a href="#">Contacts</a>
+                        <span class="sep">/</span>
+                        Dispose business card
+                        <i class="fa fa-circle text-success pull-right text-xs m-t-sm"></i>
+                      </div>
+                      <span class="label label-primary pull-left m-r-sm">PUT</span>
+                      <span class="label label-default pull-left">/api/v1/business_cards/:id</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="panel-body">
+                  <div class="wrapper res-desc">
+                    <p>Lorem ipsum dolor sit amet, consecteter adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet.<p/>
+                  </div>
+
+                  <h4 class="padder">Parameters</h4>
+                  <table class="table table-striped m-b-none">
+                    <thead>
+                      <tr>
+                        <th class="text-center">Field</th>
+                        <th>Type</th>                    
+                        <th>Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>                    
+                        <td class="required">token</td>
+                        <td>String</td>
+                        <td>Let's say you have an User model configured to use authenticatable, confirmable and recoverable modules. After creating this inside your routes:</td>
+                      </tr>
+                      <tr>                    
+                        <td class="required">id</td>
+                        <td>Number</td>
+                        <td>Card ID </td>
+                      </tr>
+                      <tr>                    
+                        <td class="required">event</td>
+                        <td>String</td>
+                        <td>This method is going to look inside your User model and create the needed routes:</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- /column -->
+
+    <!-- column -->
+    <div class="col w-md lter b-l">
+      <div class="vbox">
+        <div class="wrapper b-b b-light">
+          <div class="font-thin h4">Header</div>
+          <small class="text-muted">with fluid height</small>
+        </div>
+        <div class="row-row">
+          <div class="cell">
+            <div class="cell-inner">
+              <div class="wrapper-md">
+                This is the scrollable content
+                <p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p>
+                You got the bottom
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="padder b-t b-light text-center">
+          <div class="m-xs">Footer with fluid height</div>
+        </div>
+      </div>
+    </div>
+    <!-- /column -->
+  </div>
 </div>
 <% end %>
