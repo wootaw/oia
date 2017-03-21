@@ -27,11 +27,11 @@
               <ul class="nav nav-cata bg-dark dker">
               <% @change.parts(@project, :documents).each do |doc| %>
                 <li class="heading">
-                  <a href="#<%= doc.name %>" v-smoothscroll="'#scroll-container'"><%= doc.summary %></a>
+                  <a href="<%= @project.name %>/<%= doc.name %>" data-target="#<%= doc.name %>" v-smoothscroll="'#scroll-container'"><%= doc.summary %></a>
                   <ul class="nav list-group alt">
                     <% @change.parts(doc, :resources).each do |res| %>
                     <li class="list-group-item lt">
-                      <a class="media" href="#<%= res.slug %>" v-smoothscroll="'#scroll-container'">
+                      <a class="media" href="<%= @project.name %>/<%= res.slug %>" data-target="#<%= res.slug %>" v-smoothscroll="'#scroll-container'">
                         <span class="label <%= method_color(res.method) %> pull-left"><%= res.method.size > 4 ? res.method[0..2] : res.method %></span>
                         <div class="media-body">
                           <h5><%= res.summary %></h5>

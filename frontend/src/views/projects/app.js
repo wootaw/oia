@@ -33,8 +33,12 @@ $(function() {
         bind(el, binding) {
           $(el).on('click', function(e) {
             e.preventDefault();
-            smoothscroll($($(this).attr('href'))[0], 500, undefined, $(binding.value)[0]);
-          })
+            let id = $(this).attr('href').split('/')[1];
+            let parts = location.pathname.split('/');
+            smoothscroll($(`#${id}`)[0], 500, function() {
+              window.history.pushState("", "", `/${parts[1]}/${parts[2]}/${id}`);
+            }, $(binding.value)[0]);
+          });
         }
       },
 
@@ -77,6 +81,13 @@ $(function() {
     //     return path + id;
     //   }
     // },
+
+    mounted() {
+      let parts = location.pathname.split('/');
+      if (parts.length > 3) {
+        smoothscroll($(`#${parts[3]}`)[0], 500, undefined, $('#scroll-container')[0]);
+      }
+    },
 
     data: {
       sign: 0,
