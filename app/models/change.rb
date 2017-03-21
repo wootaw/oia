@@ -3,8 +3,7 @@ class Change < ApplicationRecord
 
   belongs_to :project
 
-  validates :version, presence: true, uniqueness: { scope: :project }
-  validates :position, presence: true
+  validates :version, presence: true, uniqueness: { scope: :project_id }
 
   acts_as_list scope: [:project_id]
   

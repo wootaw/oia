@@ -1,0 +1,88 @@
+@keyframes in {
+  0% {
+    opacity: 0;
+    transform-origin: 50% 50%;
+    transform: scale(0.8, 0.8);
+    filter: blur(90px);
+  }
+
+  100% {
+    opacity: 1;
+    transform-origin: 50% 50%;
+    transform: scale(1.01, 1.01);
+    filter: blur(0px);
+  }
+}
+
+@keyframes out {
+  0% {
+    opacity: 1;
+    transform-origin: 50% 50%;
+    transform: scale(1,1);
+    filter: blur(0px);
+  }
+
+  100% {
+    opacity: 0;
+    transform-origin: 50% 50%;
+    transform: scale(0.8, 0.8);
+    filter: blur(90px);
+    // display: none;
+  }
+}
+
+@keyframes slide-out {
+  0% {
+    opacity: 0;
+    transform-origin: 0 0;
+    transform: scale(0.5, 0.5);
+  }
+
+  100% {
+    opacity: 1;
+    transform-origin: 0 0;
+    transform: scale(1,1);
+  }
+}
+
+@keyframes alert-in {
+  0% {
+    opacity: 0;
+    transform-origin: 50% 50%;
+    transform: scale(0.8, 0.8);
+    // filter: blur(90px);
+  }
+
+  100% {
+    opacity: 1;
+    transform-origin: 50% 50%;
+    transform: scale(1, 1);
+    // filter: blur(0px);
+  }
+}
+
+@keyframes hor-in {
+  0% {
+    transform-origin: left 0;
+    transform: scaleX(0.1);
+  }
+
+  100% {
+    transform-origin: left 0;
+    transform: scaleX(1);
+  }
+}
+
+@keyframes ver-out {
+  0% {
+    opacity: 1;
+    transform: scaleY(1);
+    // display: block;
+  }
+
+  100% {
+    opacity: 0;
+    transform: scaleY(0);
+    // display: none;
+  }
+}

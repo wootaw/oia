@@ -2,6 +2,7 @@ import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap/dist/js/bootstrap'
 import 'es6-shim'
 import 'ASSET/scss/app.scss'
+import 'ASSET/scss/highlight.css'
 import 'VENDOR/font-awesome/css/font-awesome.min.css'
 
 import Vue from 'vue'
@@ -18,6 +19,8 @@ $(function() {
     el: '#app',
 
     mixins: [Sign],
+
+    // props: ['resources'],
 
     directives: {
       scrollspy: {
@@ -39,22 +42,47 @@ $(function() {
         inserted(el, binding) {
           $(el).stick_in_parent(binding.value);
         }
-      }
+      },
+
+      // colorpath: {
+      //   bind(el, binding) {
+      //     // $(el).scrollspy(binding.value);
+      //     $(el).html()
+      //   }
+      // }
     },
     // components: {
     //   'projects-list':  ProjectsList
     // },
 
-    methods: {
-      // projectCreated(project) {
-      //   this.lastest = project;
-      // }
-    },
+    // computed: {
+    //   colourPath(id, path) {
+    //     return path + id;
+    //   }
+    // },
+
+    // methods: {
+    //   // projectCreated(project) {
+    //   //   this.lastest = project;
+    //   // }
+    //   setResources(id, pname, type) {
+    //     // ifresources[id]
+    //     if (this.resources[id] == undefined) {
+    //       this.resources[id] = {};
+    //     }
+    //     this.resources[id][pname] = type;
+    //   },
+
+    //   colourPath(id, path) {
+    //     return path + id;
+    //   }
+    // },
 
     data: {
       sign: 0,
       modal: 0,
-      lastest: null
+      lastest: null,
+      // resources: {}
     }
   });
 });

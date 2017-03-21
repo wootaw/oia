@@ -28,6 +28,17 @@ module ApplicationHelper
     "<link rel=\"stylesheet\" href=\"#{src}\">".html_safe
   end
 
+  def markdown(text)
+    return nil if text.blank?
+    # Rails.cache.fetch(['markdown', Digest::MD5.hexdigest(text)]) do
+      sanitize_markdown(Apiwoods::Markdown.call(text))
+    # end
+  end
+  
+  def sanitize_markdown(html)
+    raw Sanitize.fragment(html, Apiwoods::Sanitize::DEFAULT)
+  end
+
   def method_color(m)
     {
       'GET'    => 'label-success', 
@@ -35,5 +46,23 @@ module ApplicationHelper
       'PUT'    => 'label-primary', 
       'DELETE' => 'label-danger' 
     }[m.to_s]
+  end
+
+  def location_color(l)
+    {
+      'header'  => 'text-muted',
+      'path'    => 'text-danger',
+      'query'   => 'text-info-dker',
+      'form'    => 'text-warning',
+      'body'    => 'text-info',
+      'cookie'  => '',
+    }[l]
+  end
+
+  def colour_path(path, parameters)
+    ps = parameters.select { |e| e.path? }.map(&:name)
+    rs = path
+    ps.each { |e| rs = rs.gsub(Regexp.new("(:#{e})"), '<span class="text-danger">\1</span>') }
+    rs
   end
 end

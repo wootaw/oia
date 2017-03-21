@@ -16,6 +16,7 @@ gem 'coffee-rails', '~> 4.2'
 gem 'turbolinks', '~> 5'
 gem 'jbuilder', '~> 2.5'
 gem 'json-schema'
+
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 3.0'
 # Use ActiveModel has_secure_password
@@ -23,6 +24,11 @@ gem 'json-schema'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
+gem 'sanitize'
+gem 'html-pipeline'
+gem 'html-pipeline-rouge_filter'
+gem 'redcarpet'
+gem 'auto-space'
 
 gem 'devise'
 gem 'cancancan'

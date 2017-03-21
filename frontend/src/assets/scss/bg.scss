@@ -133,6 +133,8 @@
 
       > th {
         border-bottom: 1px;
+        color: $primary_color_lt;
+        background-color: $dark_color_dk;
       }
 
       > td {
@@ -186,5 +188,5 @@
 
 .no-bg {
   color: inherit;
-  background-color: transparent;
+  background-color: transparent !important;
 }

@@ -1,6 +1,6 @@
 <% content_for :assets do %>
 <%= webpack_javascript_include_tag 'projects' %>
-<!-- <%= webpack_stylesheet_link_tag 'projects' %> -->
+<%= webpack_stylesheet_link_tag 'projects' %>
 <% end %>
 
 <% content_for :content do %>
@@ -340,16 +340,13 @@
             <div>
               <% @change.parts(@project, :documents).each do |doc| %>
               <div id="<%= doc.name %>" class="panel panel-doc m-b-none no-radius">
-                <div class="panel-heading">
-                  <h2><%= doc.summary %></h2>
-                </div>
+                <div class="panel-heading"><h2><%= doc.summary %></h2></div>
                 <div class="panel-body">
-                  <% @change.parts(doc, :descriptions).each do |desc| %>
-                  <p><%= desc.content %></p>
-                  <% end %>
+                  <%= markdown(@change.parts(doc, :descriptions).map(&:content).join("\n")) %>
                 </div>
               </div>
               <% @change.parts(doc, :resources).each do |res| %>
+              <% parameters = @change.parts(res, :parameters) %>
               <div id="<%= res.slug %>" class="panel panel-res">
                 <div class="panel-heading bg-green dk" v-sticky="{ offset_top: 50, container: '#scroll-container' }">
                   <div class="clearfix">
@@ -361,43 +358,38 @@
                         <i class="fa fa-circle text-success pull-right text-xs m-t-sm"></i>
                       </div>
                       <span class="label <%= method_color(res.method) %> pull-left m-r-sm"><%= res.method %></span>
-                      <span class="label label-default pull-left"><%= res.path %></span>
+                      <span class="label pull-left"><%= colour_path(res.path, parameters).html_safe %></span>
                     </div>
                   </div>
                 </div>
                 <div class="panel-body">
-                  <div class="wrapper res-desc bg-green">
+                  <div class="wrapper bg-light">
                     <div class="panel-body">
-                      <% @change.parts(res, :descriptions).each do |desc| %>
-                      <p><%= desc.content %></p>
-                      <% end %>
+                      <%= markdown(@change.parts(res, :descriptions).map(&:content).join("\n")) %>
                     </div>
                   </div>
 
                   <div class="panel panel-default bg-dark no-radius no-border">
-                    <div class="panel-heading dker bg-gd">
+                    <div class="panel-heading dker">
                       <span class="label bg-danger pull-right m-t-xs">4 left</span>
-                      <b>Parameters</b>
+                      <h4>Parameters</h4>
                     </div>
                     <table class="table table-striped m-b-none">
-                      <thead>
-                        <tr>
-                          <th class="text-center">Field</th>
-                          <th>Type</th>
-                          <th>Description</th>
-                        </tr>
-                      </thead>
                       <tbody>
-                        <% @change.parts(res, :parameters).each do |param| %>
+                        <% parameters.each do |param| %>
                         <tr>
-                          <td><%= param.name %></td>
-                          <td><%= param.data_type %></td>
-                          <td>
-                            <b><%= param.summary %></b><br/>
-                            <% @change.parts(param, :descriptions).each do |desc| %>
-                            <p><%= desc.content %></p>
+                          <td class="<%= location_color(param.location) %>">
+                            <i class="fa fa-lv"></i>
+                            <span><%= param.name %></span>
+                            <% if param.required %>
+                              <i class="fa fa-circle text-success pull-right text-xxs m-t-sm"></i>
                             <% end %>
                           </td>
+                          <td>
+                            <b><%= param.summary %></b><br/>
+                            <%= markdown(@change.parts(param, :descriptions).map(&:content).join("\n")) %>
+                          </td>
+                          <td><%= param.data_type %><% if param.array %>[]<% end %></td>
                         </tr>
                         <% end %>
                       </tbody>
@@ -405,29 +397,20 @@
                   </div>
 
                   <div class="panel panel-default bg-dark no-radius no-border">
-                    <div class="panel-heading dker bg-gd">
+                    <div class="panel-heading dker">
                       <span class="label bg-danger pull-right m-t-xs">4 left</span>
-                      <b>Responses</b>
+                      <h4>Responses</h4>
                     </div>
                     <table class="table table-striped m-b-none">
-                      <thead>
-                        <tr>
-                          <th class="text-center">Field</th>
-                          <th>Type</th>
-                          <th>Description</th>
-                        </tr>
-                      </thead>
                       <tbody>
                         <% @change.parts(res, :responses).each do |resp| %>
                         <tr class="resp-lv<%= resp.ancestor.to_s.split('.').size %>">
                           <td><i class="fa fa-lv"></i><span><%= resp.name %></span></td>
-                          <td><%= resp.data_type %></td>
                           <td>
                             <b><%= resp.summary %></b><br/>
-                            <% @change.parts(resp, :descriptions).each do |desc| %>
-                            <p><%= desc.content %></p>
-                            <% end %>
+                            <%= markdown(@change.parts(resp, :descriptions).map(&:content).join("\n")) %>
                           </td>
+                          <td><%= resp.data_type %><% if resp.array %>[]<% end %></td>
                         </tr>
                         <% end %>
                       </tbody>

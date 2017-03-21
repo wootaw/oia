@@ -23,7 +23,7 @@ class Description < ApplicationRecord
   end
 
   def self.expects(attrs)
-    (attrs[:descriptions] || []).map { |row| row.join(" ").strip }.compact.map do |s|
+    (attrs[:descriptions] || []).map { |row| row.join(" ").rstrip }.compact.map do |s|
       attributes_by_json(s)
     end
   end
