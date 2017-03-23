@@ -27,7 +27,7 @@ class Resource < ApplicationRecord
   accepts_nested_attributes_for :parameters
   accepts_nested_attributes_for :responses
   accepts_nested_attributes_for :descriptions
-
+  current_set :parameters, :responses
   # enum state: {
   #   mounted: 1,
   #   running: 99

@@ -24,7 +24,7 @@
                 </div>
               </div> -->
 
-              <ul class="nav nav-cata bg-dark dker">
+              <ul class="nav nav-cata bg-dark dker" v-urlspy>
               <% @change.parts(@project, :documents).each do |doc| %>
                 <li class="heading">
                   <a href="<%= @project.name %>/<%= doc.name %>" data-target="#<%= doc.name %>" v-smoothscroll="'#scroll-container'"><%= doc.summary %></a>
@@ -338,21 +338,19 @@
         <div class="row-row">
           <div id='scroll-container' class="cell" v-scrollspy="{target: '#nav-cata', offset: 50}">
             <div>
-              <% @change.parts(@project, :documents).each do |doc| %>
-              <div id="<%= doc.name %>" class="panel panel-doc m-b-none no-radius">
-                <div class="panel-heading"><h2><%= doc.summary %></h2></div>
-                <div class="panel-body">
-                  <%= markdown(@change.parts(doc, :descriptions).map(&:content).join("\n")) %>
-                </div>
+
+              <div id="<%= @document.name %>" class="panel panel-doc m-b-none no-radius">
+                <div class="panel-heading"><h2><%= @document.summary %></h2></div>
+                <div class="panel-body"><%= markdown(@document.raw_description(@change)) %></div>
               </div>
-              <% @change.parts(doc, :resources).each do |res| %>
-              <% parameters = @change.parts(res, :parameters) %>
+              <% @resources.each do |res| %>
+              <% parameters = res.the_parameters(@change) %>
               <div id="<%= res.slug %>" class="panel panel-res">
                 <div class="panel-heading bg-green dk" v-sticky="{ offset_top: 50, container: '#scroll-container' }">
                   <div class="clearfix">
                     <div class="clear">
                       <div class="h3 m-t-xs m-b-sm">
-                        <span><%= doc.summary %></span>
+                        <span><%= @document.summary %></span>
                         <span class="sep">/</span>
                         <span><%= res.summary %></span>
                         <i class="fa fa-circle text-success pull-right text-xs m-t-sm"></i>
@@ -362,11 +360,9 @@
                     </div>
                   </div>
                 </div>
-                <div class="panel-body">
+                <div class="panel-body no-padder">
                   <div class="wrapper bg-light">
-                    <div class="panel-body">
-                      <%= markdown(@change.parts(res, :descriptions).map(&:content).join("\n")) %>
-                    </div>
+                    <%= markdown(res.raw_description(@change)) %>
                   </div>
 
                   <div class="panel panel-default bg-dark no-radius no-border">
@@ -387,7 +383,7 @@
                           </td>
                           <td>
                             <b><%= param.summary %></b><br/>
-                            <%= markdown(@change.parts(param, :descriptions).map(&:content).join("\n")) %>
+                            <%= markdown(param.raw_description(@change)) %>
                           </td>
                           <td><%= param.data_type %><% if param.array %>[]<% end %></td>
                         </tr>
@@ -403,12 +399,12 @@
                     </div>
                     <table class="table table-striped m-b-none">
                       <tbody>
-                        <% @change.parts(res, :responses).each do |resp| %>
+                        <% res.the_responses(@change).each do |resp| %>
                         <tr class="resp-lv<%= resp.ancestor.to_s.split('.').size %>">
                           <td><i class="fa fa-lv"></i><span><%= resp.name %></span></td>
                           <td>
                             <b><%= resp.summary %></b><br/>
-                            <%= markdown(@change.parts(resp, :descriptions).map(&:content).join("\n")) %>
+                            <%= markdown(resp.raw_description(@change)) %>
                           </td>
                           <td><%= resp.data_type %><% if resp.array %>[]<% end %></td>
                         </tr>
@@ -417,12 +413,10 @@
                     </table>
                   </div>
                 </div>
-
               </div>
               <% end %>
-              <% end %>
-
-              <div class="panel panel-doc m-b-none no-radius">
+<!-- 
+              <div id="testsc" class="panel panel-doc m-b-none no-radius">
                 <div class="panel-heading">
                   <h2>Contacts</h2>
                 </div>
@@ -453,11 +447,7 @@
                     <p>There are a few easy ways to quickly get started with Bootstrap, each one appealing to a different skill level and use case. Read through to see what suits your particular needs.<p/>
                   </div>
 
-                  <!-- <h4 class="padder">Parameters</h4> -->
-                  <!-- <div class="wrapper"> -->
                   <h4 class="padder">Parameters</h4>
-                    <!-- <div class="panel panel-io no-radius"> -->
-                      <!-- <div class="panel-heading">Parameters</div> -->
                       
                   <table class="table table-striped m-b-none">
                     <thead>
@@ -495,13 +485,9 @@
                       </tr>
                     </tbody>
                   </table>
-                    <!-- </div> -->
-                  <!-- </div> -->
 
-                  <!-- <div class="wrapper"> -->
                   <h4 class="padder">Respones</h4>
-                    <!-- <div class="panel panel-io no-radius"> -->
-                      <!-- <div class="panel-heading">Respones</div> -->
+                    <div class="panel panel-io no-radius">
 
                   <table class="table table-striped m-b-none">
                     <thead>
@@ -539,11 +525,7 @@
                       </tr>
                     </tbody>
                   </table>
-                    <!-- </div> -->
-                  <!-- </div> -->
-
                 </div>
-
               </div>
 
               <div class="panel panel-res m-b-none">
@@ -594,9 +576,8 @@
                     </tbody>
                   </table>
                 </div>
-                
               </div>
-
+ -->
             </div>
           </div>
         </div>

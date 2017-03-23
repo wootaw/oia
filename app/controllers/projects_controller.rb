@@ -40,7 +40,23 @@ class ProjectsController < ApplicationController
       if @project.nil?
         render_404
       elsif can?(:read, @project)
-        @change  = @project.lastest_change
+        @change   = @project.lastest_change
+        @document = if params[:slug].present?
+          resource = @project.the_resources(@change).find_by(slug: params[:slug])
+          if resource.nil?
+            @project.the_documents(@change).find_by(name: params[:slug])
+          else
+            resource.document
+          end
+        else
+          @project.the_documents(@change).take
+        end
+        
+        if @document.nil?
+          render_404
+        else
+          @resources = @document.the_resources(@change)
+        end
       else
         render_404
       end

@@ -29,6 +29,16 @@ module Versionable
       attrs["#{field.to_s.tableize}_attributes".to_sym] = lastest unless lastest.length == 0
     end
 
+    def self.current_set(*args)
+      args.each do |m|
+        self.class_eval <<-CODE
+          def the_#{m}(change)
+            list_by_version(:#{m}, change.position)
+          end
+        CODE
+      end
+    end
+
     def replace_descriptions(data, attrs)
       descs  = lastest_change.nil? ? [] : lastest_change.parts(self, :descriptions)
       desc_lastest = descs.map { |o| { key: o.key, position: o.position, id: o.id } }
@@ -72,11 +82,15 @@ module Versionable
       end
     end
 
+    def raw_description(change)
+      list_by_version(:descriptions, change.position).map(&:content).join("\n")
+    end
+
     def list_by_version(set, number)
       recs = self.send(set)
       tn   = recs.table_name
-      recs = recs.where("version <= ? AND (discard_version IS NULL OR discard_version IS NOT NULL AND discard_version > ?)", number, number)
-      max  = recs.select("MAX(version) AS mv, position").group(:position)
+      recs = recs.where("#{tn}.version <= ? AND (#{tn}.discard_version IS NULL OR #{tn}.discard_version IS NOT NULL AND #{tn}.discard_version > ?)", number, number)
+      max  = recs.select("MAX(#{tn}.version) AS mv, #{tn}.position").group(:position)
       recs.joins("
         INNER JOIN (#{max.to_sql}) AS maxpos ON maxpos.mv = #{tn}.version AND maxpos.position = #{tn}.position
       ").order(:position)

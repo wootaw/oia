@@ -18,6 +18,7 @@ class Document < ApplicationRecord
   accepts_nested_attributes_for :flags
   accepts_nested_attributes_for :descriptions
   accepts_nested_attributes_for :resources
+  current_set :resources
 
   def self.attributes_by_json(data)
     attrs = data.slice(:name, :summary)

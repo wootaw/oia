@@ -28,5 +28,5 @@ Rails.application.routes.draw do
 
   match "/:owner_name" => "owners#show", via: [:get], as: :user_profile
   match "/:owner_name/:project_name" => "projects#show", via: [:get], as: :project_documents
-  match "/:owner_name/:project_name/:resource_slug" => "projects#show", via: [:get], as: :document_resources
+  match "/:owner_name/:project_name/:slug" => "projects#show", via: [:get], as: :document_resources
 end

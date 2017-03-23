@@ -9,6 +9,7 @@ import Vue from 'vue'
 import 'COMPONENT/signbox/UsersSignIn'
 import 'COMPONENT/signbox/UsersSignUp'
 import 'VIEW/projects/new'
+// import 'VIEW/projects/jquery.waypoints'
 import 'UTIL/sticky-kit'
 import smoothscroll from 'smoothscroll'
 import Sign from 'MIXIN/Sign'
@@ -28,6 +29,47 @@ $(function() {
           $(el).scrollspy(binding.value);
         }
       },
+
+      urlspy: {
+        bind(el, binding) {
+          $(document).on('activate.bs.scrollspy', function() {
+            let item = $('.list-group-item.active a', el);
+            if (item.length == 0) {
+              item = $('.heading.active > a', el);
+            }
+            if (item.length == 0) { return; }
+
+            let id = item.attr('href').split('/')[1];
+            let parts = location.pathname.split('/');
+            let url = `/${parts[1]}/${parts[2]}/${id}`;
+            if (url != location.pathname) {
+              window.history.replaceState("", "", url);
+            }
+          });
+        }
+      },
+
+      // more: {
+      //   $(document).on('activate.bs.scrollspy', function() {
+      //     let item = $(`${binding.value.target} .list-group-item.active a`);
+      //     if (item.length == 0) {
+      //       item = $(`${binding.value.target} .heading.active > a`);
+      //     }
+          
+      //     let id = item.attr('href').split('/')[1];
+      //     let parts = location.pathname.split('/');
+      //     let url = `/${parts[1]}/${parts[2]}/${id}`;
+      //     if (url != location.pathname) {
+      //       window.history.replaceState("", "", url);
+      //     }
+
+      //     // console.log(item.data('target'))
+      //     // console.log($('.panel-res:last-child').attr('id'))
+      //     if ($('.panel-res:last-child').attr('id') == item.data('target').substr(1)) {
+      //       console.log('----->')
+      //     }
+      //   });
+      // },
 
       smoothscroll: {
         bind(el, binding) {

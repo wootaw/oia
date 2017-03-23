@@ -11,6 +11,8 @@ class Project < ApplicationRecord
   has_many :tapes, dependent: :destroy
   has_many :version_changes, dependent: :destroy, class_name: 'Change'
 
+  has_many :resources, through: :documents
+
   validates :name, presence: true, length: { minimum: 2, maximum: 50 }, uniqueness: { scope: :owner }
   # validates :summary, presence: true
   validates :access_key, presence: true, uniqueness: true
@@ -18,6 +20,7 @@ class Project < ApplicationRecord
   validates :clazz, presence: true
 
   accepts_nested_attributes_for :documents
+  current_set :documents, :resources
 
   enum clazz: {
     jpublic:  40,
