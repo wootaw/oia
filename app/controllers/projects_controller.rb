@@ -42,7 +42,7 @@ class ProjectsController < ApplicationController
       elsif can?(:read, @project)
         @change   = @project.lastest_change
         @document = if params[:slug].present?
-          resource = @project.the_resources(@change).find_by(slug: params[:slug])
+          resource = @project.resources.find_by(slug: params[:slug])
           if resource.nil?
             @project.the_documents(@change).find_by(name: params[:slug])
           else

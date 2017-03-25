@@ -88,11 +88,12 @@ module Versionable
 
     def list_by_version(set, number)
       recs = self.send(set)
-      tn   = recs.table_name
-      recs = recs.where("#{tn}.version <= ? AND (#{tn}.discard_version IS NULL OR #{tn}.discard_version IS NOT NULL AND #{tn}.discard_version > ?)", number, number)
-      max  = recs.select("MAX(#{tn}.version) AS mv, #{tn}.position").group(:position)
+      # tn   = recs.table_name
+      recs = recs.where("#{set}.version <= ? AND (#{set}.discard_version IS NULL OR #{set}.discard_version IS NOT NULL AND #{set}.discard_version > ?)", number, number)
+      max  = recs.select("MAX(#{set}.version) AS mv, #{set}.position").group(:position)
+      
       recs.joins("
-        INNER JOIN (#{max.to_sql}) AS maxpos ON maxpos.mv = #{tn}.version AND maxpos.position = #{tn}.position
+        INNER JOIN (#{max.to_sql}) AS maxpos ON maxpos.mv = #{set}.version AND maxpos.position = #{set}.position
       ").order(:position)
     end
 

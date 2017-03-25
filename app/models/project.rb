@@ -20,7 +20,7 @@ class Project < ApplicationRecord
   validates :clazz, presence: true
 
   accepts_nested_attributes_for :documents
-  current_set :documents, :resources
+  current_set :documents
 
   enum clazz: {
     jpublic:  40,
