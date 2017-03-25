@@ -173,6 +173,61 @@ body {
         bottom: 0;
         left: 0;
       }
+
+      &.cell-over {
+        position: absolute;
+        z-index: 10;
+        background-color: rgba(0, 0, 0, 0.9);
+
+        .bg-loading {
+          background-position: center center;
+          background-color: rgba(255, 255, 255, 0.2);
+        }
+      }
+    }
+  }
+}
+
+.border-loading {
+  width: 100%;
+  height: 100px;
+  margin: 0;
+  position: absolute;
+
+  &.top {
+    top: 0;
+  }
+  
+  &.doing {
+    .ball {
+      display: none;
+    }
+    background-image: url("../images/loading.svg");
+    background-repeat: no-repeat;
+    background-position: center 12px;
+  }
+
+  .ball {
+    width: 10px;
+    height: 10px;
+    border-radius: 5px;
+    display: block;
+    position: absolute;
+    
+
+    &.left {
+      top: 12px;
+      background-color: $primary_color_dker;
+    }
+
+    &.center {
+      top: 20px;
+      background-color: $primary_color;
+    }
+
+    &.right {
+      top: 28px;
+      background-color: $primary_color_dker;
     }
   }
 }
@@ -697,22 +752,6 @@ fieldset[disabled] .btn-dark.active {
     padding-right: 25px;
     padding-left: 25px;
   }
-}
-
-.pos-rlt {
-  position: relative;
-}
-
-.pos-stc {
-  position: static !important;
-}
-
-.pos-abt {
-  position: absolute;
-}
-
-.pos-fix {
-  position: fixed;
 }
 
 .dp-none {
@@ -2146,6 +2185,22 @@ a.text-#000000:hover {
 }
 i.fa-lv {
   height: 10px;
+}
+
+.pos-rlt {
+  position: relative;
+}
+
+.pos-stc {
+  position: static !important;
+}
+
+.pos-abt {
+  position: absolute !important;
+}
+
+.pos-fix {
+  position: fixed;
 }
 @import "bg.scss";
 @import "form.scss";

@@ -10,6 +10,7 @@ import Vue from 'vue'
 import 'COMPONENT/signbox/UsersSignIn'
 import 'COMPONENT/signbox/UsersSignUp'
 import BorderLoading from 'COMPONENT/loadings/BorderLoading'
+import DocumentPanel from 'VIEW/documents/DocumentPanel'
 import 'VIEW/projects/new'
 // import 'VIEW/projects/jquery.waypoints'
 import 'UTIL/sticky-kit'
@@ -24,8 +25,10 @@ $(function() {
 
     mixins: [Sign],
 
-    // props: ['resources'],
-    components: { BorderLoading },
+    components: { 
+      'border-loading': BorderLoading,
+      'document-panel': DocumentPanel
+    },
 
     directives: {
       scrollspy: {
@@ -58,15 +61,7 @@ $(function() {
               }
             }
           }).on('top.bs.scrollspy', function(e) {
-            // console.log('&&&&')
             binding.value('top', $('.panel-doc:first-child').attr('id'));
-            // if ($('.panel-doc:first-child').attr('id') == id) {
-            //   binding.value('top');
-            // }
-
-            // if ($('.panel-doc:last-child .panel-res:last-child').attr('id') == id) {
-            //   binding.value('bottom');
-            // }
           });
         }
       },
@@ -90,32 +85,19 @@ $(function() {
         }
       },
 
-      // colorpath: {
-      //   bind(el, binding) {
-      //     // $(el).scrollspy(binding.value);
-      //     $(el).html()
-      //   }
-      // }
     },
-    // components: {
-    //   'projects-list':  ProjectsList
-    // },
-
-    // computed: {
-    //   colourPath(id, path) {
-    //     return path + id;
-    //   }
-    // },
 
     methods: {
-
       scrolledTo(v, slug) {
         this.loadTop = slug;
       },
 
       documentLoaded(doc, location) {
-        console.log(doc);
-        console.log(location);
+        switch(location) {
+          case 'top':
+            this.topdocs.splice(0, 0, doc);
+            break;
+        }
       }
     },
 
@@ -124,19 +106,14 @@ $(function() {
       if (parts.length > 3) {
         smoothscroll($(`#${parts[3]}`)[0], 500, undefined, $('#scroll-container')[0]);
       }
-
-      // this.$on('documentloaded', this.documentLoaded);
     },
 
     data: {
       sign: 0,
       modal: 0,
       lastest: null,
-      // firstTop: true,
       loadTop: false,
       topdocs: []
-      // version: -1
-      // resources: {}
     }
   });
 });

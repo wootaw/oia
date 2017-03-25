@@ -13,7 +13,8 @@ class DocumentsService {
     return xhr({
       url: `/documents/${slug}.json`,
       body: query,
-      prefix: 'page'
+      prefix: 'page',
+      dt: 'json'
     });
   }
 }
