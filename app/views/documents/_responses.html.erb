@@ -1,0 +1,20 @@
+<div class="panel panel-default bg-dark no-radius no-border">
+  <div class="panel-heading dker">
+    <span class="label bg-danger pull-right m-t-xs">4 left</span>
+    <h4>Responses</h4>
+  </div>
+  <table class="table table-striped m-b-none">
+    <tbody>
+      <% responses.each do |resp| %>
+      <tr class="resp-lv<%= resp.ancestor.to_s.split('.').size %>">
+        <td><i class="fa fa-lv"></i><span><%= resp.name %></span></td>
+        <td>
+          <b><%= resp.summary %></b><br/>
+          <%= markdown(resp.raw_description(change)) %>
+        </td>
+        <td><%= resp.data_type %><% if resp.array %>[]<% end %></td>
+      </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

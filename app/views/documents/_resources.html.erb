@@ -1,0 +1,24 @@
+<% resources.each do |res| %>
+<% parameters = res.the_parameters(change) %>
+<div id="<%= res.slug %>" class="panel panel-res">
+  <div class="panel-heading bg-green dk" v-sticky="{ offset_top: 50, container: '#scroll-container' }">
+    <div class="clearfix">
+      <div class="clear">
+        <div class="h3 m-t-xs m-b-sm">
+          <span><%= document.summary %></span>
+          <span class="sep">/</span>
+          <span><%= res.summary %></span>
+          <i class="fa fa-circle text-success pull-right text-xs m-t-sm"></i>
+        </div>
+        <span class="label <%= method_color(res.method) %> pull-left m-r-sm"><%= res.method %></span>
+        <span class="label pull-left"><%= colour_path(res.path, parameters).html_safe %></span>
+      </div>
+    </div>
+  </div>
+  <div class="panel-body no-padder">
+    <div class="wrapper bg-light"><%= markdown(res.raw_description(change)) %></div>
+    <%= render partial: "documents/parameters", locals: { parameters: parameters, change: change } %>
+    <%= render partial: "documents/responses", locals: { responses: res.the_responses(@change), change: change } %>
+  </div>
+</div>
+<% end %>
