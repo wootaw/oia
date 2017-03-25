@@ -35,6 +35,7 @@ class ApplicationController < ActionController::Base
     
     respond_to do |format|
       format.html { render template: "/errors/#{fname}", status: status }
+      format.json { render json: { code: status, msgs: 'Can not get data' }, status: status }
       format.all  { render nothing: true, status: status }
     end
   end

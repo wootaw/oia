@@ -1,11 +1,12 @@
 const rootPaths = { api: '/api/v1', page: '' }
-const xhr = ({ method='get', url, body=null, prefix='api' }) => {
+const xhr = ({ method='get', url, body=null, prefix='api', dt='html' }) => {
   const defer = $.Deferred()
 
   $.ajax({
     type: method,
     url: rootPaths[prefix] + url,
-    data: body
+    data: body,
+    dataType: dt
     // crossDomain: true, // 跨域
     // xhrFields: { withCredentials: true } // 跨域允许带上 cookie
   })
@@ -13,9 +14,9 @@ const xhr = ({ method='get', url, body=null, prefix='api' }) => {
     if (/^(nocontent|success)$/.test(textStatus)) {
       defer.resolve({ data: data, code: jqxhr.status })
     } else {
-      defer.resolve({ data: data.responseJSON, code: data.status })
+      defer.resolve({ data: JSON.parse(data.responseJSON), code: data.status })
     }
-  })
+  });
 
   return defer.promise()
 }
