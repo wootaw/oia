@@ -21,6 +21,7 @@
 </template>
 
 <script>
+import 'UTIL/sticky-kit'
 // import ResourceItem from 'COMPONENT/sidebars/ResourceItem'
 export default {
   props: ['resource', 'document'],
@@ -38,6 +39,16 @@ export default {
       }[this.resource.method]);
       return r;
     }
+  },
+
+  directives: {
+
+    sticky: {
+      inserted(el, binding) {
+        $(el).stick_in_parent(binding.value);
+      }
+    },
+
   },
 }
 </script>

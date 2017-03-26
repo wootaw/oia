@@ -1,5 +1,5 @@
 <template>
-  <div :class="classes">
+  <div :class="classes" v-if="more">
     <i class="ball left"></i>
     <i class="ball center"></i>
     <i class="ball right"></i>
@@ -14,6 +14,7 @@ export default {
   data () {
     return {
       doing: false,
+      more: true
     }
   },
 
@@ -30,7 +31,7 @@ export default {
   watch: {
     slug(nv, ov) {
       if (this.doing) { return; }
-      
+
       this.doing = true;
       documentsService.getPrev(nv, {
         'owner_name': this.owner,
@@ -39,7 +40,13 @@ export default {
         'location': this.location
       }).then(d => {
         this.doing = false;
-        this.$emit('documentloaded', d.data.documents, this.location);
+        let doc = d.data.documents;
+        if (doc == undefined) {
+          this.more = false;
+        } else {
+          this.$emit('documentloaded', doc, this.location);
+        }
+        
       });
     }
   }

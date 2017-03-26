@@ -97,7 +97,7 @@
       this.refresh()
     }
 
-    if (scrollTop <= 150) {
+    if (scrollTop <= 150 && this.loadingBar.length > 0) {
       var top = scrollTop - 50;
       this.loadingBar.css({ top: top });
       this.lbLeft.css({ left: (1 - top / 100) * this.loadingWidth / 2 - 12 })

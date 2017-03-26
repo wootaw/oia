@@ -83,6 +83,12 @@
           </border-loading>
           <div id='scroll-container' class="cell" v-scrollspy="{target: '#nav-cata', offset: 50}">
             <div class="m-t-xxxl">
+              <document-panel
+                v-for="doc of topdocs"
+                :document="doc"
+                :key="doc.id"
+              >
+              </document-panel>
               <div id="<%= @document.name %>" class="panel panel-doc m-b-none no-radius">
                 <div class="panel-heading"><h2><%= @document.summary %></h2></div>
                 <div class="panel-body">
