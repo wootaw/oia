@@ -1,8 +1,8 @@
 <template>
-  <div :id="document.name" class="panel panel-doc m-b-none no-radius" v-recalc-sticky>
+  <div :id="document.name" class="panel panel-doc m-b-none no-radius" v-recalc-sticky="dir" v-sticky="{ offset_top: 50, container: '#scroll-container' }">
     <div class="panel-heading"><h2>{{document.summary}}</h2></div>
     <div class="panel-body">
-      <div class="wrapper">{{document.md_description}}</div>
+      <div class="wrapper" v-html="document.md_description"></div>
       <resource-panel
         v-for="res of document.resources"
         :document="document"
@@ -18,7 +18,7 @@
 import ResourcePanel from 'VIEW/documents/ResourcePanel'
 import smoothscroll from 'smoothscroll'
 export default {
-  props: ['document'],
+  props: ['document', 'dir'],
 
   components: {
     'resource-panel': ResourcePanel
@@ -31,10 +31,29 @@ export default {
   },
 
   directives: {
+    sticky: {
+      inserted(el, binding) {
+        // $(el).stick_in_parent(binding.value);
+        let opts = binding.value;
+        opts.recalc_every = 1;
+        $('.panel-body .panel-res > .panel-heading', el).stick_in_parent(opts);
+      }
+    },
+
     recalcSticky: {
       inserted(el, binding) {
-        $(document.body).trigger("sticky_kit:recalc");
-        smoothscroll($('.panel-body .panel-res:last-child', el)[0], 0, undefined, $('#scroll-container')[0]);
+        let lc = '.panel-body .panel-res:last-child';
+        // switch(binding.value) {
+        //   case 'top':
+        //     $(document.body).trigger("sticky_kit:recalc");
+        //     // smoothscroll($(lc, el)[0], 0, undefined, $('#scroll-container')[0]);
+        //     break;
+        //   case 'bottom':
+        //     // smoothscroll($(lc, $(el).prev())[0], 0, function() {
+        //     //   $(document.body).trigger("sticky_kit:recalc");
+        //     // }, $('#scroll-container')[0]);
+        //     break;
+        // }
       }
     }
   }

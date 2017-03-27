@@ -1,6 +1,6 @@
 <template>
   <div :id="resource.slug" class="panel panel-res">
-    <div class="panel-heading bg-green dk" v-sticky="{ offset_top: 50, container: '#scroll-container' }">
+    <div class="panel-heading bg-green dk">
       <div class="clearfix">
         <div class="clear">
           <div class="h3 m-t-xs m-b-sm">
@@ -15,14 +15,13 @@
       </div>
     </div>
     <div class="panel-body no-padder">
-      <div class="wrapper bg-light">{{resource.md_description}}</div>
+      <div class="wrapper bg-light" v-html="resource.md_description"></div>
     </div>
   </div>
 </template>
 
 <script>
 import 'UTIL/sticky-kit'
-// import ResourceItem from 'COMPONENT/sidebars/ResourceItem'
 export default {
   props: ['resource', 'document'],
 
@@ -43,11 +42,12 @@ export default {
 
   directives: {
 
-    sticky: {
-      inserted(el, binding) {
-        $(el).stick_in_parent(binding.value);
-      }
-    },
+    // sticky: {
+    //   inserted(el, binding) {
+    //     // console.log(el);
+    //     $(el).stick_in_parent(binding.value);
+    //   }
+    // },
 
   },
 }
