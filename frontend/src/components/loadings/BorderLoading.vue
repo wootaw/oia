@@ -1,5 +1,5 @@
 <template>
-  <div :class="classes" v-if="more">
+  <div :class="classes" v-if="more" v-scroll="{ scroll: scroll, max: max, location: location, load: loadMore }">
     <i class="ball left"></i>
     <i class="ball center"></i>
     <i class="ball right"></i>
@@ -9,7 +9,7 @@
 <script>
 import documentsService from 'SERVICE/DocumentsService';
 export default {
-  props: ['owner', 'project', 'version', 'location', 'slug'],
+  props: ['owner', 'project', 'version', 'location', 'scroll', 'max'],
 
   data () {
     return {
@@ -28,12 +28,55 @@ export default {
     }
   },
 
-  watch: {
-    slug(nv, ov) {
+  directives: {
+    scroll: {
+      inserted(el, binding) {
+        $('i.center', el).css({ left: $(el).width() / 2 - 5 });
+      },
+
+      update(el, binding) {
+        if ($(el).data('init') == undefined) {
+          $(el).data('init', true);
+        } else {
+          switch(binding.value.location) {
+            case 'top':
+              if (binding.value.scroll <= 150) {
+                let top = binding.value.scroll - 50;
+                let d = (1 - top / 100) * $(el).width() / 2 - 12;
+                $(el).css({ top: top });
+                $('i.left', el).css({ left: d });
+                $('i.right', el).css({ right: d });
+                if (top == 0) {
+                  let id = $('.panel-doc:first-child').attr('id');
+                  binding.value.load('top', id);
+                }
+              }
+              break;
+            case 'bottom':
+              if (binding.value.scroll >= binding.value.max - 100) {
+                let bottom = binding.value.max - binding.value.scroll;
+                let d = (1 - bottom / 100) * $(el).width() / 2 - 12;
+                $(el).css({ bottom: -1 * bottom });
+                $('i.left', el).css({ left: d });
+                $('i.right', el).css({ right: d });
+                if (bottom == 0) {
+                  let id = $('.panel-doc:last-child').attr('id');
+                  binding.value.load('bottom', id);
+                }
+              }
+              break;
+          }
+        }
+      },
+    }
+  },
+
+  methods: {
+    loadMore(v, slug) {
       if (this.doing) { return; }
 
       this.doing = true;
-      documentsService.getPrev(nv, {
+      documentsService.getPrev(slug, {
         'owner_name': this.owner,
         'project_name': this.project,
         'version': this.version,
@@ -46,9 +89,12 @@ export default {
         } else {
           this.$emit('documentloaded', doc, this.location);
         }
-        
       });
     }
+  },
+
+  watch: {
+
   }
 }
 </script>

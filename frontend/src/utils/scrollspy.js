@@ -23,11 +23,19 @@
     this.activeTarget   = null
     this.scrollHeight   = 0
 
-    this.loadingBar     = null
+    this.loadingTop     = null
+    this.ltCenter       = null
+    this.ltLeft         = null
+    this.ltRight        = null
+    this.ltWidth        = null
+
+    this.loadingBottom  = null
     this.lbCenter       = null
     this.lbLeft         = null
     this.lbRight        = null
-    this.loadingWidth   = null
+    this.lbWidth        = null
+
+    this.callback       = this.options.callback
 
     this.$scrollElement.on('scroll.bs.scrollspy', $.proxy(this.process, this))
     this.refresh()
@@ -48,13 +56,6 @@
     var that          = this
     var offsetMethod  = 'offset'
     var offsetBase    = 0
-
-    this.loadingBar     = $('.border-loading.top')
-    this.lbCenter       = $('i.center', this.loadingBar)
-    this.lbLeft         = $('i.left', this.loadingBar)
-    this.lbRight        = $('i.right', this.loadingBar)
-    this.loadingWidth   = this.loadingBar.width()
-    this.lbCenter.css({ left: this.loadingWidth / 2 - 5 })
 
     this.offsets      = []
     this.targets      = []
@@ -97,15 +98,8 @@
       this.refresh()
     }
 
-    if (scrollTop <= 150 && this.loadingBar.length > 0) {
-      var top = scrollTop - 50;
-      this.loadingBar.css({ top: top });
-      this.lbLeft.css({ left: (1 - top / 100) * this.loadingWidth / 2 - 12 })
-      this.lbRight.css({ right: (1 - top / 100) * this.loadingWidth / 2 - 12 })
-
-      if (top == 0) {
-        this.loadingBar.trigger('top.bs.scrollspy');
-      }
+    if (this.callback != undefined) {
+      this.callback(scrollTop, maxScroll);
     }
 
     if (scrollTop >= maxScroll) {

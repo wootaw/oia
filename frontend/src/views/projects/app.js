@@ -14,6 +14,7 @@ import DocumentPanel from 'VIEW/documents/DocumentPanel'
 import 'VIEW/projects/new'
 // import 'VIEW/projects/jquery.waypoints'
 import 'UTIL/sticky-kit'
+import 'UTIL/distance'
 import smoothscroll from 'smoothscroll'
 import Sign from 'MIXIN/Sign'
 import documentsService from 'SERVICE/DocumentsService';
@@ -34,7 +35,14 @@ $(function() {
       scrollspy: {
         bind(el, binding) {
           $(el).scrollspy(binding.value);
-        }
+        },
+      },
+
+      calch: {
+        inserted(el, binding) {
+          let fnode = $('.panel-doc:first .panel-res:first > .panel-heading', el);
+          // console.log(fnode.distanceTop('#scroll-container'));
+        },
       },
 
       urlspy: {
@@ -60,8 +68,6 @@ $(function() {
                 window.history.replaceState("", "", url);
               }
             }
-          }).on('top.bs.scrollspy', function(e) {
-            binding.value('top', $('.panel-doc:first-child').attr('id'));
           });
         }
       },
@@ -81,21 +87,28 @@ $(function() {
 
       sticky: {
         inserted(el, binding) {
-          $(el).stick_in_parent(binding.value);
+          // $(el).stick_in_parent(binding.value);
+          let opts = binding.value;
+          // opts.spacer = '.sticky-spacer';
+          $('.panel-body .panel-res > .panel-heading', el).stick_in_parent(opts);
         }
       },
 
     },
 
     methods: {
-      scrolledTo(v, slug) {
-        this.loadTop = slug;
+      scrolledTo(scroll, max) {
+        this.scroll = scroll;
+        this.max = max;
       },
 
       documentLoaded(doc, location) {
         switch(location) {
           case 'top':
             this.topdocs.splice(0, 0, doc);
+            break;
+          case 'bottom':
+            this.bottomdocs.push(doc);
             break;
         }
       }
@@ -112,8 +125,10 @@ $(function() {
       sign: 0,
       modal: 0,
       lastest: null,
-      loadTop: false,
-      topdocs: []
+      scroll: null,
+      max: null,
+      topdocs: [],
+      bottomdocs: []
     }
   });
 });

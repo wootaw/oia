@@ -24,7 +24,7 @@
                 </div>
               </div> -->
 
-              <ul class="nav nav-cata bg-dark dker" v-urlspy="scrolledTo">
+              <ul class="nav nav-cata bg-dark dker" v-urlspy>
               <% @change.parts(@project, :documents).each do |doc| %>
                 <li class="heading">
                   <a href="<%= @project.name %>/<%= doc.name %>" data-target="#<%= doc.name %>" v-smoothscroll="'#scroll-container'"><%= doc.summary %></a>
@@ -77,27 +77,46 @@
             :project="'<%= params[:project_name] %>'" 
             :version="<%= @change.position %>" 
             :location="'top'" 
-            :slug='loadTop'
+            :scroll="scroll"
+            :max="max"
             v-on:documentloaded="documentLoaded"
           >
           </border-loading>
-          <div id='scroll-container' class="cell" v-scrollspy="{target: '#nav-cata', offset: 50}">
-            <div class="m-t-xxxl">
+          <div id='scroll-container' class="cell" v-scrollspy="{target: '#nav-cata', offset: 50, callback: scrolledTo}" v-calch>
+            <div>
               <document-panel
                 v-for="doc of topdocs"
                 :document="doc"
                 :key="doc.id"
+                :dir="'top'"
               >
               </document-panel>
-              <div id="<%= @document.name %>" class="panel panel-doc m-b-none no-radius">
+              <div id="<%= @document.name %>" class="panel panel-doc m-b-none no-radius" v-sticky="{ offset_top: 50, container: '#scroll-container' }">
                 <div class="panel-heading"><h2><%= @document.summary %></h2></div>
                 <div class="panel-body">
                   <div class="wrapper"><%= markdown(@document.raw_description(@change)) %></div>
                   <%= render partial: "documents/resources", locals: { resources: @resources, document: @document, change: @change } %>
                 </div>
               </div>
+              <document-panel
+                v-for="doc of bottomdocs"
+                :document="doc"
+                :key="doc.id"
+                :dir="'bottom'"
+              >
+              </document-panel>
             </div>
           </div>
+          <border-loading 
+            :owner="'<%= params[:owner_name] %>'" 
+            :project="'<%= params[:project_name] %>'" 
+            :version="<%= @change.position %>" 
+            :location="'bottom'" 
+            :scroll="scroll"
+            :max="max"
+            v-on:documentloaded="documentLoaded"
+          >
+          </border-loading>
         </div>
       </div>
     </div>

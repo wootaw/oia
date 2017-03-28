@@ -194,10 +194,6 @@ body {
   margin: 0;
   position: absolute;
 
-  &.top {
-    top: 0;
-  }
-  
   &.doing {
     .ball {
       display: none;
@@ -228,6 +224,65 @@ body {
     &.right {
       top: 28px;
       background-color: $primary_color_dker;
+    }
+  }
+
+  &.top {
+    top: 0;
+    + .cell > div:first-child {
+      margin-top: 100px;
+    }
+
+    // .ball {
+    //   &.left {
+    //     top: 12px;
+    //   }
+
+    //   &.center {
+    //     top: 20px;
+    //   }
+
+    //   &.right {
+    //     top: 28px;
+    //   }
+    // }
+  }
+
+  &.bottom {
+    bottom: -100px;
+    // margin-top: 100px;
+    // background-color: red;
+    // + .cell > div:last-child {
+    //   margin-bottom: 100px;
+    // }
+
+    // .ball {
+    //   &.left {
+    //     top: 12px;
+    //   }
+
+    //   &.center {
+    //     top: 20px;
+    //   }
+
+    //   &.right {
+    //     top: 28px;
+    //   }
+    // }
+  }
+}
+
+#scroll-container {
+  > div {
+    margin-bottom: 100px;
+  }
+}
+.row-row {
+  > div:last-child {
+    &.cell {
+      > div {
+        margin-bottom: 0;
+      }
     }
   }
 }
