@@ -66,11 +66,6 @@
               </div>
             </div>
           </div>
-          <div id="test-loading" :class="{'loading': loadingTop}">
-            <i class="ball left"></i>
-            <i class="ball center"></i>
-            <i class="ball right"></i>
-          </div>
           -->
           <border-loading 
             :owner="'<%= params[:owner_name] %>'" 
@@ -82,7 +77,7 @@
             v-on:documentloaded="documentLoaded"
           >
           </border-loading>
-          <div id='scroll-container' class="cell" v-scrollspy="{target: '#nav-cata', offset: 50, callback: scrolledTo}" v-calch>
+          <div id='scroll-container' class="cell" v-scrollspy="{target: '#nav-cata', offset: 50, callback: scrolledTo}">
             <div>
               <document-panel
                 v-for="doc of topdocs"

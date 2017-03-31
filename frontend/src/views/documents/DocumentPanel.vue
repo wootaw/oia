@@ -33,27 +33,21 @@ export default {
   directives: {
     sticky: {
       inserted(el, binding) {
-        // $(el).stick_in_parent(binding.value);
-        let opts = binding.value;
-        opts.recalc_every = 1;
-        $('.panel-body .panel-res > .panel-heading', el).stick_in_parent(opts);
+        $('.panel-body .panel-res > .panel-heading', el).stick_in_parent(binding.value);
       }
     },
 
     recalcSticky: {
       inserted(el, binding) {
         let lc = '.panel-body .panel-res:last-child';
-        // switch(binding.value) {
-        //   case 'top':
-        //     $(document.body).trigger("sticky_kit:recalc");
-        //     // smoothscroll($(lc, el)[0], 0, undefined, $('#scroll-container')[0]);
-        //     break;
-        //   case 'bottom':
-        //     // smoothscroll($(lc, $(el).prev())[0], 0, function() {
-        //     //   $(document.body).trigger("sticky_kit:recalc");
-        //     // }, $('#scroll-container')[0]);
-        //     break;
-        // }
+        let ct = el;
+        if (binding.value == 'bottom') {
+          ct = $(el).prev();
+        }
+
+        smoothscroll($(lc, ct)[0], 0, function() {
+          $(document.body).trigger("sticky_kit:recalc");
+        }, $('#scroll-container')[0]);
       }
     }
   }

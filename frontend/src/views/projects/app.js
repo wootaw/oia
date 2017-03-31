@@ -38,13 +38,6 @@ $(function() {
         },
       },
 
-      calch: {
-        inserted(el, binding) {
-          let fnode = $('.panel-doc:first .panel-res:first > .panel-heading', el);
-          // console.log(fnode.distanceTop('#scroll-container'));
-        },
-      },
-
       urlspy: {
         bind(el, binding) {
           $(document).on('activate.bs.scrollspy', function(e) {
@@ -87,10 +80,7 @@ $(function() {
 
       sticky: {
         inserted(el, binding) {
-          // $(el).stick_in_parent(binding.value);
-          let opts = binding.value;
-          // opts.spacer = '.sticky-spacer';
-          $('.panel-body .panel-res > .panel-heading', el).stick_in_parent(opts);
+          $('.panel-body .panel-res > .panel-heading', el).stick_in_parent(binding.value);
         }
       },
 

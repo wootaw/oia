@@ -33,6 +33,9 @@
     if (enable_bottoming == null) {
       enable_bottoming = true;
     }
+    if (opts.container != null) {
+      win = $(opts.container);
+    }
     outer_width = function(el) {
       var _el, computed, w;
       if (window.getComputedStyle) {
@@ -54,7 +57,7 @@
       }
 
       elm.data("sticky_kit", true);
-      last_scroll_height = doc.height();
+      last_scroll_height = doc.height(); // 视口高度
       parent = elm.parent();
       // console.log(elm)
       // console.log(parent)
@@ -67,11 +70,16 @@
       }
       fixed = false;
       bottomed = false;
+
+      // console.log(manual_spacer)
+      // 占位块
       spacer = manual_spacer != null ? manual_spacer && elm.closest(manual_spacer) : $("<div />");
       // console.log(spacer)
       if (spacer) {
         spacer.css('position', elm.css('position'));
       }
+
+
       recalc = function() {
         var border_top, padding_top, restore;
         if (detached) {
@@ -82,8 +90,13 @@
         border_top = parseInt(parent.css("border-top-width"), 10);
         padding_top = parseInt(parent.css("padding-top"), 10);
         padding_bottom = parseInt(parent.css("padding-bottom"), 10);
+
+        // 父元素到顶部的距离
         parent_top = parent.offset().top + border_top + padding_top;
+        parent_top += win.scrollTop();
+        // console.log(parent_top);
         parent_height = parent.height();
+
         if (fixed) {
           fixed = false;
           bottomed = false;
@@ -100,9 +113,14 @@
           }).removeClass(sticky_class);
           restore = true;
         }
+
         top = elm.offset().top - (parseInt(elm.css("margin-top"), 10) || 0) - offset_top;
+        top += win.scrollTop();
+        // console.log(top);
+
         height = elm.outerHeight(true);
         el_float = elm.css("float");
+
         if (spacer) {
           spacer.css({
             width: outer_width(elm),
@@ -112,10 +130,12 @@
             "float": el_float
           });
         }
+
         if (restore) {
           return tick();
         }
       };
+
       recalc();
       if (height === parent_height) {
         return;
@@ -123,6 +143,7 @@
       last_pos = void 0;
       offset = offset_top;
       recalc_counter = recalc_every;
+
       tick = function() {
         var css, delta, recalced, scroll, will_bottom, win_height;
         if (detached) {
@@ -256,9 +277,7 @@
         }
       };
 
-      if (opts.container != null) {
-        win = $(opts.container);
-      }
+      
       win.on("touchmove", tick);
       win.on("scroll", tick);
       win.on("resize", recalc_and_tick);
