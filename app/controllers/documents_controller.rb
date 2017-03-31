@@ -25,7 +25,7 @@ class DocumentsController < ApplicationController
             when 'top'
               @document = documents.where("documents.position < ?", current_document.position).order("position DESC").take
             when 'bottom'
-              
+              @document = documents.where("documents.position > ?", current_document.position).order(:position).take
             else
               render_404
             end

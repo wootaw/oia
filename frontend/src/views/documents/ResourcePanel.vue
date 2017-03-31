@@ -10,22 +10,29 @@
             <i class="fa fa-circle text-success pull-right text-xs m-t-sm"></i>
           </div>
           <span :class="methodClasses">{{resource.method}}</span>
-          <span class="label pull-left">{{resource.path}}</span>
+          <span class="label pull-left" v-html="colourPath"></span>
         </div>
       </div>
     </div>
     <div class="panel-body no-padder">
       <div class="wrapper bg-light" v-html="resource.md_description"></div>
+      <parameter-panel :parameters="resource.parameters"></parameter-panel>
+      <response-panel :responses="resource.responses"></response-panel>
     </div>
   </div>
 </template>
 
 <script>
 import 'UTIL/sticky-kit'
+import ParameterPanel from 'VIEW/documents/ParameterPanel'
+import ResponsePanel from 'VIEW/documents/ResponsePanel'
 export default {
   props: ['resource', 'document'],
 
-  // components: { ResourceItem },
+  components: {
+    'parameter-panel': ParameterPanel,
+    'response-panel': ResponsePanel
+  },
 
   computed: {
     methodClasses () {
@@ -37,17 +44,23 @@ export default {
         'DELETE': 'label-danger' 
       }[this.resource.method]);
       return r;
+    },
+
+    colourPath () {
+      let path = this.resource.path;
+      this.resource.parameters.reduce((r, c) => {
+        if (c.location == 'path') {
+          r.push(c.name);
+        }
+        return r;
+      }, []).forEach((n) => {
+        path = path.replace(new RegExp(`(:${n})`), '<span class="text-danger">$1</span>');
+      });
+      return path;
     }
   },
 
   directives: {
-
-    // sticky: {
-    //   inserted(el, binding) {
-    //     // console.log(el);
-    //     $(el).stick_in_parent(binding.value);
-    //   }
-    // },
 
   },
 }
