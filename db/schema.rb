@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170210084356) do
+ActiveRecord::Schema.define(version: 20170402063121) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -35,8 +35,8 @@ ActiveRecord::Schema.define(version: 20170210084356) do
     t.integer  "owner_id"
     t.datetime "created_at",                  null: false
     t.datetime "updated_at",                  null: false
-    t.integer  "discard_version"
     t.string   "key"
+    t.integer  "discard_version"
     t.integer  "position"
     t.index ["owner_type", "owner_id"], name: "index_descriptions_on_owner_type_and_owner_id", using: :btree
     t.index ["state"], name: "index_descriptions_on_state", using: :btree
@@ -52,9 +52,9 @@ ActiveRecord::Schema.define(version: 20170210084356) do
     t.integer  "project_id"
     t.datetime "created_at",                       null: false
     t.datetime "updated_at",                       null: false
-    t.integer  "position"
     t.integer  "version",              default: 0
     t.integer  "discard_version"
+    t.integer  "position"
     t.index ["name"], name: "index_documents_on_name", using: :btree
     t.index ["project_id"], name: "index_documents_on_project_id", using: :btree
     t.index ["state"], name: "index_documents_on_state", using: :btree
@@ -85,6 +85,31 @@ ActiveRecord::Schema.define(version: 20170210084356) do
     t.datetime "updated_at", null: false
     t.index ["state"], name: "index_groups_on_state", using: :btree
     t.index ["team_id"], name: "index_groups_on_team_id", using: :btree
+  end
+
+  create_table "inouts", force: :cascade do |t|
+    t.string   "name"
+    t.string   "group"
+    t.string   "summary"
+    t.string   "default"
+    t.string   "options"
+    t.integer  "version",         default: 0
+    t.string   "key"
+    t.integer  "state"
+    t.integer  "resource_id"
+    t.datetime "created_at",                      null: false
+    t.datetime "updated_at",                      null: false
+    t.integer  "discard_version"
+    t.integer  "position"
+    t.integer  "clazz"
+    t.string   "ancestor"
+    t.string   "data_type"
+    t.boolean  "required",        default: false
+    t.boolean  "array",           default: false
+    t.index ["key"], name: "index_inouts_on_key", using: :btree
+    t.index ["resource_id"], name: "index_inouts_on_resource_id", using: :btree
+    t.index ["state"], name: "index_inouts_on_state", using: :btree
+    t.index ["version"], name: "index_inouts_on_version", using: :btree
   end
 
   create_table "members", force: :cascade do |t|
@@ -123,6 +148,13 @@ ActiveRecord::Schema.define(version: 20170210084356) do
     t.index ["version"], name: "index_parameters_on_version", using: :btree
   end
 
+  create_table "postest", id: :integer, force: :cascade do |t|
+    t.string  "name"
+    t.integer "position"
+    t.integer "version"
+    t.integer "dv"
+  end
+
   create_table "projects", force: :cascade do |t|
     t.string   "name"
     t.integer  "state"
@@ -159,8 +191,8 @@ ActiveRecord::Schema.define(version: 20170210084356) do
     t.integer  "document_id"
     t.datetime "created_at",                       null: false
     t.datetime "updated_at",                       null: false
-    t.integer  "position"
     t.integer  "discard_version"
+    t.integer  "position"
     t.string   "slug"
     t.index ["document_id"], name: "index_resources_on_document_id", using: :btree
     t.index ["key"], name: "index_resources_on_key", using: :btree
@@ -206,14 +238,15 @@ ActiveRecord::Schema.define(version: 20170210084356) do
 
   create_table "tapes", force: :cascade do |t|
     t.text     "content"
+    t.integer  "state"
     t.integer  "version"
+    t.string   "schema"
     t.integer  "project_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer  "state"
-    t.string   "schema"
     t.string   "job_id"
     t.index ["project_id"], name: "index_tapes_on_project_id", using: :btree
+    t.index ["state"], name: "index_tapes_on_state", using: :btree
     t.index ["version"], name: "index_tapes_on_version", using: :btree
   end
 
@@ -243,6 +276,7 @@ ActiveRecord::Schema.define(version: 20170210084356) do
     t.datetime "updated_at",                          null: false
     t.string   "name"
     t.string   "username"
+    t.string   "avatar"
     t.index ["email"], name: "index_users_on_email", unique: true, using: :btree
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
     t.index ["state"], name: "index_users_on_state", using: :btree

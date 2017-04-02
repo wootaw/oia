@@ -7,6 +7,8 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable, authentication_keys: [:account]
 
+  mount_uploader :avatar, AvatarUploader
+
   has_many :members, dependent: :destroy
   has_many :personal_projects, as: :owner, dependent: :destroy, class_name: "Project"
 

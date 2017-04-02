@@ -33,6 +33,7 @@ class DeviseCreateUsers < ActiveRecord::Migration[5.0]
 
       t.integer     :state, index: true
       t.string      :name
+      t.string      :avatar
       
       t.timestamps null: false
     end

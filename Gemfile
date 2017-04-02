@@ -30,6 +30,9 @@ gem 'html-pipeline-rouge_filter'
 gem 'redcarpet'
 gem 'auto-space'
 
+gem 'mini_magick'
+gem 'carrierwave'
+
 gem 'devise'
 gem 'cancancan'
 

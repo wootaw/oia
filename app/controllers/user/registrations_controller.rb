@@ -10,6 +10,12 @@ class User::RegistrationsController < Devise::RegistrationsController
   # POST /resource
   def create
     self.resource = User.new(user_params)
+
+    bubbles = Bubbles.new(256)
+    File.open(bubbles.save(Rails.root.join('public', AvatarUploader.cache_dir))) do |f|
+      self.resource.avatar = f
+    end
+
     if resource.save
       sign_in :user, resource
       return render body: nil

@@ -18,6 +18,7 @@
 !/tmp/.keep
 
 # Ignore Byebug command history file.
+/public/uploads/
 /config/database.yml
 /config/application.yml
 .byebug_history

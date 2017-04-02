@@ -291,6 +291,17 @@ body {
   display: table-cell;
 }
 
+.nav > li > a:hover,
+.nav > li > a:focus {
+  background-color: $primary_color_lter;
+}
+
+.nav .open > a,
+.nav .open > a:hover,
+.nav .open > a:focus {
+  background-color: $primary_color_lter;
+}
+
 .navbar {
   margin: 0;
   border-width: 0;
@@ -553,6 +564,77 @@ body {
   //   -webkit-transform: translate3d(-75%, 0, 0px);
   //           transform: translate3d(-75%, 0, 0px);
   // }
+}
+
+.avatar {
+  position: relative;
+  display: block;
+  white-space: nowrap;
+  border-radius: 500px;
+
+  img {
+    width: 100%;
+    border-radius: 500px;
+  }
+
+  i {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 10px;
+    height: 10px;
+    margin: 2px;
+    border-style: solid;
+    border-width: 2px;
+    border-radius: 100%;
+
+    &.right {
+      right: 0;
+      left: auto;
+    }
+
+    &.bottom {
+      top: auto;
+      right: 0;
+      bottom: 0;
+      left: auto;
+    }
+
+    &.left {
+      top: auto;
+      bottom: 0;
+    }
+
+    &.on {
+      background-color: #27c24c;
+    }
+
+    &.off {
+      background-color: #98a6ad;
+    }
+
+    &.busy {
+      background-color: #f05050;
+    }
+
+    &.away {
+      background-color: #fad733;
+    }
+  }
+
+  &.thumb-md i {
+    width: 12px;
+    height: 12px;
+    margin: 3px;
+  }
+
+  &.thumb-sm i {
+    margin: 1px;
+  }
+
+  &.thumb-xs i {
+    margin: 0;
+  }
 }
 
 .win-over, .grid-over {
