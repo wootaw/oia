@@ -52,10 +52,10 @@ export default {
   },
 
   methods: {
-    level (ancestor) {
-      let lv = ancestor == null ? 0 : ancestor.split('.').length;
-      return [`resp-lv${lv}`];
-    }
+    // level (ancestor) {
+    //   let lv = ancestor == null ? 0 : ancestor.split('.').length;
+    //   return [`resp-lv${lv}`];
+    // }
   }
 }
 </script>

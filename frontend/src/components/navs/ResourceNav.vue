@@ -34,7 +34,6 @@ export default {
       this.$emit('resviewdent', this.dedent);
     }
   },
-
   
 }
 </script>

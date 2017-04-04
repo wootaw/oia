@@ -11,6 +11,10 @@ $primary_color_lt: lighten($primary_color, 25%);
 $primary_color_dk: darken($primary_color, 10%);
 $primary_color_dker: darken($primary_color, 18%);
 // #002f06
+$white_color_lter: lighten($white_color, 58%);
+$white_color_lt: lighten($white_color, 25%);
+$white_color_dk: darken($white_color, 10%);
+$white_color_dker: darken($white_color, 68%);
 
 $primary_color_flt: fade_in($primary_color, 0.02);
 $primary_color_fdk: fade_in($primary_color, 0.1);

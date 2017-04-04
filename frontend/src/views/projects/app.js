@@ -13,6 +13,7 @@ import BorderLoading from 'COMPONENT/loadings/BorderLoading'
 import DocumentPanel from 'VIEW/documents/DocumentPanel'
 import ResourceNav from 'COMPONENT/navs/ResourceNav'
 import ResourceView from 'COMPONENT/sidebars/ResourceView'
+import ReplyPanel from 'COMPONENT/comments/ReplyPanel'
 import 'UTIL/sticky-kit'
 import smoothscroll from 'smoothscroll'
 import documentsService from 'SERVICE/DocumentsService';
@@ -38,7 +39,8 @@ $(function() {
       'border-loading': BorderLoading,
       'document-panel': DocumentPanel,
       'resource-view': ResourceView,
-      'resource-nav': ResourceNav
+      'resource-nav': ResourceNav,
+      'reply-panel': ReplyPanel
     },
 
     directives: {
