@@ -10,28 +10,10 @@
   </button>
   <div class="grid-over h-full">
     <div class="hbox hbox-auto-xs">
-      <div class="col w-40 b-r">
-        <div class="vbox">
-          <div class="row-row">
-            <div class="cell">
-              <div class="cell-inner">
-                <div class="wrapper-md">
-                  This is the scrollable content
-                  <p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p>
-                  You got the bottom
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col">
+      <resource-view :dedent="resource_view_dent"></resource-view>
+      <div class="col w-auto b-l">
         <div class="vbox bg-dark dker">
-          <ul class="nav nav-tabs m-t-md">
-            <li class="left"><a class="bg-paper" href="#"><i class="fa fa-fw fa-dedent"></i></a></li>
-            <li class="active m-l"><a href="#">Comments</a></li>
-            <li><a href="#">Console</a></li>
-          </ul>
+          <resource-nav v-on:resviewdent="resourceViewDent"></resource-nav>
           <div class="row-row">
             <div class="cell">
               <div class="cell-inner bg-dark">

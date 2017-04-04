@@ -11,6 +11,8 @@ import 'COMPONENT/signbox/UsersSignIn'
 import 'COMPONENT/signbox/UsersSignUp'
 import BorderLoading from 'COMPONENT/loadings/BorderLoading'
 import DocumentPanel from 'VIEW/documents/DocumentPanel'
+import ResourceNav from 'COMPONENT/navs/ResourceNav'
+import ResourceView from 'COMPONENT/sidebars/ResourceView'
 import 'UTIL/sticky-kit'
 import smoothscroll from 'smoothscroll'
 import documentsService from 'SERVICE/DocumentsService';
@@ -19,11 +21,24 @@ $(function() {
   let app = new Vue({
     el: '#app',
 
+    data: {
+      sign: 0,
+      modal: 0,
+      lastest: null,
+      scroll: null,
+      max: null,
+      resource_view_dent: true,
+      topdocs: [],
+      bottomdocs: []
+    },
+
     mixins: [Sign],
 
     components: { 
       'border-loading': BorderLoading,
-      'document-panel': DocumentPanel
+      'document-panel': DocumentPanel,
+      'resource-view': ResourceView,
+      'resource-nav': ResourceNav
     },
 
     directives: {
@@ -96,6 +111,10 @@ $(function() {
             this.bottomdocs.push(doc);
             break;
         }
+      },
+
+      resourceViewDent(dent) {
+        this.resource_view_dent = dent;
       }
     },
 
@@ -104,16 +123,6 @@ $(function() {
       if (parts.length > 3) {
         smoothscroll($(`#${parts[3]}`)[0], 500, undefined, $('#scroll-container')[0]);
       }
-    },
-
-    data: {
-      sign: 0,
-      modal: 0,
-      lastest: null,
-      scroll: null,
-      max: null,
-      topdocs: [],
-      bottomdocs: []
     }
   });
 });
