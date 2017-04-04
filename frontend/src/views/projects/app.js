@@ -1,24 +1,19 @@
 import 'bootstrap/dist/css/bootstrap.css'
-// import 'bootstrap/dist/js/bootstrap'
+import 'ASSET/scss/app.scss'
+import 'VENDOR/font-awesome/css/font-awesome.min.css'
+import 'ASSET/scss/highlight.css'
+
 import 'UTIL/bootjs'
 import 'es6-shim'
-import 'ASSET/scss/app.scss'
-import 'ASSET/scss/highlight.css'
-import 'VENDOR/font-awesome/css/font-awesome.min.css'
-
 import Vue from 'vue'
+import Sign from 'MIXIN/Sign'
 import 'COMPONENT/signbox/UsersSignIn'
 import 'COMPONENT/signbox/UsersSignUp'
 import BorderLoading from 'COMPONENT/loadings/BorderLoading'
 import DocumentPanel from 'VIEW/documents/DocumentPanel'
-import 'VIEW/projects/new'
-// import 'VIEW/projects/jquery.waypoints'
 import 'UTIL/sticky-kit'
-import 'UTIL/distance'
 import smoothscroll from 'smoothscroll'
-import Sign from 'MIXIN/Sign'
 import documentsService from 'SERVICE/DocumentsService';
-// import ProjectsList from 'VIEW/owners/ProjectsList'
 
 $(function() {
   let app = new Vue({

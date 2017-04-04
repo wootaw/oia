@@ -21,7 +21,8 @@ class SignService {
       url: path,
       body: query,
       method: 'post',
-      prefix: 'page'
+      prefix: 'page',
+      dt: 'json'
     });
   }
 

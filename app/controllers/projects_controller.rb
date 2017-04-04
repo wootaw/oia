@@ -49,6 +49,7 @@ class ProjectsController < ApplicationController
             resource.document
           end
         else
+          @hide_top = true
           @project.the_documents(@change).take
         end
         

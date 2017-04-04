@@ -14,7 +14,7 @@ const xhr = ({ method='get', url, body=null, prefix='api', dt='html' }) => {
     if (/^(nocontent|success)$/.test(textStatus)) {
       defer.resolve({ data: data, code: jqxhr.status })
     } else {
-      defer.resolve({ data: JSON.parse(data.responseJSON), code: data.status })
+      defer.resolve({ data: data.responseJSON, code: data.status })
     }
   });
 

@@ -111,12 +111,81 @@
 }
 
 .bg-dark {
+  color: #a6a8b1;
+  background-color: $dark_color;
+}
+
+.bg-dark.lt,
+.bg-dark .lt {
+  background-color: $dark_color_lt;
+}
+
+.bg-dark.lter,
+.bg-dark .lter {
+  background-color: $dark_color_lter;
+}
+
+.bg-dark.dk,
+.bg-dark .dk {
+  background-color: $dark_color_dk;
+}
+
+.bg-dark.dker,
+.bg-dark .dker {
+  background-color: $dark_color_dker;
+}
+
+.bg-dark.bg,
+.bg-dark .bg {
+  background-color: #3a3f51;
+}
+
+.bg-dark {
   
   &.panel {
     border-color: $dark_color_lt;
     .panel-heading {
       color: #fff;
       border-color: $dark_color_lt;
+    }
+  }
+
+  .nav-tabs {
+    background-color: $dark_color_dker;
+    border-bottom: 1px solid $dark_color_lt;
+    > li {
+      padding-top: 8px;
+      > a {
+        background-color: $dark_color_dk;
+        border: 1px solid $dark_color_lt;
+        padding: 6px 15px;
+
+        &:hover {
+          background-color: $dark_color;
+          color: $primary_color_lt;
+        }
+      }
+
+      &.left {
+        padding-top: 0;
+        margin-left: -1px;
+        > a {
+          border-radius: 0 4px 4px 0;
+          padding: 6px 6px;
+          border-left-color: transparent;
+        }
+      }
+
+      &.active {
+        padding-top: 0;
+         > a {
+          color: $white_color;
+          background-color: $dark_color;
+          border: 1px solid $dark_color_lt;
+          border-bottom-color: transparent;
+          padding: 10px 20px;
+        }
+      }
     }
   }
 
@@ -156,34 +225,25 @@
   }
 }
 
-.bg-dark {
-  color: #a6a8b1;
-  background-color: $dark_color;
-}
+.bg-paper {
+  background-image: url("../images/black_paper.jpg");
 
-.bg-dark.lt,
-.bg-dark .lt {
-  background-color: $dark_color_lt;
-}
+  &.panel {
+    border-color: $dark_color_lt;
+    .panel-heading {
+      color: #fff;
+      border-color: $dark_color_lt;
+    }
 
-.bg-dark.lter,
-.bg-dark .lter {
-  background-color: $dark_color_lter;
-}
-
-.bg-dark.dk,
-.bg-dark .dk {
-  background-color: $dark_color_dk;
-}
-
-.bg-dark.dker,
-.bg-dark .dker {
-  background-color: $dark_color_dker;
-}
-
-.bg-dark.bg,
-.bg-dark .bg {
-  background-color: #3a3f51;
+    .arrow {
+      &.left {
+        border-right-color: $dark_color_lt;
+        &:after {
+          border-right-color: $dark_color_paper;
+        }
+      }
+    }
+  }
 }
 
 .no-bg {

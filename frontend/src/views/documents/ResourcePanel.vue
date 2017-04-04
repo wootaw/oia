@@ -7,7 +7,7 @@
             <span>{{document.summary}}</span>
             <span class="sep">/</span>
             <span>{{resource.summary}}</span>
-            <i class="fa fa-circle text-success pull-right text-xs m-t-sm"></i>
+            <button class="btn m-b-xs btn-xs btn-warning pull-right"><i class="fa fa-comments m-r-xs"></i>25</button>
           </div>
           <span :class="methodClasses">{{resource.method}}</span>
           <span class="label pull-left" v-html="colourPath"></span>

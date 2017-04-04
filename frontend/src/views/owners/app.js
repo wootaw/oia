@@ -1,15 +1,14 @@
 import 'bootstrap/dist/css/bootstrap.css'
-// import 'bootstrap/dist/js/bootstrap'
-import 'UTIL/bootjs'
-import 'es6-shim'
 import 'ASSET/scss/app.scss'
 import 'VENDOR/font-awesome/css/font-awesome.min.css'
 
+import 'UTIL/bootjs'
+import 'es6-shim'
 import Vue from 'vue'
+import Sign from 'MIXIN/Sign'
 import 'COMPONENT/signbox/UsersSignIn'
 import 'COMPONENT/signbox/UsersSignUp'
 import 'VIEW/projects/new'
-import Sign from 'MIXIN/Sign'
 import ProjectsList from 'VIEW/owners/ProjectsList'
 
 $(function() {
