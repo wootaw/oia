@@ -8,8 +8,7 @@
         :document="document"
         :resource="res"
         :key="res.id"
-      >
-      </resource-panel>
+      ></resource-panel>
     </div>
   </div>
 </template>

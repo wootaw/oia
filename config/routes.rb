@@ -19,6 +19,12 @@ Rails.application.routes.draw do
       get :exists
     end
   end
+
+  resources :comments do
+    collection do
+      post :preview
+    end
+  end
   
   namespace :api do
     namespace :v1 do
