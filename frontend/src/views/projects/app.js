@@ -11,9 +11,9 @@ import 'COMPONENT/signbox/UsersSignIn'
 import 'COMPONENT/signbox/UsersSignUp'
 import BorderLoading from 'COMPONENT/loadings/BorderLoading'
 import DocumentPanel from 'VIEW/documents/DocumentPanel'
-import ResourceNav from 'COMPONENT/navs/ResourceNav'
-import ResourceView from 'COMPONENT/sidebars/ResourceView'
+import ResourceModal from 'COMPONENT/modals/ResourceModal'
 import ReplyPanel from 'COMPONENT/comments/ReplyPanel'
+import 'DIRECTIVE/showmodal'
 import 'UTIL/sticky-kit'
 import smoothscroll from 'smoothscroll'
 import documentsService from 'SERVICE/DocumentsService';
@@ -28,7 +28,6 @@ $(function() {
       lastest: null,
       scroll: null,
       max: null,
-      resource_view_dent: true,
       topdocs: [],
       bottomdocs: []
     },
@@ -38,8 +37,7 @@ $(function() {
     components: { 
       'border-loading': BorderLoading,
       'document-panel': DocumentPanel,
-      'resource-view': ResourceView,
-      'resource-nav': ResourceNav,
+      'resource-modal': ResourceModal,
       'reply-panel': ReplyPanel
     },
 
@@ -115,9 +113,6 @@ $(function() {
         }
       },
 
-      resourceViewDent(dent) {
-        this.resource_view_dent = dent;
-      }
     },
 
     mounted() {

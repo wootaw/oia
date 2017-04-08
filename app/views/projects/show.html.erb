@@ -4,128 +4,114 @@
 <% end %>
 
 <% content_for :modals do %>
-<div class="modal fade modal-full" id="comments-modal" tabindex="-1" role="dialog">
-  <button class="btn btn-rounded btn-lg btn-icon btn-default btn-close" data-dismiss="modal">
-    <i class="fa fa-times"></i>
-  </button>
-  <div class="grid-over h-full">
-    <div class="hbox hbox-auto-xs">
-      <resource-view :dedent="resource_view_dent"></resource-view>
-      <div class="col w-auto b-l">
-        <div class="vbox bg-dark dker">
-          <resource-nav v-on:resviewdent="resourceViewDent"></resource-nav>
-          <div class="row-row bg-dark box-s-l-i">
-            <div class="cell">
-              <div class="cell-inner">
-                <div class="wrapper-md">
-                  <div class="m-b b-l m-l-md streamline">
-                    <div>
-                      <a class="pull-left thumb-sm avatar m-l-n-md">
-                        <img src="/uploads/user/sm_iune12pxp-mimoaqfvv-jodiwb0sc-bdm0reu0d.png" class="img-circle" alt="...">
-                      </a>
-                      <div class="m-l-xl panel b-a bg-paper">
-                        <div class="panel-heading pos-rlt b-b b-light">
-                          <span class="arrow left"></span>
-                          <a href>John smith</a>
-                          <label class="label bg-info m-l-xs">Editor</label> 
-                          <span class="text-muted m-l-sm pull-right">
-                            <i class="fa fa-clock-o"></i>
-                            Just now
-                          </span>
-                        </div>
-                        <div class="panel-body">
-                          <div>Lorem ipsum dolor sit amet, consecteter adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet.</div>
-                          <div class="m-t-sm">
-                            <a href ui-toggle-class class="btn btn-default btn-xs active">
-                              <i class="fa fa-star-o text-muted text"></i>
-                              <i class="fa fa-star text-danger text-active"></i> 
-                              Like
-                            </a>
-                            <a href class="btn btn-default btn-xs">
-                              <i class="fa fa-mail-reply text-muted"></i> Reply
-                            </a>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <!-- .comment-reply -->
-                    <div class="m-l-xl">
-                      <a class="pull-left thumb-sm avatar">
-                        <img src="/uploads/user/sm_cztvmqtbd-acujcs5uu-9sgonxmk8-rs5m7gawq-nagnwult3.png" alt="...">
-                      </a>          
-                      <div class="m-l-xxxl panel b-a bg-paper">
-                        <div class="panel-heading pos-rlt">
-                          <span class="arrow left pull-up"></span>
-                          <span class="text-muted m-l-sm pull-right">
-                            <i class="fa fa-clock-o"></i>
-                            10m ago
-                          </span>
-                          <a href>Mika Sam</a> 
-                          Report this comment is helpful                           
-                        </div>
-                      </div>
-                    </div>
-                    <!-- / .comment-reply -->
-                    <div>
-                      <a class="pull-left thumb-sm avatar m-l-n-md">
-                        <img src="/uploads/user/sm_b44oirkbe-nh7n8ejdb-7acctptkt-jcwdzvc3s-by0dkl4i6.png" alt="...">
-                      </a>          
-                      <div class="m-l-xl panel b-a bg-paper">
-                        <div class="panel-heading pos-rlt b-b b-light">
-                          <span class="arrow left"></span>                    
-                          <a href>By me</a>
-                          <label class="label bg-success m-l-xs">User</label> 
-                          <span class="text-muted m-l-sm pull-right">
-                            <i class="fa fa-clock-o"></i>
-                            1h ago
-                          </span>
-                        </div>
-                        <div class="panel-body">
-                          <div>This comment was posted by you.</div>
-                        </div>
-                      </div>
-                    </div>
-                    <div>
-                      <a class="pull-left thumb-sm avatar m-l-n-md"><img src="/uploads/user/sm_ae2tw5i88-rkbwt9npa-lyieltlc3-ek4a0pba0-bn6o3zgcu.png" alt="..."></a>          
-                      <div class="m-l-xl panel b-a bg-paper">
-                        <div class="panel-heading pos-rlt b-b b-light">
-                          <span class="arrow left"></span>
-                          <a href>Peter</a>
-                          <label class="label bg-primary m-l-xs">Vip</label> 
-                          <span class="text-muted m-l-sm pull-right">
-                            <i class="fa fa-clock-o"></i>
-                            2hs ago
-                          </span>
-                        </div>
-                        <div class="panel-body">
-                          <blockquote>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
-                            <small>Someone famous in <cite title="Source Title">Source Title</cite></small>
-                          </blockquote>
-                          <div>Lorem ipsum dolor sit amet, consecteter adipiscing elit...</div>
-                          <div class="m-t-sm">
-                            <a href data-toggle="class" class="btn btn-default btn-xs">
-                              <i class="fa fa-star-o text-muted text"></i>
-                              <i class="fa fa-star text-danger text-active"></i> 
-                              Like
-                            </a>
-                            <a href class="btn btn-default btn-xs"><i class="fa fa-mail-reply text-muted"></i> Reply</a>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
+<resource-modal>
+  <div class="row-row bg-dark box-s-l-i dp-none">
+    <div class="cell">
+      <div class="cell-inner">
+        <div class="wrapper-md">
+          <div class="m-b b-l m-l-md streamline">
+            <div>
+              <a class="pull-left thumb-sm avatar m-l-n-md">
+                <img src="/uploads/user/sm_iune12pxp-mimoaqfvv-jodiwb0sc-bdm0reu0d.png" class="img-circle" alt="...">
+              </a>
+              <div class="m-l-xl panel b-a bg-paper">
+                <div class="panel-heading pos-rlt b-b b-light">
+                  <span class="arrow left"></span>
+                  <a href>John smith</a>
+                  <label class="label bg-info m-l-xs">Editor</label> 
+                  <span class="text-muted m-l-sm pull-right">
+                    <i class="fa fa-clock-o"></i>
+                    Just now
+                  </span>
+                </div>
+                <div class="panel-body">
+                  <div>Lorem ipsum dolor sit amet, consecteter adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet.</div>
+                  <div class="m-t-sm">
+                    <a href ui-toggle-class class="btn btn-default btn-xs active">
+                      <i class="fa fa-star-o text-muted text"></i>
+                      <i class="fa fa-star text-danger text-active"></i> 
+                      Like
+                    </a>
+                    <a href class="btn btn-default btn-xs">
+                      <i class="fa fa-mail-reply text-muted"></i> Reply
+                    </a>
                   </div>
-                  <reply-panel></reply-panel>
+                </div>
+              </div>
+            </div>
+            <!-- .comment-reply -->
+            <div class="m-l-xl">
+              <a class="pull-left thumb-sm avatar">
+                <img src="/uploads/user/sm_cztvmqtbd-acujcs5uu-9sgonxmk8-rs5m7gawq-nagnwult3.png" alt="...">
+              </a>          
+              <div class="m-l-xxxl panel b-a bg-paper">
+                <div class="panel-heading pos-rlt">
+                  <span class="arrow left pull-up"></span>
+                  <span class="text-muted m-l-sm pull-right">
+                    <i class="fa fa-clock-o"></i>
+                    10m ago
+                  </span>
+                  <a href>Mika Sam</a> 
+                  Report this comment is helpful                           
+                </div>
+              </div>
+            </div>
+            <!-- / .comment-reply -->
+            <div>
+              <a class="pull-left thumb-sm avatar m-l-n-md">
+                <img src="/uploads/user/sm_b44oirkbe-nh7n8ejdb-7acctptkt-jcwdzvc3s-by0dkl4i6.png" alt="...">
+              </a>          
+              <div class="m-l-xl panel b-a bg-paper">
+                <div class="panel-heading pos-rlt b-b b-light">
+                  <span class="arrow left"></span>                    
+                  <a href>By me</a>
+                  <label class="label bg-success m-l-xs">User</label> 
+                  <span class="text-muted m-l-sm pull-right">
+                    <i class="fa fa-clock-o"></i>
+                    1h ago
+                  </span>
+                </div>
+                <div class="panel-body">
+                  <div>This comment was posted by you.</div>
+                </div>
+              </div>
+            </div>
+            <div>
+              <a class="pull-left thumb-sm avatar m-l-n-md"><img src="/uploads/user/sm_ae2tw5i88-rkbwt9npa-lyieltlc3-ek4a0pba0-bn6o3zgcu.png" alt="..."></a>          
+              <div class="m-l-xl panel b-a bg-paper">
+                <div class="panel-heading pos-rlt b-b b-light">
+                  <span class="arrow left"></span>
+                  <a href>Peter</a>
+                  <label class="label bg-primary m-l-xs">Vip</label> 
+                  <span class="text-muted m-l-sm pull-right">
+                    <i class="fa fa-clock-o"></i>
+                    2hs ago
+                  </span>
+                </div>
+                <div class="panel-body">
+                  <blockquote>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
+                    <small>Someone famous in <cite title="Source Title">Source Title</cite></small>
+                  </blockquote>
+                  <div>Lorem ipsum dolor sit amet, consecteter adipiscing elit...</div>
+                  <div class="m-t-sm">
+                    <a href data-toggle="class" class="btn btn-default btn-xs">
+                      <i class="fa fa-star-o text-muted text"></i>
+                      <i class="fa fa-star text-danger text-active"></i> 
+                      Like
+                    </a>
+                    <a href class="btn btn-default btn-xs"><i class="fa fa-mail-reply text-muted"></i> Reply</a>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-          
+          <reply-panel></reply-panel>
         </div>
       </div>
     </div>
   </div>
-</div>
+</resource-modal>
 <% end %>
 
 <% content_for :content do %>

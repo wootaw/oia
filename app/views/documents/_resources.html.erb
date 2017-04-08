@@ -9,7 +9,9 @@
           <span><%= document.summary %></span>
           <span class="sep">/</span>
           <span><%= res.summary %></span>
-          <button class="btn m-b-xs btn-xs btn-warning pull-right" data-toggle="modal" data-target="#comments-modal"><i class="fa fa-comments m-r-xs"></i>25</button>
+          <button class="btn m-b-xs btn-xs btn-warning pull-right" v-showmodal="{id: '#comments-modal', data: {slug: '<%= res.slug %>', tab: 'comments'}}">
+            <i class="fa fa-comments m-r-xs"></i>25
+          </button>
         </div>
         <span class="label <%= method_color(res.method) %> pull-left m-r-sm"><%= res.method %></span>
         <span class="label pull-left"><%= colour_path(res.path, parameters).html_safe %></span>

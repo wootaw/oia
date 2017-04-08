@@ -26,6 +26,7 @@ module.exports = {
       vue:        'vue/dist/vue.js',
       ASSET:      PATHS.SRC.join('assets'),
       COMPONENT:  PATHS.SRC.join('components'),
+      DIRECTIVE:  PATHS.SRC.join('directives'),
       FILTER:     PATHS.SRC.join('filters'),
       MIXIN:      PATHS.SRC.join('mixins'),
       ROUTE:      PATHS.SRC.join('routes'),
