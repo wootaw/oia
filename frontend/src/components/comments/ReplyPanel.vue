@@ -13,13 +13,13 @@
           <li :class="previewTabClasses">
             <a href="#" @click.stop.prevent="toggleTab('preview')">Preview</a>
           </li>
-          <li class="pull-right dropdown">
-            <button class="btn btn-xs m-r-sm m-t-n-sm dropdown-toggle" data-toggle="dropdown" v-dropdown>
+          <li class="pull-right dropdown dropup">
+            <button class="btn btn-xs m-r m-t-n-sm dropdown-toggle" data-toggle="dropdown" v-dropdown>
               <i class="fa fa-code"></i><span class="caret"></span>
             </button>
-            <ul class="dropdown-menu dropup pull-left m-r-sm">
+            <ul class="dropdown-menu pull-left m-r">
               <li v-for="(value, key) in languages">
-                <a href="#" v-html="value" @click.stop.prevent="appendCode(key)"></a>
+                <a href="#" v-html="value" @click.prevent="appendCode(key)"></a>
               </li>
             </ul>
           </li>
@@ -39,7 +39,6 @@
         <button class="btn m-t w-xs btn-success pull-right" @click="setContent('ok')">Comment</button>
       </div>
     </div>
-    <!-- <div class="editor-shadow"></div> -->
   </div>
 </template>
 
@@ -120,9 +119,13 @@ export default {
         if (str != null) {
           let start = el.selectionStart;
           let end   = el.selectionEnd;
+          let caret = start + str.length;
 
           $(el).val(`${$(el).val().substring(0, start)}${str}${$(el).val().substring(end)}`);
-          el.selectionStart = el.selectionEnd = start + str.length;
+          if (/`{3}\n/.test(str)) {
+            caret -= 5;
+          }
+          el.selectionStart = el.selectionEnd = caret;
           $(el).focus();
 
           binding.value[1](null);
@@ -151,7 +154,11 @@ export default {
     },
 
     appendCode(lang) {
-      console.log(lang);
+      let prefix_break = '';
+      if (this.content.length > 0) {
+        prefix_break = '\n';
+      }
+      this.insertion = `${prefix_break}\`\`\`${lang}\n\n\`\`\`\n`;
     },
 
     getInsertion() {

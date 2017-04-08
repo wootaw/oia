@@ -2,37 +2,39 @@
 
   &.has-error {
     input {
-      background-color: #f2dede;
+      background-color: $error_bg;
+      color: $error_txt;
+      border: 1px dashed $error_txt;
     }
     + .tooltip {
       &.top .tooltip-arrow {
-        border-top-color: #f2dede;
+        border-top-color: $error_bg;
       }
       &.top-left .tooltip-arrow {
-        border-top-color: #f2dede;
+        border-top-color: $error_bg;
       }
       &.top-right .tooltip-arrow {
-        border-top-color: #f2dede;
+        border-top-color: $error_bg;
       }
       &.right .tooltip-arrow {
-        border-right-color: #f2dede;
+        border-right-color: $error_bg;
       }
       &.left .tooltip-arrow {
-        border-left-color: #f2dede;
+        border-left-color: $error_bg;
       }
       &.bottom .tooltip-arrow {
-        border-bottom-color: #f2dede;
+        border-bottom-color: $error_bg;
       }
       &.bottom-left .tooltip-arrow {
-        border-bottom-color: #f2dede;
+        border-bottom-color: $error_bg;
       }
       &.bottom-right .tooltip-arrow {
-        border-bottom-color: #f2dede;
+        border-bottom-color: $error_bg;
       }
       .tooltip-inner {
-        background-color: #f2dede;
+        background-color: $error_bg;
         border-color: #ebccd1;
-        color: #a94442;
+        color: $error_txt;
       }
     }
   }

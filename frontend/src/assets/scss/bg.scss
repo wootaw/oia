@@ -142,24 +142,33 @@
 
 .bg-dark {
   pre {
-    color: #fff;
+    color: $white_color;
     background-color: $pre_color;
     border-color: $dark_color_dk;
   }
 
-  textarea, .preview-area {
-    color: #fff;
-  }
-
-  textarea {
-    padding: 10px;
+  .form-control,
+  .input-group-btn button {
+    color: $white_color;
     border: 1px dashed $dark_color_lter;
     background-color: $dark_color;
     box-shadow: 0px 0px 2px 1px rgba(0, 0, 0, 0.4);
     &:focus {
       box-shadow: none !important;
       border-color: $white_color_dker;
+      &.btn-default {
+        background-color: $dark_color;
+        color: $white_color_dk;
+      }
     }
+  }
+
+  .preview-area {
+    color: $white_color;
+  }
+
+  textarea {
+    padding: 10px;
   }
 
   .preview-area {
