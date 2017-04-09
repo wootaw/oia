@@ -32,11 +32,12 @@
           v-show="tab=='write'" 
           @keydown.tab.stop.prevent="insertion='  '" 
           v-editor="[getInsertion, setInsertion, setContent, insertion]"
+          data-autogrow="false"
         ></textarea>
         <div class="preview-area b-b" v-show="tab=='preview'">
           <div :class="previewAreaClasses" v-html="preview"></div>
         </div>
-        <button class="btn m-t w-xs btn-success pull-right" @click="setContent('ok')">Comment</button>
+        <button class="btn m-t w-xs btn-success pull-right" @click="addComment()">Comment</button>
       </div>
     </div>
   </div>
@@ -46,7 +47,7 @@
 import commentsService from 'SERVICE/CommentsService';
 import 'VENDOR/jquery.autogrow-textarea'
 export default {
-  // props: ['responses'],
+  props: ['resourceid'],
 
   data () {
     return {
@@ -106,7 +107,10 @@ export default {
     editor: {
       bind(el, binding) {
         $(document).on('shown.bs.modal', (e) => {
-          $(el).autogrow();
+          if (!$(el).data('autogrow')) {
+            $(el).autogrow();
+            $(el).data('autogrow', true);
+          }
         });
 
         $(el).blur((e) => {
@@ -136,6 +140,9 @@ export default {
 
   methods: {
     toggleTab (tab) {
+      if (this.loading) {
+        return;
+      }
       this.tab = tab;
 
       switch(tab) {
@@ -151,6 +158,30 @@ export default {
           }
           break;
       }
+    },
+
+    addComment() {
+      if (this.loading) {
+        return;
+      }
+
+      this.loading = true;
+      commentsService.create(this.resourceid, this.content).then(d => {
+        this.loading = false;
+        switch(d.code) {
+          case 200:
+            if (d.data.code == 201) {
+              this.$emit('commentcreated', d.data.comments);
+            } else {
+              this.msgs = d.data.msgs;
+            }
+            break;
+          case 401:
+            this.alert = true;
+            this.msg = resp.msg;
+            break;
+        }
+      });
     },
 
     appendCode(lang) {
@@ -184,12 +215,3 @@ export default {
   
 }
 </script>
-
-<style>
-/*.editor-shadow {
-  position: absolute;
-  top: -10000;
-  left: -10000;
-  resize: none;
-}*/
-</style>

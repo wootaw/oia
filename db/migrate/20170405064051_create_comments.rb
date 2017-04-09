@@ -4,6 +4,7 @@ class CreateComments < ActiveRecord::Migration[5.0]
       t.text        :body, null: false
       t.datetime    :deleted_at, index: true
       t.integer     :reply_id
+      t.integer     :position, index: true
       t.references  :user, index: true
       t.references  :target, polymorphic: true, index: true
       t.timestamps

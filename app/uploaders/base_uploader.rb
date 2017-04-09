@@ -25,23 +25,23 @@ class BaseUploader < CarrierWave::Uploader::Base
     %w(jpg jpeg gif png svg)
   end
 
-  def url(version_name = nil)
-    @url ||= super({})
-    return @url if version_name.blank?
-    version_name = version_name.to_s
-    unless version_name.in?(ALLOW_VERSIONS)
-      raise "ImageUploader version_name:#{version_name} not allow."
-    end
+  # def url(version_name = nil)
+  #   @url ||= super({})
+  #   return @url if version_name.blank?
+  #   version_name = version_name.to_s
+  #   unless version_name.in?(ALLOW_VERSIONS)
+  #     raise "ImageUploader version_name:#{version_name} not allow."
+  #   end
 
-    case A.upload_provider
-    when 'aliyun'
-      super(thumb: "?x-oss-process=image/#{aliyun_thumb_key(version_name)}")
-    when 'upyun'
-      [@url, version_name].join('!')
-    else
-      [@url, version_name].join('!')
-    end
-  end
+  #   case A.upload_provider
+  #   when 'aliyun'
+  #     super(thumb: "?x-oss-process=image/#{aliyun_thumb_key(version_name)}")
+  #   when 'upyun'
+  #     [@url, version_name].join('!')
+  #   else
+  #     [@url, version_name].join('!')
+  #   end
+  # end
 
   private
 

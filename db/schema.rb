@@ -36,6 +36,7 @@ ActiveRecord::Schema.define(version: 20170405064051) do
     t.integer  "target_id"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+    t.integer  "position"
     t.index ["deleted_at"], name: "index_comments_on_deleted_at", using: :btree
     t.index ["target_type", "target_id"], name: "index_comments_on_target_type_and_target_id", using: :btree
     t.index ["user_id"], name: "index_comments_on_user_id", using: :btree

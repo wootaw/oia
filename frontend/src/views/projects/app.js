@@ -12,7 +12,7 @@ import 'COMPONENT/signbox/UsersSignUp'
 import BorderLoading from 'COMPONENT/loadings/BorderLoading'
 import DocumentPanel from 'VIEW/documents/DocumentPanel'
 import ResourceModal from 'COMPONENT/modals/ResourceModal'
-import ReplyPanel from 'COMPONENT/comments/ReplyPanel'
+
 import 'DIRECTIVE/showmodal'
 import 'UTIL/sticky-kit'
 import smoothscroll from 'smoothscroll'
@@ -38,7 +38,6 @@ $(function() {
       'border-loading': BorderLoading,
       'document-panel': DocumentPanel,
       'resource-modal': ResourceModal,
-      'reply-panel': ReplyPanel
     },
 
     directives: {

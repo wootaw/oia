@@ -9,6 +9,7 @@ class Resource < ApplicationRecord
   has_many :parameters, dependent: :destroy
   has_many :responses, dependent: :destroy
   has_many :descriptions, as: :owner, dependent: :destroy
+  has_many :comments, dependent: :destroy
 
   delegate :project, to: :document, prefix: false
   delegate :lastest_change, to: :project, prefix: false
