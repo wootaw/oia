@@ -8,7 +8,7 @@
             <span class="sep">/</span>
             <span>{{resource.summary}}</span>
             <button class="btn m-b-xs btn-xs btn-warning pull-right" v-showmodal="{id: '#resource-modal', data: {slug: resource.slug, tab: 'comments', resource_id: resource.id}}">
-              <i class="fa fa-comments m-r-xs"></i>25
+              <i class="fa fa-comments m-r-xs"></i>{{resource.comments_total}}
             </button>
           </div>
           <span :class="methodClasses">{{resource.method}}</span>

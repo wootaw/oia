@@ -33,6 +33,7 @@
           @keydown.tab.stop.prevent="insertion='  '" 
           v-editor="[getInsertion, setInsertion, setContent, insertion]"
           data-autogrow="false"
+          v-autogrow="panel"
         ></textarea>
         <div class="preview-area b-b" v-show="tab=='preview'">
           <div :class="previewAreaClasses" v-html="preview"></div>
@@ -47,7 +48,7 @@
 import commentsService from 'SERVICE/CommentsService';
 import 'VENDOR/jquery.autogrow-textarea'
 export default {
-  props: ['resourceid'],
+  props: ['resourceid', 'panel'],
 
   data () {
     return {
@@ -104,15 +105,17 @@ export default {
       }
     },
 
+    autogrow: {
+      update(el, binding) {
+        if (!$(el).data('autogrow') && binding.value == 'comments') {
+          $(el).autogrow();
+          $(el).data('autogrow', true);
+        }
+      }
+    },
+
     editor: {
       bind(el, binding) {
-        $(document).on('shown.bs.modal', (e) => {
-          if (!$(el).data('autogrow')) {
-            $(el).autogrow();
-            $(el).data('autogrow', true);
-          }
-        });
-
         $(el).blur((e) => {
           binding.value[2]($(el).val());
         });
@@ -121,16 +124,20 @@ export default {
       update(el, binding) {
         let str = binding.value[0]();
         if (str != null) {
-          let start = el.selectionStart;
-          let end   = el.selectionEnd;
-          let caret = start + str.length;
+          if (str == '<reset>') {
+            $(el).val('');
+          } else {
+            let start = el.selectionStart;
+            let end   = el.selectionEnd;
+            let caret = start + str.length;
 
-          $(el).val(`${$(el).val().substring(0, start)}${str}${$(el).val().substring(end)}`);
-          if (/`{3}\n/.test(str)) {
-            caret -= 5;
+            $(el).val(`${$(el).val().substring(0, start)}${str}${$(el).val().substring(end)}`);
+            if (/`{3}\n/.test(str)) {
+              caret -= 5;
+            }
+            el.selectionStart = el.selectionEnd = caret;
+            $(el).focus();
           }
-          el.selectionStart = el.selectionEnd = caret;
-          $(el).focus();
 
           binding.value[1](null);
         }
@@ -172,6 +179,7 @@ export default {
           case 200:
             if (d.data.code == 201) {
               this.$emit('commentcreated', d.data.comments);
+              this.insertion = '<reset>';
             } else {
               this.msgs = d.data.msgs;
             }

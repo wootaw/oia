@@ -3,6 +3,7 @@ class CommentsController < ApplicationController
   def index
     @resource = Resource.find(params[:resource_id])
     @comments = @resource.comments.order(:position)
+    @meta     = { total: @comments.count }
     render template: "comments/index.json.jbuilder"
   end
 

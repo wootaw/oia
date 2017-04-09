@@ -8,13 +8,24 @@
         <resource-view :dedent="resource_view_dent"></resource-view>
         <div class="col w-auto b-l">
           <div class="vbox bg-dark dker">
-            <resource-nav v-on:resviewdent="resourceViewDent"></resource-nav>
+            <resource-nav 
+              @resviewdent="resourceViewDent" 
+              @tabchanged="toggleTab" 
+              :commentstotal="comments_total" 
+              :tab="tab"
+            ></resource-nav>
             <div class="row-row bg-dark box-s-l-i">
               <div class="cell">
                 <div class="cell-inner">
-                  <comments :resourceid="resource_id" :tab="tab">
-                    <slot></slot>
-                  </comments>
+                  <comments-view 
+                    :resourceid="resource_id" 
+                    :tab="tab" 
+                    @totalchanged="updateCommentsTotal" 
+                    v-show="tab=='comments'"
+                  ><slot></slot>
+                  </comments-view>
+                  <console-view :resourceid="resource_id" :tab="tab" v-show="tab=='console'">
+                  </console-view>
                 </div>
               </div>
             </div>
@@ -28,7 +39,8 @@
 <script>
 import ResourceNav from 'VIEW/resources/ResourceNav'
 import ResourceView from 'VIEW/resources/ResourceView'
-import Comments from 'VIEW/resources/Comments'
+import CommentsView from 'VIEW/resources/CommentsView'
+import ConsoleView from 'VIEW/resources/ConsoleView'
 export default {
   // props: ['method', 'summary', 'path'],
 
@@ -36,6 +48,7 @@ export default {
     return {
       resource_view_dent: true,
       resource_id: null,
+      comments_total: null,
       tab: null,
       loading: false,
     }
@@ -44,7 +57,8 @@ export default {
   components: { 
     'resource-view': ResourceView,
     'resource-nav': ResourceNav,
-    'comments': Comments,
+    'comments-view': CommentsView,
+    'console-view': ConsoleView,
   },
 
   computed: {
@@ -81,8 +95,15 @@ export default {
     setParams(resource_id, tab) {
       this.resource_id = resource_id;
       this.tab = tab;
-    }
+    },
 
+    toggleTab (tab) {
+      this.tab = tab;
+    },
+
+    updateCommentsTotal(total) {
+      this.comments_total = total;
+    }
   }
 }
 </script>
