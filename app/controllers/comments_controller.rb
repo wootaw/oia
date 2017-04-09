@@ -1,5 +1,11 @@
 class CommentsController < ApplicationController
 
+  def index
+    @resource = Resource.find(params[:resource_id])
+    @comments = @resource.comments.order(:position)
+    render template: "comments/index.json.jbuilder"
+  end
+
   def create
     @resource = Resource.find(params[:resource_id])
     @comment = current_user.comments.build(body: params[:body], target: @resource)

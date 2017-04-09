@@ -11,7 +11,7 @@ import 'COMPONENT/signbox/UsersSignIn'
 import 'COMPONENT/signbox/UsersSignUp'
 import BorderLoading from 'COMPONENT/loadings/BorderLoading'
 import DocumentPanel from 'VIEW/documents/DocumentPanel'
-import ResourceModal from 'COMPONENT/modals/ResourceModal'
+import ResourceModal from 'VIEW/resources/ResourceModal'
 
 import 'DIRECTIVE/showmodal'
 import 'UTIL/sticky-kit'

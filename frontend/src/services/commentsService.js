@@ -1,12 +1,13 @@
 import xhr from './xhr/'
 
 class CommentsService {
-  fetchList (query) {
+  fetchList (resource_id) {
     return xhr({
-      url: '/documents',
-      // url: '/docs.json',
-      body: query
-    })
+      url: '/comments',
+      body: { resource_id: resource_id },
+      prefix: 'page',
+      dt: 'json'
+    });
   }
 
   preview(content) {

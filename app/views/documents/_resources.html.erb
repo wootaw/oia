@@ -9,7 +9,7 @@
           <span><%= document.summary %></span>
           <span class="sep">/</span>
           <span><%= res.summary %></span>
-          <button class="btn m-b-xs btn-xs btn-warning pull-right" v-showmodal="{id: '#comments-modal', data: {slug: '<%= res.slug %>', tab: 'comments', resource_id: '<%= res.id %>'}}">
+          <button class="btn m-b-xs btn-xs btn-warning pull-right" v-showmodal="{id: '#resource-modal', data: {slug: '<%= res.slug %>', tab: 'comments', resource_id: '<%= res.id %>'}}">
             <i class="fa fa-comments m-r-xs"></i>25
           </button>
         </div>

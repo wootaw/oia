@@ -1,5 +1,5 @@
 <template>
-  <div class="modal fade modal-full" id="comments-modal" tabindex="-1" role="dialog" v-modal="setParams">
+  <div class="modal fade modal-full" id="resource-modal" tabindex="-1" role="dialog" v-modal="[setParams]">
     <button class="btn btn-rounded btn-lg btn-icon btn-default btn-close" data-dismiss="modal">
       <i class="fa fa-times"></i>
     </button>
@@ -12,13 +12,9 @@
             <div class="row-row bg-dark box-s-l-i">
               <div class="cell">
                 <div class="cell-inner">
-                  <div class="wrapper-md">
-                    <div class="m-b b-l m-l-md streamline">
-                      <slot></slot>
-                      <comment v-for="comment of comments" :key="comment.id" :comment="comment"></comment>
-                    </div>
-                    <reply-panel :resourceid="resource_id" @commentcreated="commentCreated"></reply-panel>
-                  </div>
+                  <comments :resourceid="resource_id" :tab="tab">
+                    <slot></slot>
+                  </comments>
                 </div>
               </div>
             </div>
@@ -30,10 +26,9 @@
 </template>
 
 <script>
-import ResourceNav from 'COMPONENT/navs/ResourceNav'
-import ResourceView from 'COMPONENT/sidebars/ResourceView'
-import Comment from 'COMPONENT/comments/Comment'
-import ReplyPanel from 'COMPONENT/comments/ReplyPanel'
+import ResourceNav from 'VIEW/resources/ResourceNav'
+import ResourceView from 'VIEW/resources/ResourceView'
+import Comments from 'VIEW/resources/Comments'
 export default {
   // props: ['method', 'summary', 'path'],
 
@@ -42,15 +37,14 @@ export default {
       resource_view_dent: true,
       resource_id: null,
       tab: null,
-      comments: []
+      loading: false,
     }
   },
 
   components: { 
     'resource-view': ResourceView,
     'resource-nav': ResourceNav,
-    'comment': Comment,
-    'reply-panel': ReplyPanel
+    'comments': Comments,
   },
 
   computed: {
@@ -65,7 +59,7 @@ export default {
           parts.push($(el).data('slug'));
           parts.push($(el).data('tab'));
 
-          binding.value($(el).data('resource_id'), parts[3]);
+          binding.value[0]($(el).data('resource_id'), parts[3]);
           window.history.pushState("", "Comments", `/${parts.join('/')}`);
         }).on('hidden.bs.modal', function (e) {
           let parts = location.pathname.split('/').slice(1, 4);
@@ -87,11 +81,8 @@ export default {
     setParams(resource_id, tab) {
       this.resource_id = resource_id;
       this.tab = tab;
-    },
-
-    commentCreated(comment) {
-      this.comments.push(comment);
     }
+
   }
 }
 </script>
