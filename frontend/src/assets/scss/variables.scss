@@ -4,6 +4,9 @@
 
 $primary_color: #27a102;
 $white_color: #fff;
+$dark_color: #171717;
+$dark_color_paper: #1f1f1f;
+$warning_color: #ab7a4b;
 // #27a102
 // #167e2e
 $primary_color_lter: lighten($primary_color, 58%);
@@ -11,17 +14,14 @@ $primary_color_lt: lighten($primary_color, 25%);
 $primary_color_dk: darken($primary_color, 10%);
 $primary_color_dker: darken($primary_color, 18%);
 // #002f06
-$white_color_lter: lighten($white_color, 58%);
-$white_color_lt: lighten($white_color, 25%);
-$white_color_dk: darken($white_color, 50%);
-$white_color_dker: darken($white_color, 68%);
-
 $primary_color_flt: fade_in($primary_color, 0.02);
 $primary_color_fdk: fade_in($primary_color, 0.1);
 $primary_color_fbd: fade_in($primary_color, 0.2);
 
-$dark_color: #171717;
-$dark_color_paper: #1f1f1f;
+$white_color_lter: lighten($white_color, 58%);
+$white_color_lt: darken($white_color, 35%);
+$white_color_dk: darken($white_color, 50%);
+$white_color_dker: darken($white_color, 68%);
 
 $dark_color_lt: #2b2b2b;
 $dark_color_lter: #333;
@@ -30,7 +30,6 @@ $dark_color_dker: #000;
 
 $dangerColor: #bd362f;
 $successColor: #0eaf53;
-$warning_color: #ab7a4b;
 $inverseColor: #45484d;
 $infoColor: #5cc7dd;
 $spacing: 15px;

@@ -86,7 +86,7 @@
 <div class="app-content-body app-content-full h-full">
   <div class="hbox hbox-auto-xs">
     <!-- column -->
-    <div class="col w-xl b-r">
+    <div class="col w-xl">
       <div class="vbox">
         <div class="b-b">
           <div class="font-thin padder-sm padder-v bg-dark lt">
@@ -106,15 +106,15 @@
               <ul class="nav nav-cata bg-dark dker" v-urlspy>
               <% @change.parts(@project, :documents).each do |doc| %>
                 <li class="heading">
-                  <a href="<%= @project.name %>/<%= doc.name %>" data-target="#<%= doc.name %>" v-smoothscroll="'#scroll-container'"><%= doc.summary %></a>
+                  <a href="<%= @project.name %>/<%= doc.name %>" data-target="#<%= doc.name %>" v-smoothscroll="'#scroll-container'" class="b-r"><%= doc.summary %></a>
                   <ul class="nav list-group alt">
                     <% @change.parts(doc, :resources).each do |res| %>
-                    <li class="list-group-item lt">
-                      <a class="media" href="<%= @project.name %>/<%= res.slug %>" data-target="#<%= res.slug %>" v-smoothscroll="'#scroll-container'">
+                    <li class="list-group-item dker">
+                      <a class="media b-r" href="<%= @project.name %>/<%= res.slug %>" data-target="#<%= res.slug %>" v-smoothscroll="'#scroll-container'">
                         <span class="label <%= method_color(res.method) %> pull-left"><%= res.method.size > 4 ? res.method[0..2] : res.method %></span>
                         <div class="media-body">
                           <h5><%= res.summary %></h5>
-                          <small class="text-muted"><%= res.path %></small>
+                          <small><%= res.path %></small>
                         </div>
                       </a>
                     </li>
@@ -159,7 +159,7 @@
           </border-loading>
           <% end %>
           <div id='scroll-container' class="cell" v-scrollspy="{target: '#nav-cata', offset: 50, callback: scrolledTo}">
-            <div>
+            <div class="bg-paper">
               <document-panel
                 v-for="doc of topdocs"
                 :document="doc"
@@ -167,12 +167,10 @@
                 :dir="'top'"
               >
               </document-panel>
-              <div id="<%= @document.name %>" class="panel panel-doc m-b-none no-radius" v-sticky="{ offset_top: 50, container: '#scroll-container' }">
-                <div class="panel-heading"><h2><%= @document.summary %></h2></div>
-                <div class="panel-body">
-                  <div class="wrapper"><%= markdown(@document.raw_description(@change)) %></div>
-                  <%= render partial: "documents/resources", locals: { resources: @resources, document: @document, change: @change } %>
-                </div>
+              <div id="<%= @document.name %>" class="wrapper-md panel-doc" v-sticky="{ offset_top: 50, container: '#scroll-container' }">
+                <h2><%= @document.summary %></h2>
+                <div class="wrapper"><%= markdown(@document.raw_description(@change)) %></div>
+                <%= render partial: "documents/resources", locals: { resources: @resources, document: @document, change: @change } %>
               </div>
               <document-panel
                 v-for="doc of bottomdocs"

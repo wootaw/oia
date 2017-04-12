@@ -1,15 +1,13 @@
 <template>
-  <div :id="document.name" class="panel panel-doc m-b-none no-radius" v-recalc-sticky="dir" v-sticky="{ offset_top: 50, container: '#scroll-container' }">
-    <div class="panel-heading"><h2>{{document.summary}}</h2></div>
-    <div class="panel-body">
-      <div class="wrapper" v-html="document.md_description"></div>
-      <resource-panel
-        v-for="res of document.resources"
-        :document="document"
-        :resource="res"
-        :key="res.id"
-      ></resource-panel>
-    </div>
+  <div :id="document.name" class="wrapper-md panel-doc" v-recalc-sticky="dir" v-sticky="{ offset_top: 50, container: '#scroll-container' }">
+    <h2>{{document.summary}}</h2>
+    <div class="wrapper" v-html="document.md_description"></div>
+    <resource-panel
+      v-for="res of document.resources"
+      :document="document"
+      :resource="res"
+      :key="res.id"
+    ></resource-panel>
   </div>
 </template>
 
