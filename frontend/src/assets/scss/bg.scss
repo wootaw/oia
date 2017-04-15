@@ -195,17 +195,21 @@
       // border-right: 1px solid $white_color_dker;
 
       h5 {
-        color: $white_color_lt;
+        color: $primary_color_dk;
       }
 
       small {
         color: $white_color_dker;
       }
 
+      a:focus {
+        background-color: inherit;
+      }
+
       &.active,
       &:hover {
         border-right: 0;
-        a.media {
+        a.media, &.media {
           background-image: url("../images/black_paper.jpg");
           h5 {
             color: $primary_color_lter;
@@ -398,6 +402,10 @@
           border-right-color: $dark_color_paper;
         }
       }
+    }
+
+    .panel-footer {
+      background-image: url("../images/black_paper.jpg");
     }
   }
 

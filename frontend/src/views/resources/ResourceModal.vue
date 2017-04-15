@@ -24,7 +24,12 @@
                     v-show="tab=='comments'"
                   ><slot></slot>
                   </comments-view>
-                  <console-view :resource="resource" :tab="tab" v-show="tab=='console'"></console-view>
+                  <console-view 
+                    :resource="resource" 
+                    :tab="tab" 
+                    v-show="tab=='console'" 
+                    v-if="resource!=null"
+                  ></console-view>
                 </div>
               </div>
             </div>

@@ -8,8 +8,8 @@ html.bg {
 }
 
 body {
-  font-family: "Source Sans Pro", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-size: 14px;
+  font-family: Source Code Pro, Panic Sans, Monaco, monospace, sans-serif;
+  font-size: 12px;
   -webkit-font-smoothing: antialiased;
   line-height: 1.42857143;
   color: #fff;
@@ -37,6 +37,9 @@ body {
   overflow-x: hidden;
 }
 
+small {
+  font-family: Source Sans Pro, Helvetica Neue, Helvetica,Arial,sans-serif;
+}
 *:focus {
   outline: 0 !important;
   outline-width: 0;
@@ -296,13 +299,23 @@ body {
 
 .nav > li > a:hover,
 .nav > li > a:focus {
-  background-color: $primary_color_lter;
+  // background-color: $primary_color_lter;
 }
 
 .nav .open > a,
 .nav .open > a:hover,
 .nav .open > a:focus {
-  background-color: $primary_color_lter;
+  // background-color: $primary_color_lter;
+}
+
+.nav-pills > li {
+  a:hover {
+    color: $primary_color_dker;
+    background-color: $primary_color_lter;
+  }
+  &.active a, &.active a:focus {
+    background-color: $primary_color;
+  }
 }
 
 .navbar {
@@ -1493,7 +1506,9 @@ fieldset[disabled] .btn-dark.active {
 .w-auto {
   width: auto;
 }
-
+.h-xxxs {
+  min-height: 40px;
+}
 .h-xxs {
   min-height: 60px;
 }
@@ -2339,9 +2354,15 @@ a.text-#000000:hover {
     font-weight: bold;
 
     a {
-      display: block;
+      display: flex;
       text-decoration: none;
-      color: #fff;
+      // color: #fff;
+      .media-body {
+        flex: 1 1 auto;
+        h5 {
+          margin: 0;
+        }
+      }
     }
 
     &.active,
@@ -2375,19 +2396,10 @@ a.text-#000000:hover {
 
   .label {
     width: 45px;
+    height: 18px;
     margin-top: 10px;
     margin-right: 10px;
-  }
-
-  .media-body {
-    a {
-      display: block;
-      text-decoration: none;
-
-      h5 {
-        margin: 0;
-      }
-    }
+    font-family: "Source Sans Pro","Helvetica Neue",Helvetica,Arial,sans-serif;
   }
 
   .list-group {
@@ -2399,6 +2411,13 @@ a.text-#000000:hover {
       border-right: 0;
       // border-color: #151515;
       
+      &.flexbox {
+        display: flex;
+        input {
+          flex: 1 1 0px;
+        }
+      }
+
       &:first-child {
         border-top-left-radius: 0;
         border-top-right-radius: 0;
@@ -2433,6 +2452,15 @@ a.text-#000000:hover {
           display: block;
         }
       }
+    }
+  }
+}
+
+.list-group-item {
+  &.flexbox {
+    display: flex;
+    input {
+      flex: 1 1 0px;
     }
   }
 }
