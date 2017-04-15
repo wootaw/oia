@@ -4,7 +4,7 @@
 <% end %>
 
 <% content_for :modals do %>
-<resource-modal>
+<resource-modal :find="changeResource" :resource="resource" :document="document">
   <div class="dp-none comment-init">
     <a class="pull-left thumb-sm avatar m-l-n-md">
       <img src="/uploads/user/sm_iune12pxp-mimoaqfvv-jodiwb0sc-bdm0reu0d.png" class="img-circle" alt="...">
@@ -96,14 +96,14 @@
 
         <div class="row-row">
           <div id="nav-cata" class="cell">
-            <div class="cell-inner">
+            <div class="cell-inner b-r">
               <!-- <div id="app">
                 <div v-for="doc in documents">
                   <document-group :resources="doc.resources" :summary="doc.summary"></document-group>
                 </div>
               </div> -->
 
-              <ul class="nav nav-cata bg-dark dker" v-urlspy>
+              <ul class="nav nav-cata bg-dark dker m-r-n-xxs" v-urlspy>
               <% @change.parts(@project, :documents).each do |doc| %>
                 <li class="heading">
                   <a href="<%= @project.name %>/<%= doc.name %>" data-target="#<%= doc.name %>" v-smoothscroll="'#scroll-container'" class="b-r"><%= doc.summary %></a>
@@ -167,7 +167,7 @@
                 :dir="'top'"
               >
               </document-panel>
-              <div id="<%= @document.name %>" class="wrapper-md panel-doc" v-sticky="{ offset_top: 50, container: '#scroll-container' }">
+              <div id="<%= @document.name %>" data-version="<%= @change.position %>" class="wrapper-md panel-doc" v-sticky="{ offset_top: 50, container: '#scroll-container' }">
                 <h2><%= @document.summary %></h2>
                 <div class="wrapper"><%= markdown(@document.raw_description(@change)) %></div>
                 <%= render partial: "documents/resources", locals: { resources: @resources, document: @document, change: @change } %>

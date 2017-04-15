@@ -76,7 +76,7 @@ export default {
       if (this.doing) { return; }
 
       this.doing = true;
-      documentsService.getPrev(slug, {
+      documentsService.getOne(slug, {
         'owner_name': this.owner,
         'project_name': this.project,
         'version': this.version,

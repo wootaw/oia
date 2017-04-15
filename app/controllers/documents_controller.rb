@@ -22,6 +22,8 @@ class DocumentsController < ApplicationController
             render_404
           else
             case params[:location]
+            when 'current'
+              @document = current_document
             when 'top'
               @document = documents.where("documents.position < ?", current_document.position).order("position DESC").take
             when 'bottom'

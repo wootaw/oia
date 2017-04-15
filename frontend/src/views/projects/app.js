@@ -25,11 +25,14 @@ $(function() {
     data: {
       sign: 0,
       modal: 0,
-      lastest: null,
-      scroll: null,
+      // lastest: null,
+      scroll: null, // resource scroll to
       max: null,
+      current: [],
       topdocs: [],
-      bottomdocs: []
+      bottomdocs: [],
+      resource: null,
+      document: null
     },
 
     mixins: [Sign],
@@ -112,6 +115,47 @@ $(function() {
         }
       },
 
+      changeResource(id, slug, op) {
+        if (op == 'clear') {
+          this.resource = null;
+          return;
+        }
+
+        this.topdocs.concat(this.bottomdocs, this.current).some((doc, idx, docs) => {
+          doc.resources.some((res, idx, ress) => {
+            if (res.id == id) {
+              this.resource = res;
+              this.document = doc;
+              return true;
+            }
+          });
+
+          if (this.resource != null) {
+            return true;
+          }
+        });
+
+        if (this.resource == null) {
+          let resel = $(`#${slug}`).parents('.panel-doc');
+          let parts = location.pathname.split('/').slice(1, 3);
+
+          documentsService.getOne(resel.attr('id'), {
+            'owner_name': parts[0],
+            'project_name': parts[1],
+            'version': resel.data('version'),
+            'location': 'current'
+          }).then(d => {
+            this.current.push(d.data.documents);
+            this.current[0].resources.some((res, idx, ress) => {
+              if (res.id == id) {
+                this.resource = res;
+                this.document = this.current[0];
+                return true;
+              }
+            });
+          });
+        }
+      }
     },
 
     mounted() {

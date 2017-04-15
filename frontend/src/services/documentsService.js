@@ -9,7 +9,7 @@ class DocumentsService {
     })
   }
 
-  getPrev(slug, query) {
+  getOne(slug, query) {
     return xhr({
       url: `/documents/${slug}.json`,
       body: query,

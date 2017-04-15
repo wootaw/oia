@@ -4,10 +4,19 @@
       <div class="row-row">
         <div class="cell">
           <div class="cell-inner">
-            <div class="wrapper-md">
-              This is the scrollable content
-              <p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>监听当前实例上的自定义事件。事件可以由vm.$emit触发。回调函数会接收所有传入事件触发函数的额外参数。</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p>
-              You got the bottom
+            <div class="wrapper" v-if="resource != null">
+              <div class="clearfix m-b">
+                <div class="h3 m-t-xs m-b-sm">
+                  <span>{{document.summary}}</span>
+                  <span class="sep">/</span>
+                  <span>{{resource.summary}}</span>
+                </div>
+                <span :class="methodClasses">{{resource.method}}</span>
+                <span class="label pull-left">{{resource.path}}</span>
+              </div>
+              <div class="no-padder m-b" v-html="resource.md_description"></div>
+              <parameter-panel :parameters="resource.parameters"></parameter-panel>
+              <response-panel :responses="resource.responses"></response-panel>
             </div>
           </div>
         </div>
@@ -17,13 +26,22 @@
 </template>
 
 <script>
+import ResourcePanel from 'VIEW/documents/ResourcePanel'
+import ParameterPanel from 'VIEW/documents/ParameterPanel'
+import ResponsePanel from 'VIEW/documents/ResponsePanel'
 export default {
-  props: ['dedent'],
+  props: ['dedent', 'resource', 'document'],
 
   data () {
     return {
       'w': true
     };
+  },
+
+  components: { 
+    'resource-panel': ResourcePanel,
+    'parameter-panel': ParameterPanel,
+    'response-panel': ResponsePanel
   },
 
   computed: {
@@ -32,9 +50,22 @@ export default {
         'col': true,
         'w-40': this.w,
         'w-1x': !this.w,
-        'bounce-in-left': this.dedent,
+        'bg-loading': this.resource == null,
+        'x-c-y-c': this.resource == null,
+        'bounce-in-left': this.dedent && this.resource != null,
         'slide-out-left': !this.dedent
       };
+    },
+
+    methodClasses () {
+      let r = ['label', 'pull-left', 'm-r-sm'];
+      r.push({
+        'GET':    'label-success', 
+        'POST':   'label-warning', 
+        'PUT':    'label-primary', 
+        'DELETE': 'label-danger' 
+      }[this.resource.method]);
+      return r;
     },
 
   },

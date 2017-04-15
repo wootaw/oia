@@ -1,11 +1,11 @@
 <template>
-  <div class="modal fade modal-full" id="resource-modal" tabindex="-1" role="dialog" v-modal="[setParams]">
+  <div class="modal fade modal-full" id="resource-modal" tabindex="-1" role="dialog" v-modal="[toggleTab, find]">
     <button class="btn btn-rounded btn-lg btn-icon btn-default btn-close" data-dismiss="modal">
       <i class="fa fa-times"></i>
     </button>
     <div class="grid-over h-full">
       <div class="hbox hbox-auto-xs">
-        <resource-view :dedent="resource_view_dent"></resource-view>
+        <resource-view :dedent="resource_view_dent" :resource="resource" :document="document"></resource-view>
         <div class="col w-auto b-l">
           <div class="vbox bg-dark dker">
             <resource-nav 
@@ -18,14 +18,13 @@
               <div class="cell">
                 <div class="cell-inner">
                   <comments-view 
-                    :resourceid="resource_id" 
+                    :resourceid="resourceId" 
                     :tab="tab" 
                     @totalchanged="updateCommentsTotal" 
                     v-show="tab=='comments'"
                   ><slot></slot>
                   </comments-view>
-                  <console-view :resourceid="resource_id" :tab="tab" v-show="tab=='console'">
-                  </console-view>
+                  <console-view :resource="resource" :tab="tab" v-show="tab=='console'"></console-view>
                 </div>
               </div>
             </div>
@@ -42,12 +41,11 @@ import ResourceView from 'VIEW/resources/ResourceView'
 import CommentsView from 'VIEW/resources/CommentsView'
 import ConsoleView from 'VIEW/resources/ConsoleView'
 export default {
-  // props: ['method', 'summary', 'path'],
+  props: ['find', 'resource', 'document'],
 
   data () {
     return {
       resource_view_dent: true,
-      resource_id: null,
       comments_total: null,
       tab: null,
       loading: false,
@@ -62,6 +60,9 @@ export default {
   },
 
   computed: {
+    resourceId () {
+      return this.resource == null ? null : this.resource.id;
+    }
   },
 
   directives: {
@@ -73,9 +74,13 @@ export default {
           parts.push($(el).data('slug'));
           parts.push($(el).data('tab'));
 
-          binding.value[0]($(el).data('resource_id'), parts[3]);
-          window.history.pushState("", "Comments", `/${parts.join('/')}`);
+          binding.value[1]($(el).data('resource_id'), parts[2], 'search');  // call findResource in app
+          binding.value[0](parts[3]);            // call toggleTab
+          
+          window.history.pushState('', 'Comments', `/${parts.join('/')}`);
         }).on('hidden.bs.modal', function (e) {
+          binding.value[1](null, null, 'clear');
+
           let parts = location.pathname.split('/').slice(1, 4);
           window.history.pushState("", "", `/${parts.join('/')}`);
         });
@@ -90,11 +95,6 @@ export default {
   methods: {
     resourceViewDent(dent) {
       this.resource_view_dent = dent;
-    },
-
-    setParams(resource_id, tab) {
-      this.resource_id = resource_id;
-      this.tab = tab;
     },
 
     toggleTab (tab) {
