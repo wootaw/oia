@@ -14,7 +14,7 @@
                 <span :class="methodClasses">{{resource.method}}</span>
                 <span class="label pull-left">{{resource.path}}</span>
               </div>
-              <div class="no-padder m-b" v-html="resource.md_description"></div>
+              <div class="no-padder bg-dark no-bg m-b" v-html="resource.md_description"></div>
               <parameter-panel :parameters="resource.parameters"></parameter-panel>
               <response-panel :responses="resource.responses"></response-panel>
             </div>

@@ -1173,6 +1173,15 @@ fieldset[disabled] .btn-dark.active {
       line-height: 45px;
     }
   }
+
+  &.btn-xs {
+    width: 20px;
+    height: 20px;
+
+    i {
+      line-height: 20px;
+    }
+  }
 }
 
 .btn-rounded {

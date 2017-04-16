@@ -4,7 +4,7 @@
       <div class="row">
         <div class="col-sm-12 col-xs-12">
           <span :class="methodClasses">{{resource.method}}</span>
-          <span class="label label-default pull-left">{{resource.path}}</span>
+          <span class="label pull-left" v-html="colourPath"></span>
         </div>
       </div>
     </div>
@@ -21,24 +21,25 @@
         </li>
       </ul>
       <div class="panel b-a bg-paper">
-        <ul class="list-group list-group-lg no-bg auto">
+        <ul class="list-group list-group-lg no-bg auto list-params">
           <li class="list-group-item clearfix flexbox h-xxxs" v-for="param of fields" :key="param.id">
             <label class="i-checks i-checks-sm m-r-sm">
-              <input type="checkbox" :disabled="required(param)" :checked="required(param)">
+              <input type="checkbox" :disabled="required(param)" v-model="param.checked">
               <i></i>
             </label>
-            <input class="inv" type="text" name="" :value="param.name">
-            <input class="inv" type="text" name="" :value="param.default" placeholder="null">
+            <input class="inv" type="text" v-model="param.name">
+            <input :class="{'inv': true, 'm-r-md': !param.custom}" type="text" v-model="param.value" placeholder="null">
+            <button class="btn btn-icon btn-xs" v-if="param.custom" @click="removeParam(param)"><i class="fa fa-times"></i></button>
           </li>
         </ul>
         <div class="clearfix panel-footer">
-          <a class="" href="#">
+          <a class="" href="#" @click.stop.prevent="addParam()">
             <i class="fa fa-plus fa-fw text-muted"></i> 
             Add a new {{tab}}
           </a>
         </div>
       </div>
-      <div class="panel b-a bg-paper">
+      <div class="panel b-a bg-paper" v-show="false">
         <div class="panel-body">
           <blockquote>
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
@@ -73,7 +74,11 @@ export default {
 
   data () {
     return {
-      tab: 'parameter'
+      tab: 'parameter',
+      params: this.resource.parameters.reduce((r, c) => {  
+        r.push({ name: c.name, value: c.default, checked: c.required, custom: false, origin: c });
+        return r;
+      }, [])
     };
   },
 
@@ -91,20 +96,52 @@ export default {
     },
 
     fields () {
-      return this.resource.parameters.reduce((r, c) => {
-        if (c.location == 'header' || c.location == 'body') {
-          if (c.location == this.tab) {
+      return this.params.reduce((r, c) => {
+        if (c.origin.location == 'header' || c.origin.location == 'body') {
+          if (c.origin.location == this.tab) {
             r.push(c);
           }
         } else {
-          if (c.location == 'parameter') {
+          if (this.tab == 'parameter') {
             r.push(c);
           }
         }
         return r;
       }, []);
-    }
+    },
+
+    colourPath () {
+      let path = this.resource.path;
+      this.params.reduce((r, c) => {
+        if (c.origin.location == 'path' && c.name != null && c.value != null) {
+          r.push([c.name, c.value]);
+        }
+        return r;
+      }, []).forEach((e) => {
+        path = path.replace(new RegExp(`(:${e[0]})`), `<span class="text-danger">${encodeURIComponent(e[1])}</span>`);
+      });
+
+      let parts = this.params.reduce((r, c) => {
+        if (c.origin.location == 'query' && c.name != null && c.value != null) {
+          r.push(`<span class="text-danger">${encodeURIComponent(c.name)}=${encodeURIComponent(c.value)}</span>`);
+        }
+        return r;
+      }, []);
+      let search = parts.length > 0 ? `?${parts.join('&')}` : '';
+
+      return `${path}${search}`;
+    },
   },
+
+  // updated () {
+  //   console.log(this.resource == null ? null : this.resource.id);
+  // },
+
+  // watch: {
+  //   tab (nv, ov) {
+  //     console.log(this.resource);
+  //   }
+  // },
 
   methods: {
     locationClasses (location) {
@@ -121,12 +158,37 @@ export default {
     },
 
     required (parameter) {
-      return parameter.required || parameter.location == 'path';
+      return parameter.origin.required || parameter.origin.location == 'path';
     },
 
     toggleParameterTab (tab) {
       this.tab = tab;
+    },
+
+    addParam () {
+      let location = this.tab == 'header' ? 'header' : 'query';
+      this.params.push({ name: 'New Item', value: null, checked: true, custom: true, origin: { location: location } });
+    },
+
+    removeParam (param) {
+      this.params.some((e, i, a) => {
+        if (e.name == param.name && e.value == param.value && e.custom == true) {
+          this.params.splice(i, 1);
+          return true;
+        } else {
+          return false;
+        }
+      });
     }
   }
 }
 </script>
+
+<style>
+.list-params .list-group-item button {
+  visibility: hidden;
+}
+.list-params .list-group-item:hover button {
+  visibility: visible;
+}
+</style>

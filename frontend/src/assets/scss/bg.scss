@@ -141,6 +141,11 @@
 }
 
 .bg-dark {
+
+  &.no-bg, .no-bg {
+    background-color: transparent;
+  }
+  
   pre {
     color: $white_color;
     background-color: $pre_color;
