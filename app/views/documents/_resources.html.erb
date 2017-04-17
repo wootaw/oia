@@ -2,24 +2,23 @@
 <% parameters = res.the_parameters(change) %>
 <% responses = res.the_responses(change) %>
 <div id="<%= res.slug %>" class="panel panel-res">
-  <div class="panel-heading bg-green dk">
-    <div class="clearfix">
-      <div class="clear">
-        <div class="h3 m-t-xs m-b-sm">
-          <span><%= document.summary %></span>
-          <span class="sep">/</span>
-          <span><%= res.summary %></span>
-          <button class="btn m-b-xs btn-xs btn-warning pull-right" v-showmodal="{id: '#resource-modal', data: {slug: '<%= res.slug %>', tab: 'comments', resource_id: '<%= res.id %>'}}">
-            <i class="fa fa-comments m-r-xs"></i><%= res.comments.count %>
-          </button>
-        </div>
-        <span class="label <%= method_color(res.method) %> pull-left m-r-sm"><%= res.method %></span>
-        <span class="label pull-left"><%= colour_path(res.path, parameters).html_safe %></span>
-      </div>
+  <div class="panel-heading bg-green dk clearfix">
+    <div class="h3 m-t-xs m-b-sm">
+      <span><%= document.summary %></span>
+      <span class="sep">/</span>
+      <span><%= res.summary %></span>
     </div>
+    <span class="label <%= method_color(res.method) %> pull-left m-r-sm"><%= res.method %></span>
+    <span class="label pull-left"><%= colour_path(res.path, parameters).html_safe %></span>
+    <button class="btn m-b-xs btn-xs btn-warning pull-right" v-showmodal="{id: '#resource-modal', data: {slug: '<%= res.slug %>', tab: 'comments', resource_id: '<%= res.id %>'}}">
+      <i class="fa fa-comments m-r-xs"></i><%= res.comments.count %>
+    </button>
+    <button class="btn m-b-xs m-r-xs btn-xs btn-info pull-right" v-showmodal="{id: '#resource-modal', data: {slug: '<%= res.slug %>', tab: 'console', resource_id: '<%= res.id %>'}}">
+      <i class="fa fa-terminal m-r-xs"></i>
+    </button>
   </div>
   <div class="panel-body no-padder">
-    <div class="wrapper bg-light"><%= markdown(res.raw_description(change)) %></div>
+    <div class="wrapper bg-light m-b"><%= markdown(res.raw_description(change)) %></div>
     <%= render partial: "documents/parameters", locals: { parameters: parameters, change: change } %>
     <%= render partial: "documents/responses", locals: { responses: responses, change: change } %>
   </div>

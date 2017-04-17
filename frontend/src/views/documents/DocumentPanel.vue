@@ -30,13 +30,13 @@ export default {
   directives: {
     sticky: {
       inserted(el, binding) {
-        $('.panel-body .panel-res > .panel-heading', el).stick_in_parent(binding.value);
+        $('.panel-res > .panel-heading', el).stick_in_parent(binding.value);
       }
     },
 
     recalcSticky: {
       inserted(el, binding) {
-        let lc = '.panel-body .panel-res:last-child';
+        let lc = '.panel-res:last-child';
         let ct = el;
         if (binding.value == 'bottom') {
           ct = $(el).prev();
