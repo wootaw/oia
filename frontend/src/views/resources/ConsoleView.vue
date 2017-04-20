@@ -4,7 +4,7 @@
       <div class="row">
         <div class="col-sm-12 col-xs-12">
           <span :class="methodClasses">{{resource.method}}</span>
-          <span class="label pull-left" v-html="colourPath"></span>
+          <span class="label no-padder" v-html="locationHerf"></span><span class="label no-padder" v-html="locationSearch"></span>
         </div>
       </div>
     </div>
@@ -20,7 +20,7 @@
           <a href="#" @click.stop.prevent="toggleParameterTab('body')">Body</a>
         </li>
       </ul>
-      <div class="panel b-a bg-paper">
+      <div class="panel b-a bg-paper" v-show="tab!='body'">
         <ul class="list-group list-group-lg no-bg auto list-params">
           <li class="list-group-item clearfix flexbox h-xxxs" v-for="param of fields" :key="param.id">
             <label class="i-checks i-checks-sm m-r-sm">
@@ -39,43 +39,27 @@
           </a>
         </div>
       </div>
-      <div class="panel b-a bg-paper" v-show="false">
-        <div class="panel-body">
-          <blockquote>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
-            <small>Someone famous in <cite title="Source Title">Source Title</cite></small>
-          </blockquote>
-          <div>Lorem ipsum dolor sit amet, consecteter adipiscing elit...</div>
-          <div class="m-t-sm">
-            <a href data-toggle="class" class="btn btn-default btn-xs">
-              <i class="fa fa-star-o text-muted text"></i>
-              <i class="fa fa-star text-danger text-active"></i> 
-              Like
-            </a>
-            <a href class="btn btn-default btn-xs"><i class="fa fa-mail-reply text-muted"></i> Reply</a>
-          </div>
-        </div>
-        <div class="clearfix panel-footer">
-          <div class="input-group">
-            <input type="text" class="form-control input-sm btn-rounded" placeholder="Search">
-            <span class="input-group-btn">
-              <button type="submit" class="btn btn-default btn-sm btn-rounded"><i class="fa fa-search"></i></button>
-            </span>
-          </div>
-        </div>
+      <div class="panel b-a bg-paper h-xxl" v-show="tab=='body'">
+        <div class="panel-body no-padder" style="height: 360px;" v-jsoneditor="{setEditor: setEditor, options: {mode: 'code', onError: bodyError, onChange: bodyChanged}}"></div>
+        <div class="clearfix panel-footer b-t no-padder"><pre class="no-border no-bg" v-html="errorMsg"></pre></div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import 'jsoneditor/dist/jsoneditor.css'
+import JSONEditor from 'jsoneditor/dist/jsoneditor'
+
 export default {
   props: ['resource'],
 
   data () {
     return {
       tab: 'parameter',
-      params: this.resource.parameters.reduce((r, c) => {  
+      editor: null,
+      errorMsg: null,
+      params: this.resource.parameters.reduce((r, c) => {
         r.push({ name: c.name, value: c.default, checked: c.required, custom: false, origin: c });
         return r;
       }, [])
@@ -110,7 +94,16 @@ export default {
       }, []);
     },
 
-    colourPath () {
+    bodyJSON () {
+      return this.params.reduce((r, c) => {
+        if (!c.custom && c.origin.location == "body") {
+          if (c.origin.ancestor == null) {}
+        }
+        return r;
+      }, {});
+    },
+
+    locationHerf () {
       let path = this.resource.path;
       this.params.reduce((r, c) => {
         if (c.origin.location == 'path' && c.name != null && c.value != null) {
@@ -120,19 +113,27 @@ export default {
       }, []).forEach((e) => {
         path = path.replace(new RegExp(`(:${e[0]})`), `<span class="text-danger">${encodeURIComponent(e[1])}</span>`);
       });
+      return path;
+    },
 
-      let parts = this.params.reduce((r, c) => {
+    locationSearch () {
+      const parts = this.params.reduce((r, c) => {
         if (c.origin.location == 'query' && c.name != null && c.value != null) {
           r.push(`<span class="text-danger">${encodeURIComponent(c.name)}=${encodeURIComponent(c.value)}</span>`);
         }
         return r;
       }, []);
-      let search = parts.length > 0 ? `?${parts.join('&')}` : '';
-
-      return `${path}${search}`;
-    },
+      return parts.length > 0 ? `?${parts.join('&')}` : '';
+    }
   },
 
+  directives: {
+    jsoneditor: {
+      inserted(el, binding) {
+        binding.value.setEditor(new JSONEditor(el, binding.value.options));
+      },
+    },
+  },
   // updated () {
   //   console.log(this.resource == null ? null : this.resource.id);
   // },
@@ -179,6 +180,18 @@ export default {
           return false;
         }
       });
+    },
+
+    bodyError (msg) {
+      this.errorMsg = msg.toString();
+    },
+
+    bodyChanged () {
+      this.errorMsg = null;
+    },
+
+    setEditor (editor) {
+      this.editor = editor;
     }
   }
 }

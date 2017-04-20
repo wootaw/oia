@@ -68,6 +68,13 @@ ajv@^4.11.2, ajv@^4.7.0:
     co "^4.6.0"
     json-stable-stringify "^1.0.1"
 
+ajv@4.11.6:
+  version "4.11.6"
+  resolved "http://registry.npm.taobao.org/ajv/download/ajv-4.11.6.tgz#947e93049790942b2a2d60a8289b28924d39f987"
+  dependencies:
+    co "^4.6.0"
+    json-stable-stringify "^1.0.1"
+
 align-text@^0.1.1, align-text@^0.1.3:
   version "0.1.4"
   resolved "http://registry.npm.taobao.org/align-text/download/align-text-0.1.4.tgz#0cd90a561093f35d0a99256c22b7069433fad117"
@@ -889,6 +896,12 @@ brace-expansion@^1.0.0, brace-expansion@^1.1.6:
   dependencies:
     balanced-match "^0.4.1"
     concat-map "0.0.1"
+
+brace@0.10.0:
+  version "0.10.0"
+  resolved "http://registry.npm.taobao.org/brace/download/brace-0.10.0.tgz#edef4eb9b0928ba1ee5f717ffc157749a6dd5d76"
+  dependencies:
+    w3c-blob "0.0.1"
 
 braces@^1.8.2:
   version "1.8.5"
@@ -2932,6 +2945,10 @@ isstream@~0.1.2:
   version "0.1.2"
   resolved "http://registry.npm.taobao.org/isstream/download/isstream-0.1.2.tgz#47e63f7af55afa6f92e1500e690eb8b8529c099a"
 
+javascript-natural-sort@0.7.1:
+  version "0.7.1"
+  resolved "http://registry.npm.taobao.org/javascript-natural-sort/download/javascript-natural-sort-0.7.1.tgz#f9e2303d4507f6d74355a73664d1440fb5a0ef59"
+
 jodid25519@^1.0.0:
   version "1.0.2"
   resolved "http://registry.npm.taobao.org/jodid25519/download/jodid25519-1.0.2.tgz#06d4912255093419477d425633606e0e90782967"
@@ -3010,6 +3027,14 @@ json3@^3.3.2, json3@3.3.2:
 json5@^0.5.0:
   version "0.5.1"
   resolved "http://registry.npm.taobao.org/json5/download/json5-0.5.1.tgz#1eade7acc012034ad84e2396767ead9fa5495821"
+
+jsoneditor:
+  version "5.6.0"
+  resolved "http://registry.npm.taobao.org/jsoneditor/download/jsoneditor-5.6.0.tgz#b7df2ad1289486b0b3b0368da8b551e0f0b31ed6"
+  dependencies:
+    ajv "4.11.6"
+    brace "0.10.0"
+    javascript-natural-sort "0.7.1"
 
 jsonfile@^2.1.0:
   version "2.4.0"
@@ -5371,6 +5396,10 @@ vue-template-es2015-compiler@^1.2.2:
 vue@^2.2.0-beta.1:
   version "2.2.0"
   resolved "http://registry.npm.taobao.org/vue/download/vue-2.2.0.tgz#f4586920ce36d53944ab27ac5236ed9303a46b47"
+
+w3c-blob@0.0.1:
+  version "0.0.1"
+  resolved "http://registry.npm.taobao.org/w3c-blob/download/w3c-blob-0.0.1.tgz#b0cd352a1a50f515563420ffd5861f950f1d85b8"
 
 watchpack@^1.2.0:
   version "1.3.1"

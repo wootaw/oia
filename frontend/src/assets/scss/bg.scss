@@ -418,6 +418,38 @@
     background-color: transparent;
     border: 1px solid $dark_color_lt;
   }
+
+  div.jsoneditor {
+    border: 0!important;
+  }
+  div.jsoneditor-menu {
+    background-color: transparent!important;
+    border-bottom: 1px solid $dark_color_lt!important;
+  }
+  .ace-jsoneditor .ace_gutter {
+    background-color: $dark_color_dk!important;
+    color: $white_color!important;
+  }
+  .ace-jsoneditor .ace_gutter-active-line {
+    background-color: $white_color_dker!important;
+    color: $dark_color!important;
+  }
+  .ace-jsoneditor .ace_scroller {
+    background-color: $dark_color!important;
+  }
+  .ace-jsoneditor .ace_marker-layer .ace_active-line {
+    background-color: $dark_color_lter!important;
+  }
+  .ace-jsoneditor.ace_editor {
+    background-color: transparent!important;
+  }
+  .ace-jsoneditor .ace_variable {
+    color: $white_color!important;
+  }
+  .ace-jsoneditor .ace_indent-guide {
+    background: transparent!important;
+    border-right: 1px dashed $dark_color_lter!important;
+  }
 }
 
 .bg-black {
