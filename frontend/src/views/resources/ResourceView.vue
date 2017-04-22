@@ -12,7 +12,7 @@
                   <span>{{resource.summary}}</span>
                 </div>
                 <span :class="methodClasses">{{resource.method}}</span>
-                <span class="label pull-left">{{resource.path}}</span>
+                <span class="label pull-left text-muted">{{resource.path}}</span>
               </div>
               <div class="no-padder bg-dark no-bg m-b" v-html="resource.md_description"></div>
               <parameter-panel :parameters="resource.parameters"></parameter-panel>

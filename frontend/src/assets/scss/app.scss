@@ -2688,6 +2688,20 @@ a.text-#000000:hover {
       border-color: #1c6000;
     }
   }
+  .modal-dialog {
+    width: auto;
+  }
+
+  // &.fade .modal-dialog {
+  //   -webkit-animation: flip-out-ver-left 0.45s cubic-bezier(0.550, 0.085, 0.680, 0.530) both;
+  //   -moz-animation: flip-out-ver-left 0.45s cubic-bezier(0.550, 0.085, 0.680, 0.530) both;
+  //   animation: flip-out-ver-left 0.45s cubic-bezier(0.550, 0.085, 0.680, 0.530) both;
+  // }
+  // &.in .modal-dialog {
+  //   -webkit-animation: flip-in-ver-right 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+  //   -moz-animation: flip-in-ver-right 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+  //   animation: flip-in-ver-right 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+  // }
 }
 
 @for $i from 0 through 6 {

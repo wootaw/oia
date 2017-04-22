@@ -3,7 +3,7 @@
     <button class="btn btn-rounded btn-lg btn-icon btn-default btn-close" data-dismiss="modal">
       <i class="fa fa-times"></i>
     </button>
-    <div class="grid-over h-full">
+    <div class="grid-over h-full modal-dialog">
       <div class="hbox hbox-auto-xs">
         <resource-view :dedent="resource_view_dent" :resource="resource" :document="document"></resource-view>
         <div class="col w-auto b-l">
@@ -74,20 +74,22 @@ export default {
 
     modal: {
       bind(el, binding) {
+        let parts = null;
         $(el).on('show.bs.modal', function (e) {
-          let parts = location.pathname.split('/').slice(1, 3);
+          parts = location.pathname.split('/').slice(1, 3);
           parts.push($(el).data('slug'));
           parts.push($(el).data('tab'));
 
           binding.value[1]($(el).data('resource_id'), parts[2], 'search');  // call findResource in app
-          binding.value[0](parts[3]);            // call toggleTab
           
           window.history.pushState('', 'Comments', `/${parts.join('/')}`);
+        }).on('shown.bs.modal', function (e) {
+          binding.value[0](parts[3]);             // call toggleTab
+        }).on('hide.bs.modal', function (e) {
         }).on('hidden.bs.modal', function (e) {
-          binding.value[1](null, null, 'clear');
+          binding.value[1](null, null, 'clear');  // call findResource in app
 
-          let parts = location.pathname.split('/').slice(1, 4);
-          window.history.pushState("", "", `/${parts.join('/')}`);
+          window.history.pushState("", "", `/${parts.slice(0, 3).join('/')}`);
         });
       },
 
