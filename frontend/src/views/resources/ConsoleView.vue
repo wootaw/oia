@@ -40,8 +40,10 @@
         </div>
       </div>
       <div class="panel b-a bg-paper h-xxl" v-show="tab=='body'">
-        <div class="panel-body no-padder" style="height: 360px;" v-jsoneditor="{setEditor: setEditor, options: {mode: 'code', onError: bodyError, onChange: bodyChanged}}"></div>
-        <div class="clearfix panel-footer b-t no-padder"><pre class="no-border no-bg" v-html="errorMsg"></pre></div>
+        <div class="panel-body no-padder" style="height: 360px;" v-jsoneditor="[setEditor, {mode: 'code', onError: bodyError, onChange: bodyChanged}, resource]"></div>
+        <div class="clearfix panel-footer b-t no-padder">
+          <pre class="no-border no-bg" v-html="errorMsg"></pre>
+        </div>
       </div>
     </div>
   </div>
@@ -55,14 +57,27 @@ export default {
   props: ['resource'],
 
   data () {
+    if (this.resource.params == null) {
+      this.resource.params = this.resource.parameters.reduce((r, c) => {
+        r.push({ name: c.name, value: c.default, checked: c.required, custom: false, origin: c });
+        return r;
+      }, []);
+    }
+
+    if (this.resource.bodyJSON == null) {
+      this.resource.bodyJSON = this.resource.parameters.reduce((r, c) => {
+        if (c.location == "body") {
+          this.initBody(r, c);
+        }
+        return r;
+      }, {});
+    }
+
     return {
       tab: 'parameter',
       editor: null,
       errorMsg: null,
-      params: this.resource.parameters.reduce((r, c) => {
-        r.push({ name: c.name, value: c.default, checked: c.required, custom: false, origin: c });
-        return r;
-      }, [])
+      params: this.resource.params
     };
   },
 
@@ -94,15 +109,6 @@ export default {
       }, []);
     },
 
-    bodyJSON () {
-      return this.params.reduce((r, c) => {
-        if (!c.custom && c.origin.location == "body") {
-          if (c.origin.ancestor == null) {}
-        }
-        return r;
-      }, {});
-    },
-
     locationHerf () {
       let path = this.resource.path;
       this.params.reduce((r, c) => {
@@ -130,7 +136,9 @@ export default {
   directives: {
     jsoneditor: {
       inserted(el, binding) {
-        binding.value.setEditor(new JSONEditor(el, binding.value.options));
+        const editor = new JSONEditor(el, binding.value[1]);
+        binding.value[0](editor);
+        editor.set(binding.value[2].bodyJSON);
       },
     },
   },
@@ -156,6 +164,37 @@ export default {
         'cookie': '',
       }[location]);
       return r;
+    },
+
+    initBody (obj, param) {
+      if (param.ancestor == null) {
+        let value = { 'String': "null", 'Boolean': true, 'Number': 0, 'Object': {} }[param.data_type];
+        if (param.array) {
+          value = [value];
+        }
+        obj[param.name] = value;
+        return true;
+      } else {
+        const parts = param.ancestor.split('.');
+        const name  = parts.shift();
+        let parent  = obj[name];
+
+        if (parent == null) {
+          return false;
+        } else {
+          if (Array.isArray(parent)) {
+            parent = parent[0];
+          }
+
+          if (typeof parent == "object") {
+            const subparam = (({ data_type, array, name }) => ({ data_type, array, name }))(param);
+            subparam.ancestor = parts.length == 0 ? null : parts.join('.');
+            return this.initBody(parent, subparam);
+          } else {
+            return true;
+          }
+        }
+      }
     },
 
     required (parameter) {
@@ -188,6 +227,7 @@ export default {
 
     bodyChanged () {
       this.errorMsg = null;
+      this.resource.bodyJSON = this.editor.get();
     },
 
     setEditor (editor) {
