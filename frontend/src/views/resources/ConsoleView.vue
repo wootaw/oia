@@ -4,7 +4,7 @@
       <div class="row">
         <div class="col-sm-12 col-xs-12">
           <span :class="methodClasses">{{resource.method}}</span>
-          <span class="label no-padder" v-html="locationHerf"></span><span class="label no-padder" v-html="locationSearch"></span>
+          <span class="label no-padder" v-html="locationHref" v-raw:href="setVal"></span><span class="label no-padder" v-html="locationSearch" v-raw:search="setVal"></span>
         </div>
       </div>
     </div>
@@ -16,7 +16,7 @@
         <li :class="{'active': tab=='header'}">
           <a href="#" @click.stop.prevent="toggleParameterTab('header')">Headers</a>
         </li>
-        <li :class="{'active': tab=='body'}">
+        <li :class="{'active': tab=='body'}" v-show="resource.method!='GET'">
           <a href="#" @click.stop.prevent="toggleParameterTab('body')">Body</a>
         </li>
       </ul>
@@ -39,8 +39,29 @@
           </a>
         </div>
       </div>
-      <div class="panel b-a bg-paper h-xxl" v-show="tab=='body'">
-        <div class="panel-body no-padder" style="height: 360px;" v-jsoneditor="[setEditor, {mode: 'code', onError: bodyError, onChange: bodyChanged}, resource]"></div>
+      <div class="panel b-a bg-paper h-xxl" v-show="tab == 'body'">
+        <div class="panel-body no-padder" style="height: 360px;" v-jsoneditor:input="[setVal, {mode: 'code', onError: bodyError, onChange: bodyChanged}, resource]"></div>
+        <div class="clearfix panel-footer b-t no-padder">
+          <pre class="no-border no-bg" v-html="errorMsg"></pre>
+        </div>
+      </div>
+      <div class="no-padder pull-right h-xxxs">
+        <div class="pull-left h-xxxs w-xxs bg-loading" v-show="loading"></div>
+        <div class="btn-group dropdown">
+          <button class="btn btn-success" @click="callResource" :disabled="loading">Request Resource</button>
+          <button class="btn btn-success" data-toggle="dropdown"><span class="caret"></span></button>
+          <ul class="dropdown-menu">
+            <li><a href>Action</a></li>
+            <li><a href>Another action</a></li>
+            <li><a href>Something else here</a></li>
+            <li class="divider"></li>
+            <li><a href>Separated link</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="clearfix m-b"></div>
+      <div class="panel b-a bg-paper h-xxl" v-show="resultData != null">
+        <div class="panel-body no-padder" style="height: 360px;" v-jsoneditor:result="[setVal, {mode: 'view'}, resource]"></div>
         <div class="clearfix panel-footer b-t no-padder">
           <pre class="no-border no-bg" v-html="errorMsg"></pre>
         </div>
@@ -75,8 +96,13 @@ export default {
 
     return {
       tab: 'parameter',
-      editor: null,
+      input: null,
+      result: null,
+      resultData: null,
       errorMsg: null,
+      loading: false,
+      href: this.resource.path,
+      search: '',
       params: this.resource.params
     };
   },
@@ -109,7 +135,7 @@ export default {
       }, []);
     },
 
-    locationHerf () {
+    locationHref () {
       let path = this.resource.path;
       this.params.reduce((r, c) => {
         if (c.origin.location == 'path' && c.name != null && c.value != null) {
@@ -137,10 +163,18 @@ export default {
     jsoneditor: {
       inserted(el, binding) {
         const editor = new JSONEditor(el, binding.value[1]);
-        binding.value[0](editor);
-        editor.set(binding.value[2].bodyJSON);
+        binding.value[0](binding.arg, editor);      // call setVal
+        if (binding.arg == 'input') {
+          editor.set(binding.value[2].bodyJSON);
+        }
       },
     },
+
+    raw: {
+      componentUpdated (el, binding) {
+        binding.value(binding.arg, $(el).text());   // call setVal
+      }
+    }
   },
   // updated () {
   //   console.log(this.resource == null ? null : this.resource.id);
@@ -153,6 +187,37 @@ export default {
   // },
 
   methods: {
+    partParams (part) {
+      return this.params.reduce((r, c) => {
+        if (c.origin.location == part && c.name != null && c.value != null && c.checked) {
+          r[c.name] = c.value;
+        }
+        return r;
+      }, {});
+    },
+
+    callResource () {
+      this.loading = true;
+      const options = {
+        type: this.resource.method,
+        url: `https://api.apiwoods.com${this.href}${this.search}`,
+        data: this.partParams('form'),
+        crossDomain: true,
+      };
+      const headers = this.partParams('header');
+      if (headers.length > 0) {
+        options.headers = headers;
+      }
+
+      $.ajax(options).done((data, textStatus, jqxhr) => {
+        this.loading = false;
+        this.resultData = data;
+        this.result.set(data);
+      }).fail((jqXHR, textStatus, errorThrown) => {
+        this.loading = false;
+      });
+    },
+
     locationClasses (location) {
       let r = [];
       r.push({
@@ -230,8 +295,8 @@ export default {
       this.resource.bodyJSON = this.editor.get();
     },
 
-    setEditor (editor) {
-      this.editor = editor;
+    setVal (part, value) {
+      this[part] = value;
     }
   }
 }

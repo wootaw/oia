@@ -420,11 +420,15 @@
   }
 
   div.jsoneditor {
+    color: inherit;
     border: 0!important;
   }
   div.jsoneditor-menu {
     background-color: transparent!important;
     border-bottom: 1px solid $dark_color_lt!important;
+  }
+  div.jsoneditor-field {
+    color: $white_color;
   }
   .ace-jsoneditor .ace_gutter {
     background-color: $dark_color_dk!important;
@@ -449,6 +453,14 @@
   .ace-jsoneditor .ace_indent-guide {
     background: transparent!important;
     border-right: 1px dashed $dark_color_lter!important;
+  }
+  table.jsoneditor-search {
+    input {
+      color: $white_color;
+    }
+    div.jsoneditor-frame {
+      background: transparent!important;
+    }
   }
 }
 
