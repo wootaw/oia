@@ -1,17 +1,11 @@
 <header id="header" class="app-header navbar box-shadow" role="menu">
   <div class="collapse pos-rlt navbar-collapse box-shadow bg-white-only">
-    <!-- buttons -->
-    <div class="nav navbar-nav hidden-xs">
-      <a href="#" class="btn no-shadow navbar-btn" ui-toggle-class="app-aside-folded" target=".app">
-        <i class="fa fa-dedent fa-fw text"></i>
-        <i class="fa fa-indent fa-fw text-active"></i>
-      </a>
-      <a href="#" class="btn no-shadow navbar-btn" ui-toggle-class="show" target="#aside-user">
-        <i class="icon-user fa-fw"></i>
-      </a>
-    </div>
-    <!-- / buttons -->
+    <a href="/" class="navbar-brand text-lt full-left">
+      <img src="/logo.png" alt=".">
+      <span class="hidden-folded m-l-xs ng-binding">apiwoods</span>
+    </a>
 
+    <% if false %>
     <!-- link and dropdown -->
     <ul class="nav navbar-nav hidden-sm">
       <li class="dropdown pos-stc">
@@ -155,11 +149,12 @@
       </div>
     </form>
     <!-- / search form -->
-
+    <% end %>
     <!-- nabar right -->
     
     <% if user_signed_in? %>
     <ul class="nav navbar-nav navbar-right">
+      <% if false %>
       <li class="dropdown">
         <a href="#" data-toggle="dropdown" class="dropdown-toggle">
           <i class="icon-bell fa-fw"></i>
@@ -194,6 +189,7 @@
         </div>
         <!-- / dropdown -->
       </li>
+      <% end %>
       <li class="dropdown">
         <a href="#" data-toggle="dropdown" class="dropdown-toggle clear" data-toggle="dropdown">
           <span class="thumb-sm avatar pull-right m-t-n-sm m-b-n-sm m-l-sm">
@@ -246,14 +242,10 @@
     </ul>
     <% else %>
     <div class="nav navbar-nav navbar-right">
-      <a href="#" class="btn no-shadow navbar-btn" ui-toggle-class="app-aside-folded" target=".app">
-        <i class="fa fa-dedent fa-fw text"></i>
-        <i class="fa fa-indent fa-fw text-active"></i>
-      </a>
-      <button class="btn btn-success btn-rounded btn-sign no-bg m-r-sm" data-toggle="modal" data-target="#sign-modal" @click="openPage('<%= new_user_session_path %>', 'sign')">
+      <button class="btn btn-success btn-rounded btn-sign no-bg m-r-sm navbar-btn" data-toggle="modal" data-target="#sign-modal" @click="openPage('<%= new_user_session_path %>', 'sign')">
         Sign In
       </button>
-      <button class="btn btn-info btn-rounded btn-sign m-r" data-toggle="modal" data-target="#sign-modal" @click="openPage('<%= new_user_registration_path %>', 'sign')">
+      <button class="btn btn-info btn-rounded btn-sign m-r navbar-btn" data-toggle="modal" data-target="#sign-modal" @click="openPage('<%= new_user_registration_path %>', 'sign')">
         Sign Up
       </button>
     </div>

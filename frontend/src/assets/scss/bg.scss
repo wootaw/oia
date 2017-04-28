@@ -142,6 +142,10 @@
 
 .bg-dark {
 
+  h3, .h3 {
+    color: $white_color;
+  }
+
   &.no-bg, .no-bg {
     background-color: transparent;
   }

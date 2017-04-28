@@ -13,7 +13,7 @@ export default {
       body[this.csrf('param')] = this.csrf('token');
       signService.signOut(path, body).then((resp) => {
         switch(resp.code) {
-          case 204:
+          case 200:
             location.reload();
             break;
           case 401:
