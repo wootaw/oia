@@ -9,13 +9,13 @@ import Vue from 'vue'
 import Sign from 'MIXIN/Sign'
 import 'COMPONENT/signbox/UsersSignIn'
 import 'COMPONENT/signbox/UsersSignUp'
-import BorderLoading from 'COMPONENT/loadings/BorderLoading'
+import DocumentsList from 'VIEW/projects/DocumentsList'
 import DocumentPanel from 'VIEW/documents/DocumentPanel'
 import ResourceModal from 'VIEW/resources/ResourceModal'
 
 import 'DIRECTIVE/showmodal'
-import 'UTIL/sticky-kit'
-import smoothscroll from 'smoothscroll'
+// import 'UTIL/sticky-kit'
+// import smoothscroll from 'smoothscroll'
 import documentsService from 'SERVICE/DocumentsService';
 
 $(function() {
@@ -31,6 +31,7 @@ $(function() {
       current: [],
       topdocs: [],
       bottomdocs: [],
+      documents: [],
       resource: null,
       document: null
     },
@@ -38,7 +39,7 @@ $(function() {
     mixins: [Sign],
 
     components: { 
-      'border-loading': BorderLoading,
+      'documents-list': DocumentsList,
       'document-panel': DocumentPanel,
       'resource-modal': ResourceModal,
     },
@@ -46,33 +47,33 @@ $(function() {
     directives: {
       scrollspy: {
         bind(el, binding) {
-          $(el).scrollspy(binding.value);
+          // $(el).scrollspy(binding.value);
         },
       },
 
       urlspy: {
         bind(el, binding) {
           $(document).on('activate.bs.scrollspy', function(e) {
-            let item = $(e.target);
-            if (item.hasClass('list-group-item')) { return; }
-            let child = $('.list-group-item.active', item);
-            if (child.length == 0) {
-              item = $('> a', item);
-            } else {
-              item = $('a', child);
-            }
-            if (item.length == 0) { return; }
+            // let item = $(e.target);
+            // if (item.hasClass('list-group-item')) { return; }
+            // let child = $('.list-group-item.active', item);
+            // if (child.length == 0) {
+            //   item = $('> a', item);
+            // } else {
+            //   item = $('a', child);
+            // }
+            // if (item.length == 0) { return; }
 
-            let id = item.data('target').substr(1);
-            let parts = location.pathname.split('/');
-            let url = `/${parts[1]}/${parts[2]}/${id}`;
-            if (url != location.pathname) {
-              if ($(el).data('old') == undefined) { 
-                $(el).data('old', true);
-              } else {
-                window.history.replaceState("", "", url);
-              }
-            }
+            // let id = item.data('target').substr(1);
+            // let parts = location.pathname.split('/');
+            // let url = `/${parts[1]}/${parts[2]}/${id}`;
+            // if (url != location.pathname) {
+            //   if ($(el).data('old') == undefined) { 
+            //     $(el).data('old', true);
+            //   } else {
+            //     window.history.replaceState("", "", url);
+            //   }
+            // }
           });
         }
       },
@@ -83,16 +84,16 @@ $(function() {
             e.preventDefault();
             let id = $(this).attr('href').split('/')[1];
             let parts = location.pathname.split('/');
-            smoothscroll($(`#${id}`)[0], 500, function() {
-              window.history.pushState("", "", `/${parts[1]}/${parts[2]}/${id}`);
-            }, $(binding.value)[0]);
+            // smoothscroll($(`#${id}`)[0], 500, function() {
+            //   window.history.pushState("", "", `/${parts[1]}/${parts[2]}/${id}`);
+            // }, $(binding.value)[0]);
           });
         }
       },
 
       sticky: {
         inserted(el, binding) {
-          $('.panel-res > .panel-heading', el).stick_in_parent(binding.value);
+          // $('.panel-res > .panel-heading', el).stick_in_parent(binding.value);
         }
       },
 
@@ -104,14 +105,28 @@ $(function() {
         this.max = max;
       },
 
-      documentLoaded(doc, location) {
-        switch(location) {
-          case 'top':
-            this.topdocs.splice(0, 0, doc);
-            break;
-          case 'bottom':
-            this.bottomdocs.push(doc);
-            break;
+      // documentLoaded(doc, location) {
+      //   switch(location) {
+      //     case 'top':
+      //       this.topdocs.splice(0, 0, doc);
+      //       break;
+      //     case 'bottom':
+      //       this.bottomdocs.push(doc);
+      //       break;
+      //   }
+      // },
+
+      documentChanged (slug) {
+        // console.log(slug)
+        this.documents.some((doc, idx, docs) => {
+          if (doc.name == slug) {
+            this.document = doc;
+            return true;
+          }
+        });
+
+        if (this.document == null) {
+          
         }
       },
 
@@ -159,10 +174,10 @@ $(function() {
     },
 
     mounted() {
-      let parts = location.pathname.split('/');
-      if (parts.length > 3) {
-        smoothscroll($(`#${parts[3]}`)[0], 500, undefined, $('#scroll-container')[0]);
-      }
+      // let parts = location.pathname.split('/');
+      // if (parts.length > 3) {
+      //   smoothscroll($(`#${parts[3]}`)[0], 500, undefined, $('#scroll-container')[0]);
+      // }
     }
   });
 });

@@ -1,6 +1,6 @@
 <template>
   <div :id="resource.slug" class="panel panel-res">
-    <div class="panel-heading bg-green dk clearfix">
+    <div class="panel-heading clearfix">
       <div class="h3 m-t-xs m-b-sm">
         <span>{{document.summary}}</span>
         <span class="sep">/</span>
@@ -15,8 +15,9 @@
         <i class="fa fa-terminal m-r-xs"></i>
       </button>
     </div>
-    <div class="panel-body no-padder">
-      <div class="wrapper bg-light m-b" v-html="resource.md_description"></div>
+    <div class="padder">
+      <div class="line b-b m-t-none"></div>
+      <div class="m-b" v-html="resource.md_description"></div>
       <parameter-panel :parameters="resource.parameters"></parameter-panel>
       <response-panel :responses="resource.responses"></response-panel>
     </div>

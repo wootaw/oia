@@ -1,13 +1,16 @@
 <template>
-  <div :id="document.name" class="wrapper-md panel-doc" v-recalc-sticky="dir" v-sticky="{ offset_top: 50, container: '#scroll-container' }">
-    <h2>{{document.summary}}</h2>
-    <div class="wrapper" v-html="document.md_description"></div>
-    <resource-panel
-      v-for="res of document.resources"
-      :document="document"
-      :resource="res"
-      :key="res.id"
-    ></resource-panel>
+  <div :id="docName" class="panel-doc" v-recalc-sticky="dir" v-sticky="{ offset_top: 50, container: '#scroll-container' }">
+    <slot v-if="document == null"></slot>
+    <template v-else>
+      <h2 class="m-l">{{document.summary}}</h2>
+      <div class="wrapper" v-html="document.md_description"></div>
+      <resource-panel
+        v-for="res of document.resources"
+        :document="document"
+        :resource="res"
+        :key="res.id"
+      ></resource-panel>
+    </template>
   </div>
 </template>
 
@@ -15,7 +18,7 @@
 import ResourcePanel from 'VIEW/documents/ResourcePanel'
 import smoothscroll from 'smoothscroll'
 export default {
-  props: ['document', 'dir'],
+  props: ['document', 'dir', 'name'],
 
   components: {
     'resource-panel': ResourcePanel
@@ -24,6 +27,12 @@ export default {
   data () {
     return {
       doing: false,
+    }
+  },
+
+  computed: {
+    docName () {
+      return (this.document == null ? null : this.document.name) || this.name;
     }
   },
 
@@ -42,9 +51,9 @@ export default {
           ct = $(el).prev();
         }
 
-        smoothscroll($(lc, ct)[0], 0, function() {
-          $(document.body).trigger("sticky_kit:recalc");
-        }, $('#scroll-container')[0]);
+        // smoothscroll($(lc, ct)[0], 0, function() {
+        //   $(document.body).trigger("sticky_kit:recalc");
+        // }, $('#scroll-container')[0]);
       }
     }
   }

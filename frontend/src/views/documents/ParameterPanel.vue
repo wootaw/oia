@@ -1,7 +1,6 @@
 <template>
   <div class="panel panel-default bg-dark panel-params">
     <div class="panel-heading dker">
-      <span class="label bg-danger pull-right m-t-xs">4 left</span>
       <h4>Parameters</h4>
     </div>
     <table class="table table-striped m-b-none">

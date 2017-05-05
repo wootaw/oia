@@ -83,143 +83,36 @@
 <% end %>
 
 <% content_for :content do %>
-<div class="app-content-body app-content-full h-full">
+<div class="app-content-body">
   <div class="hbox hbox-auto-xs">
-    <!-- column -->
-    <div class="col w-xl">
-      <div class="vbox">
-        <div class="b-b">
-          <div class="font-thin padder-sm padder-v bg-dark lt">
-            <input class="w-full bg-dark lt b-none" type="text" placeholder="Input and search">
-          </div>
+    <div class="col w-45 bg-dark pos-rlt">
+      <div class="wrapper-md">
+        <div class="h3 m-t-xs m-b-sm">
+          <span><%= @owner.username %></span>
+          <span class="sep">/</span>
+          <span><%= @project.name %></span>
         </div>
-
-        <div class="row-row">
-          <div id="nav-cata" class="cell">
-            <div class="cell-inner b-r">
-              <!-- <div id="app">
-                <div v-for="doc in documents">
-                  <document-group :resources="doc.resources" :summary="doc.summary"></document-group>
-                </div>
-              </div> -->
-
-              <ul class="nav nav-cata bg-dark dker m-r-n-xxs" v-urlspy>
-              <% @change.parts(@project, :documents).each do |doc| %>
-                <li class="heading">
-                  <a href="<%= @project.name %>/<%= doc.name %>" data-target="#<%= doc.name %>" v-smoothscroll="'#scroll-container'" class="b-r"><%= doc.summary %></a>
-                  <ul class="nav list-group alt">
-                    <% @change.parts(doc, :resources).each do |res| %>
-                    <li class="list-group-item dker">
-                      <a class="media b-r" href="<%= @project.name %>/<%= res.slug %>" data-target="#<%= res.slug %>" v-smoothscroll="'#scroll-container'">
-                        <span class="label <%= method_color(res.method) %> pull-left"><%= res.method.size > 4 ? res.method[0..2] : res.method %></span>
-                        <div class="media-body">
-                          <h5><%= res.summary %></h5>
-                          <small><%= res.path %></small>
-                        </div>
-                      </a>
-                    </li>
-                    <% end %>
-                  </ul>
-                </li>
-              <% end %>
-              </ul>
-
-            </div>
-          </div>
-        </div>
+        <small class="text-muted"><%= @project.summary %></small>
       </div>
+      <documents-list current="<%= @document.id %>" @documentchanged="documentChanged">
+        <% @change.parts(@project, :documents).each do |doc| %>
+        <li data-id="<%= doc.id %>">
+          <a href="<%= doc.name %>">
+            <small class="text-muted">version</small>
+            <h5><%= doc.summary %></h5>
+            <small class="text-muted"><%= doc.summary %></small>
+          </a>
+        </li>
+        <% end %>
+      </documents-list>
     </div>
-    <!-- /column -->
-
-    <!-- column -->
-    <div class="col">
-      <div class="vbox">
-        <div class="row-row">
-          <!-- 
-          <div id='scroll-mark' class="cell bg-dark cell-over">
-            <div class="dp-table w-full h-full item">
-              <div class="cell w-half v-middle wrapper-md">
-                <div class="padder-xl">
-                  <div id="loading-top" class="w-sm h-xxs bg-loading panel m-center"></div>
-                </div>
-              </div>
-            </div>
-          </div>
-          -->
-          <% unless @hide_top %>
-          <border-loading 
-            :owner="'<%= params[:owner_name] %>'" 
-            :project="'<%= params[:project_name] %>'" 
-            :version="<%= @change.position %>" 
-            :location="'top'" 
-            :scroll="scroll"
-            :max="max"
-            v-on:documentloaded="documentLoaded"
-          >
-          </border-loading>
-          <% end %>
-          <div id='scroll-container' class="cell" v-scrollspy="{target: '#nav-cata', offset: 50, callback: scrolledTo}">
-            <div class="bg-paper">
-              <document-panel
-                v-for="doc of topdocs"
-                :document="doc"
-                :key="doc.id"
-                :dir="'top'"
-              >
-              </document-panel>
-              <div id="<%= @document.name %>" data-version="<%= @change.position %>" class="wrapper-md panel-doc" v-sticky="{ offset_top: 50, container: '#scroll-container' }">
-                <h2><%= @document.summary %></h2>
-                <div class="wrapper"><%= markdown(@document.raw_description(@change)) %></div>
-                <%= render partial: "documents/resources", locals: { resources: @resources, document: @document, change: @change } %>
-              </div>
-              <document-panel
-                v-for="doc of bottomdocs"
-                :document="doc"
-                :key="doc.id"
-                :dir="'bottom'"
-              >
-              </document-panel>
-            </div>
-          </div>
-          <border-loading 
-            :owner="'<%= params[:owner_name] %>'" 
-            :project="'<%= params[:project_name] %>'" 
-            :version="<%= @change.position %>" 
-            :location="'bottom'" 
-            :scroll="scroll"
-            :max="max"
-            v-on:documentloaded="documentLoaded"
-          >
-          </border-loading>
-        </div>
-      </div>
+    <div class="col box-s-l">
+      <document-panel name="<%= @document.name %>">
+        <h2 class="m-l"><%= @document.summary %></h2>
+        <div class="wrapper"><%= markdown(@document.raw_description(@change)) %></div>
+        <%= render partial: "documents/resources", locals: { resources: @resources, document: @document, change: @change } %>
+      </document-panel>
     </div>
-    <!-- /column -->
-
-    <!-- column -->
-    <div class="col w-md lter b-l">
-      <div class="vbox">
-        <div class="wrapper b-b b-light">
-          <div class="font-thin h4">Header</div>
-          <small class="text-muted">with fluid height</small>
-        </div>
-        <div class="row-row">
-          <div class="cell">
-            <div class="cell-inner">
-              <div class="wrapper-md">
-                This is the scrollable content
-                <p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p>
-                You got the bottom
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="padder b-t b-light text-center">
-          <div class="m-xs">Footer with fluid height</div>
-        </div>
-      </div>
-    </div>
-    <!-- /column -->
   </div>
 </div>
 <% end %>

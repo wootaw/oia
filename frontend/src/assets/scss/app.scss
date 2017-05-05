@@ -180,7 +180,7 @@ small {
 .app-content-body {
   float: left;
   width: 100%;
-  padding-bottom: 50px;
+  // padding-bottom: 50px;
 }
 
 .hbox {
@@ -2565,6 +2565,11 @@ a.text-#000000:hover {
 }
 
 .nav-cata {
+  &.affix {
+    position: fixed;
+    left: 0;
+    right: 55%;
+  }
   li {
     a {
       padding: 10px 40px!important;
@@ -2585,7 +2590,7 @@ a.text-#000000:hover {
 
     &.active {
       background-image: url("../images/black_paper.jpg");
-      box-shadow: 0 0 30px -8px rgba(180, 180, 180, 0.25), 0 0 30px -8px rgba(180, 180, 180, 0.25);
+      // box-shadow: 0 0 30px -8px rgba(180, 180, 180, 0.25), 0 0 30px -8px rgba(180, 180, 180, 0.25);
       a {
         border-left: 4px solid $white_color_dker;
         padding-left: 30px!important;

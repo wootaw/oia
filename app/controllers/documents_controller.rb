@@ -12,7 +12,13 @@ class DocumentsController < ApplicationController
       if @project.nil?
         render_404
       elsif can?(:read, @project)
-        @change   = @project.version_changes.find_by(position: params[:version])
+        changes = @project.version_changes
+        if params[:version].present?
+          @change = changes.find_by(position: params[:version])
+        else
+          @change = changes.order("changes.position DESC").take
+        end
+        
         if @change.nil?
           render_404
         else

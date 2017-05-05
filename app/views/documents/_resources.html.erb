@@ -2,7 +2,7 @@
 <% parameters = res.the_parameters(change) %>
 <% responses = res.the_responses(change) %>
 <div id="<%= res.slug %>" class="panel panel-res">
-  <div class="panel-heading bg-green dk clearfix">
+  <div class="panel-heading clearfix">
     <div class="h3 m-t-xs m-b-sm">
       <span><%= document.summary %></span>
       <span class="sep">/</span>
@@ -17,8 +17,9 @@
       <i class="fa fa-terminal m-r-xs"></i>
     </button>
   </div>
-  <div class="panel-body no-padder">
-    <div class="wrapper bg-light m-b"><%= markdown(res.raw_description(change)) %></div>
+  <div class="padder">
+    <div class="line b-b m-t-none"></div>
+    <div class="m-b"><%= markdown(res.raw_description(change)) %></div>
     <%= render partial: "documents/parameters", locals: { parameters: parameters, change: change } %>
     <%= render partial: "documents/responses", locals: { responses: responses, change: change } %>
   </div>
