@@ -47,16 +47,16 @@ export default {
   directives: {
     init: {
       inserted(el, binding) {
-        $(el).find('li').click(function() {
+        $(el).find('li a.doc-item').click(function() {
           if ($(this).parents('.nav-cata').hasClass('loading')) {
             return false;
           }
-          binding.value[1]('active', $(this).data('id'));
-          binding.value[1]('slug', $('a', this).attr('href'));
+          binding.value[1]('active', $(this).parents().data('id'));
+          binding.value[1]('slug', $(this).attr('href'));
           return false;
         }).each((i, elm) => {
-          if ($(elm).data('id') == binding.value[0]) {      // binding.value[0] == selected
-            $(elm).addClass('active');
+          if ($(elm).parents().data('id') == binding.value[0]) {      // binding.value[0] == selected
+            $(elm).parents().addClass('active');
           }
         });
       },

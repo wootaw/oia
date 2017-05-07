@@ -97,7 +97,8 @@
       <documents-list :documentid="<%= @document.id %>" :documentname="document_name" @documentchanged="documentChanged">
         <% @change.parts(@project, :documents).each do |doc| %>
         <li data-id="<%= doc.id %>">
-          <a href="<%= doc.name %>">
+          <resources-oulline :document="current"></resources-oulline>
+          <a class="doc-item" href="<%= doc.name %>">
             <small class="text-muted">version</small>
             <h5><%= doc.summary %></h5>
             <small class="text-muted"><%= doc.summary %></small>

@@ -12,10 +12,11 @@ import 'COMPONENT/signbox/UsersSignUp'
 import DocumentsList from 'VIEW/projects/DocumentsList'
 import DocumentPanel from 'VIEW/documents/DocumentPanel'
 import ResourceModal from 'VIEW/resources/ResourceModal'
+import ResourcesOutline from 'VIEW/projects/ResourcesOutline'
 
 import 'DIRECTIVE/showmodal'
 // import 'UTIL/sticky-kit'
-// import smoothscroll from 'smoothscroll'
+import smoothscroll from 'smoothscroll'
 import documentsService from 'SERVICE/DocumentsService';
 
 $(function() {
@@ -26,8 +27,8 @@ $(function() {
       sign: 0,
       modal: 0,
       // lastest: null,
-      scroll: null, // resource scroll to
-      max: null,
+      // scroll: null, // resource scroll to
+      // max: null,
       current: null,
       document_name: null
       // topdocs: [],
@@ -40,9 +41,10 @@ $(function() {
     mixins: [Sign],
 
     components: { 
-      'documents-list': DocumentsList,
-      'document-panel': DocumentPanel,
-      'resource-modal': ResourceModal,
+      'documents-list':     DocumentsList,
+      'document-panel':     DocumentPanel,
+      'resource-modal':     ResourceModal,
+      'resources-oulline':  ResourcesOutline
     },
 
     computed: {
@@ -86,18 +88,18 @@ $(function() {
         }
       },
 
-      smoothscroll: {
-        bind(el, binding) {
-          $(el).on('click', function(e) {
-            e.preventDefault();
-            let id = $(this).attr('href').split('/')[1];
-            let parts = location.pathname.split('/');
-            // smoothscroll($(`#${id}`)[0], 500, function() {
-            //   window.history.pushState("", "", `/${parts[1]}/${parts[2]}/${id}`);
-            // }, $(binding.value)[0]);
-          });
-        }
-      },
+      // smoothscroll: {
+      //   bind(el, binding) {
+      //     $(el).on('click', function(e) {
+      //       e.preventDefault();
+      //       let id = $(this).attr('href').split('/')[1];
+      //       let parts = location.pathname.split('/');
+      //       // smoothscroll($(`#${id}`)[0], 500, function() {
+      //       //   window.history.pushState("", "", `/${parts[1]}/${parts[2]}/${id}`);
+      //       // }, $(binding.value)[0]);
+      //     });
+      //   }
+      // },
 
       sticky: {
         inserted(el, binding) {
@@ -135,10 +137,10 @@ $(function() {
     },
 
     mounted() {
-      // let parts = location.pathname.split('/');
-      // if (parts.length > 3) {
-      //   smoothscroll($(`#${parts[3]}`)[0], 500, undefined, $('#scroll-container')[0]);
-      // }
+      let parts = location.pathname.split('/');
+      if (parts.length > 3) {
+        smoothscroll($(`#${parts[3]}`)[0], 500, undefined, $('#scroll-container')[0]);
+      }
     }
   });
 });

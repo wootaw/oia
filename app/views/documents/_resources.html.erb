@@ -1,14 +1,14 @@
 <% resources.each do |res| %>
 <% parameters = res.the_parameters(change) %>
 <% responses = res.the_responses(change) %>
-<div id="<%= res.slug %>" class="panel panel-res">
+<div id="<%= res.slug %>" class="panel panel-res" data-id="<%= res.id %>">
   <div class="panel-heading clearfix">
     <div class="h3 m-t-xs m-b-sm">
       <span><%= document.summary %></span>
       <span class="sep">/</span>
-      <span><%= res.summary %></span>
+      <span class="res-summary"><%= res.summary %></span>
     </div>
-    <span class="label <%= method_color(res.method) %> pull-left m-r-sm"><%= res.method %></span>
+    <span class="label <%= method_color(res.method) %> pull-left m-r-sm res-method"><%= res.method %></span>
     <span class="label pull-left"><%= colour_path(res.path, parameters).html_safe %></span>
     <button class="btn m-b-xs btn-xs btn-warning pull-right" v-showmodal="{id: '#resource-modal', data: {slug: '<%= res.slug %>', tab: 'comments', document_name: '<%= document.name %>'}}">
       <i class="fa fa-comments m-r-xs"></i><%= res.comments.count %>

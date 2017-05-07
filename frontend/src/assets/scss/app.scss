@@ -2580,7 +2580,15 @@ a.text-#000000:hover {
   }
 
   li {
-    a {
+    .dropdown {
+      position: absolute;
+      right: 0;
+      z-index: 1;
+      margin: 20px 20px 0 0;
+      display: none;
+    }
+
+    a.doc-item {
       padding: 10px 40px!important;
       h5 {
         color: $white_color;
@@ -2590,11 +2598,11 @@ a.text-#000000:hover {
         background-color: $dark_color_lter!important;
       }
     }
-
+    
     &.active {
       background-image: url("../images/black_paper.jpg");
       // box-shadow: 0 0 30px -8px rgba(180, 180, 180, 0.25), 0 0 30px -8px rgba(180, 180, 180, 0.25);
-      a {
+      a.doc-item {
         border-left: 4px solid $white_color_dker;
         padding-left: 30px!important;
         &:hover, &:focus {
@@ -2606,7 +2614,13 @@ a.text-#000000:hover {
   }
 
   &:not(.loading) {
-    li a:hover {
+    li.active {
+      .dropdown {
+        display: block;
+      }
+    }
+
+    li:not(.active) a.doc-item:hover {
       background-color: $dark_color_lt!important;
         // box-shadow: -4px 0 30px -8px rgba(180, 180, 180, 0.25);
         // box-shadow: inset -4px 0 30px -8px rgba(180, 180, 180, 0.25);
@@ -2615,13 +2629,13 @@ a.text-#000000:hover {
 
   &.loading {
     li {
-      &.active a {
+      &.active a.doc-item {
         background-image: url("../images/loading.svg");
         background-repeat: no-repeat;
         background-position: 95% center;
       }
 
-      a {
+      a.doc-item {
         &:hover, &:focus {
           background-color: transparent!important;
           box-shadow: none;
