@@ -150,7 +150,7 @@ export default {
 
     locationSearch () {
       const parts = this.params.reduce((r, c) => {
-        if (c.origin.location == 'query' && c.name != null && c.value != null) {
+        if (c.origin.location == 'query' && c.name != null && c.value != null && c.checked) {
           r.push(`<span class="text-danger">${encodeURIComponent(c.name)}=${encodeURIComponent(c.value)}</span>`);
         }
         return r;
@@ -200,7 +200,7 @@ export default {
       this.loading = true;
       const options = {
         type: this.resource.method,
-        url: `https://api.apiwoods.com${this.href}${this.search}`,
+        url: `https://api.yunlu6.com${this.href}${this.search}`,
         data: this.partParams('form'),
         crossDomain: true,
       };
@@ -292,7 +292,9 @@ export default {
 
     bodyChanged () {
       this.errorMsg = null;
-      this.resource.bodyJSON = this.editor.get();
+      if (this.editor != null) {
+        this.resource.bodyJSON = this.editor.get();
+      }
     },
 
     setVal (part, value) {

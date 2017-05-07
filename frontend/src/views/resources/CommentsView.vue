@@ -1,10 +1,15 @@
 <template>
-  <div class="wrapper-md">
-    <div class="m-b b-l m-l-md streamline">
-      <slot></slot>
-      <comment v-for="comment of comments" :key="comment.id" :comment="comment"></comment>
+  <div class="no-padder">
+    <div class="wrapper-md b-b box-s-l-i w-full bg-dark pos-fix" style="top: 59px; z-index: 20;" v-if="meta != null">
+      Total of {{meta.total}} Comments
     </div>
-    <reply-panel :resourceid="resourceid" @commentcreated="commentCreated" :panel="tab"></reply-panel>
+    <div class="wrapper-md m-t-xxl">
+      <div class="m-b b-l m-l-md streamline">
+        <slot></slot>
+        <comment v-for="comment of comments" :key="comment.id" :comment="comment"></comment>
+      </div>
+      <reply-panel :resourceid="resourceid" @commentcreated="commentCreated" :panel="tab"></reply-panel>
+    </div>
   </div>
 </template>
 
@@ -40,13 +45,13 @@ export default {
 
   watch: {
     resourceid(nv, ov) {
-      if (nv != ov) {
+      if (nv != ov && nv != null) {
         this.loadComments();
       }
     },
 
     tab(nv, ov) {
-      if (nv != ov && nv == 'comments') {
+      if (nv != ov && nv == 'comments' && this.resourceid != null) {
         this.loadComments();
       }
     },

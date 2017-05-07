@@ -2570,17 +2570,20 @@ a.text-#000000:hover {
     left: 0;
     right: 55%;
   }
+
+  &.affix-bottom {
+    position: absolute;
+    top: auto;
+    bottom: 100px;
+    right: 55%;
+    left: 0;
+  }
+
   li {
     a {
       padding: 10px 40px!important;
       h5 {
         color: $white_color;
-      }
-
-      &:hover {
-        background-color: $dark_color_lt!important;
-        // box-shadow: -4px 0 30px -8px rgba(180, 180, 180, 0.25);
-        // box-shadow: inset -4px 0 30px -8px rgba(180, 180, 180, 0.25);
       }
 
       &:focus {
@@ -2601,7 +2604,33 @@ a.text-#000000:hover {
       }
     }
   }
+
+  &:not(.loading) {
+    li a:hover {
+      background-color: $dark_color_lt!important;
+        // box-shadow: -4px 0 30px -8px rgba(180, 180, 180, 0.25);
+        // box-shadow: inset -4px 0 30px -8px rgba(180, 180, 180, 0.25);
+    }
+  }
+
+  &.loading {
+    li {
+      &.active a {
+        background-image: url("../images/loading.svg");
+        background-repeat: no-repeat;
+        background-position: 95% center;
+      }
+
+      a {
+        &:hover, &:focus {
+          background-color: transparent!important;
+          box-shadow: none;
+        }
+      }
+    }
+  }
 }
+
 // .nav-cata {
 //   padding-left: 0;
 //   border: 0;

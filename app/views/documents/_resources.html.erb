@@ -10,10 +10,10 @@
     </div>
     <span class="label <%= method_color(res.method) %> pull-left m-r-sm"><%= res.method %></span>
     <span class="label pull-left"><%= colour_path(res.path, parameters).html_safe %></span>
-    <button class="btn m-b-xs btn-xs btn-warning pull-right" v-showmodal="{id: '#resource-modal', data: {slug: '<%= res.slug %>', tab: 'comments', resource_id: '<%= res.id %>'}}">
+    <button class="btn m-b-xs btn-xs btn-warning pull-right" v-showmodal="{id: '#resource-modal', data: {slug: '<%= res.slug %>', tab: 'comments', document_name: '<%= document.name %>'}}">
       <i class="fa fa-comments m-r-xs"></i><%= res.comments.count %>
     </button>
-    <button class="btn m-b-xs m-r-xs btn-xs btn-info pull-right" v-showmodal="{id: '#resource-modal', data: {slug: '<%= res.slug %>', tab: 'console', resource_id: '<%= res.id %>'}}">
+    <button class="btn m-b-xs m-r-xs btn-xs btn-info pull-right" v-showmodal="{id: '#resource-modal', data: {slug: '<%= res.slug %>', tab: 'console', document_name: '<%= document.name %>'}}">
       <i class="fa fa-terminal m-r-xs"></i>
     </button>
   </div>

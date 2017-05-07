@@ -8,10 +8,10 @@
       </div>
       <span :class="methodClasses">{{resource.method}}</span>
       <span class="label pull-left" v-html="colourPath"></span>
-      <button class="btn m-b-xs btn-xs btn-warning pull-right" v-showmodal="{id: '#resource-modal', data: {slug: resource.slug, tab: 'comments', resource_id: resource.id}}">
+      <button class="btn m-b-xs btn-xs btn-warning pull-right" v-showmodal="{id: '#resource-modal', data: {slug: resource.slug, tab: 'comments', document_name: document.name}}">
         <i class="fa fa-comments m-r-xs"></i>{{resource.comments_total}}
       </button>
-      <button class="btn m-b-xs m-r-xs btn-xs btn-info pull-right" v-showmodal="{id: '#resource-modal', data: {slug: resource.slug, tab: 'console', resource_id: resource.id}}">
+      <button class="btn m-b-xs m-r-xs btn-xs btn-info pull-right" v-showmodal="{id: '#resource-modal', data: {slug: resource.slug, tab: 'console', document_name: document.name}}">
         <i class="fa fa-terminal m-r-xs"></i>
       </button>
     </div>

@@ -28,12 +28,13 @@ $(function() {
       // lastest: null,
       scroll: null, // resource scroll to
       max: null,
-      current: [],
-      topdocs: [],
-      bottomdocs: [],
-      documents: [],
-      resource: null,
-      document: null
+      current: null,
+      document_name: null
+      // topdocs: [],
+      // bottomdocs: [],
+      // documents: [],
+      // resource: null,
+      // document: null
     },
 
     mixins: [Sign],
@@ -42,6 +43,13 @@ $(function() {
       'documents-list': DocumentsList,
       'document-panel': DocumentPanel,
       'resource-modal': ResourceModal,
+    },
+
+    computed: {
+      // documentName () {
+      //   return this.current == null ? null : this.current.name;
+      // },
+
     },
 
     directives: {
@@ -116,61 +124,14 @@ $(function() {
       //   }
       // },
 
-      documentChanged (slug) {
-        // console.log(slug)
-        this.documents.some((doc, idx, docs) => {
-          if (doc.name == slug) {
-            this.document = doc;
-            return true;
-          }
-        });
-
-        if (this.document == null) {
-          
-        }
+      documentChanged (doc) {
+        this.current = doc;
       },
 
-      changeResource(id, slug, op) {
-        if (op == 'clear') {
-          this.resource = null;
-          return;
-        }
+      needDocument (document_name) {
+        this.document_name = document_name;
+      },
 
-        this.topdocs.concat(this.bottomdocs, this.current).some((doc, idx, docs) => {
-          doc.resources.some((res, idx, ress) => {
-            if (res.id == id) {
-              this.resource = res;
-              this.document = doc;
-              return true;
-            }
-          });
-
-          if (this.resource != null) {
-            return true;
-          }
-        });
-
-        if (this.resource == null) {
-          let resel = $(`#${slug}`).parents('.panel-doc');
-          let parts = location.pathname.split('/').slice(1, 3);
-
-          documentsService.getOne(resel.attr('id'), {
-            'owner_name': parts[0],
-            'project_name': parts[1],
-            'version': resel.data('version'),
-            'location': 'current'
-          }).then(d => {
-            this.current.push(d.data.documents);
-            this.current[0].resources.some((res, idx, ress) => {
-              if (res.id == id) {
-                this.resource = res;
-                this.document = this.current[0];
-                return true;
-              }
-            });
-          });
-        }
-      }
     },
 
     mounted() {

@@ -4,7 +4,7 @@
 <% end %>
 
 <% content_for :modals do %>
-<resource-modal :find="changeResource" :resource="resource" :document="document">
+<resource-modal :document="current" @needdocument="needDocument">
   <div class="dp-none comment-init">
     <a class="pull-left thumb-sm avatar m-l-n-md">
       <img src="/uploads/user/sm_iune12pxp-mimoaqfvv-jodiwb0sc-bdm0reu0d.png" class="img-circle" alt="...">
@@ -24,7 +24,7 @@
         <div class="m-t-sm">
           <a href ui-toggle-class class="btn btn-default btn-xs active">
             <i class="fa fa-star-o text-muted text"></i>
-            <i class="fa fa-star text-danger text-active"></i> 
+            <i class="fa fa-star text-danger text-active"></i>
             Like
           </a>
           <a href class="btn btn-default btn-xs">
@@ -85,7 +85,7 @@
 <% content_for :content do %>
 <div class="app-content-body">
   <div class="hbox hbox-auto-xs">
-    <div class="col w-45 bg-dark pos-rlt">
+    <div class="col w-45 bg-dark">
       <div class="wrapper-md">
         <div class="h3 m-t-xs m-b-sm">
           <span><%= @owner.username %></span>
@@ -94,7 +94,7 @@
         </div>
         <small class="text-muted"><%= @project.summary %></small>
       </div>
-      <documents-list current="<%= @document.id %>" @documentchanged="documentChanged">
+      <documents-list :documentid="<%= @document.id %>" :documentname="document_name" @documentchanged="documentChanged">
         <% @change.parts(@project, :documents).each do |doc| %>
         <li data-id="<%= doc.id %>">
           <a href="<%= doc.name %>">
@@ -107,7 +107,7 @@
       </documents-list>
     </div>
     <div class="col box-s-l">
-      <document-panel name="<%= @document.name %>">
+      <document-panel name="<%= @document.name %>" :document="current">
         <h2 class="m-l"><%= @document.summary %></h2>
         <div class="wrapper"><%= markdown(@document.raw_description(@change)) %></div>
         <%= render partial: "documents/resources", locals: { resources: @resources, document: @document, change: @change } %>

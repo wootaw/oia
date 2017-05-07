@@ -1,5 +1,5 @@
 <template>
-  <div class="modal fade modal-full" id="resource-modal" tabindex="-1" role="dialog" v-modal="[toggleTab, find]">
+  <div class="modal fade modal-full" id="resource-modal" tabindex="-1" role="dialog" v-modal="[setProps]">
     <button class="btn btn-rounded btn-lg btn-icon btn-default btn-close" data-dismiss="modal">
       <i class="fa fa-times"></i>
     </button>
@@ -10,7 +10,7 @@
           <div class="vbox bg-dark dker">
             <resource-nav 
               @resviewdent="resourceViewDent" 
-              @tabchanged="toggleTab" 
+              @tabchanged="setProps" 
               :commentstotal="comments_total" 
               :tab="tab"
             ></resource-nav>
@@ -45,8 +45,9 @@ import ResourceNav from 'VIEW/resources/ResourceNav'
 import ResourceView from 'VIEW/resources/ResourceView'
 import CommentsView from 'VIEW/resources/CommentsView'
 import ConsoleView from 'VIEW/resources/ConsoleView'
+import documentsService from 'SERVICE/DocumentsService';
 export default {
-  props: ['find', 'resource', 'document'],
+  props: ['document'],
 
   data () {
     return {
@@ -54,19 +55,36 @@ export default {
       comments_total: null,
       tab: null,
       loading: false,
+      resource_slug: null,
+      document_name: null
     }
   },
 
   components: { 
     'resource-view': ResourceView,
-    'resource-nav': ResourceNav,
+    'resource-nav':  ResourceNav,
     'comments-view': CommentsView,
-    'console-view': ConsoleView,
+    'console-view':  ConsoleView,
   },
 
   computed: {
     resourceId () {
       return this.resource == null ? null : this.resource.id;
+    },
+
+    resource () {
+      if (this.withoutResource()) {
+        return null;
+      } else {
+        let result = null;
+        this.document.resources.some((res, idx, ress) => {
+          if (res.slug == this.resource_slug) {
+            result = res;
+            return true;
+          }
+        });
+        return result;
+      }
     }
   },
 
@@ -80,15 +98,13 @@ export default {
           parts.push($(el).data('slug'));
           parts.push($(el).data('tab'));
 
-          binding.value[1]($(el).data('resource_id'), parts[2], 'search');  // call findResource in app
-          
+          binding.value[0]('document_name', $(el).data('document_name'));
+          binding.value[0]('resource_slug', parts[2]);    // call setProps
           window.history.pushState('', 'Comments', `/${parts.join('/')}`);
         }).on('shown.bs.modal', function (e) {
-          binding.value[0](parts[3]);             // call toggleTab
+          binding.value[0]('tab', parts[3]);              // call setProps
         }).on('hide.bs.modal', function (e) {
         }).on('hidden.bs.modal', function (e) {
-          binding.value[1](null, null, 'clear');  // call findResource in app
-
           window.history.pushState("", "", `/${parts.slice(0, 3).join('/')}`);
         });
       },
@@ -104,8 +120,17 @@ export default {
       this.resource_view_dent = dent;
     },
 
-    toggleTab (tab) {
-      this.tab = tab;
+    withoutResource () {
+      return this.document == null || this.resource_slug == null;
+    },
+
+    setProps (prop, value) {
+      this[prop] = value;
+      if (prop == 'resource_slug') {
+        if (this.withoutResource()) {
+          this.$emit('needdocument', this.document_name);
+        }
+      }
     },
 
     updateCommentsTotal(total) {
