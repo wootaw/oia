@@ -154,6 +154,9 @@
     
     <% if user_signed_in? %>
     <ul class="nav navbar-nav navbar-right">
+      <% if params[:controller] == "projects" && params[:action] == "show" %>
+      <resources-oulline :document="current"></resources-oulline>
+      <% end %>
       <% if false %>
       <li class="dropdown">
         <a href="#" data-toggle="dropdown" class="dropdown-toggle">

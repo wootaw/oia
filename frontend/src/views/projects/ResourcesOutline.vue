@@ -1,18 +1,19 @@
 <template>
-  <div class="dropdown" v-downitems="[document, setProps]">
-    <a href="#" class="btn btn-default btn-xs m-l dropdown-toggle" data-toggle="dropdown">
+  <li class="dropdown" v-downitems="[document, setProps]">
+    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
       <i class="fa fa-list m-r-xs"></i>
+      <span>Outline</span>
       <span class="caret"></span>
     </a>
     <ul class="dropdown-menu pull-right m-l">
       <li v-for="res of resources" :key="res.id">
-        <a :href="res.slug" @click.prevent="toResource(res.slug)">
+        <a :href="res.slug" @click.stop.prevent="toResource(res.slug)">
           <i :class="methodClasses(res.method)"></i>
           <span>{{res.summary}}</span>
         </a>
       </li>
     </ul>
-  </div>
+  </li>
 </template>
 
 <script>
