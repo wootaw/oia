@@ -13,6 +13,8 @@ import DocumentsList from 'VIEW/projects/DocumentsList'
 import DocumentPanel from 'VIEW/documents/DocumentPanel'
 import ResourceModal from 'VIEW/resources/ResourceModal'
 import ResourcesOutline from 'VIEW/projects/ResourcesOutline'
+import CollaboratorsList from 'VIEW/projects/CollaboratorsList'
+import TagsEditor from 'COMPONENT/TagsEditor'
 
 import 'DIRECTIVE/showmodal'
 // import 'UTIL/sticky-kit'
@@ -41,10 +43,12 @@ $(function() {
     mixins: [Sign],
 
     components: { 
+      'tags-editor':        TagsEditor,
       'documents-list':     DocumentsList,
       'document-panel':     DocumentPanel,
       'resource-modal':     ResourceModal,
-      'resources-oulline':  ResourcesOutline
+      'resources-oulline':  ResourcesOutline,
+      'collaborators-list': CollaboratorsList
     },
 
     computed: {

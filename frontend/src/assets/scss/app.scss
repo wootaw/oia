@@ -1758,6 +1758,41 @@ fieldset[disabled] .btn-dark.active {
   height: 100%;
 }
 
+.thumb-xl {
+  display: inline-block;
+  width: 128px;
+}
+
+.thumb-lg {
+  display: inline-block;
+  width: 96px;
+}
+
+.thumb-md {
+  display: inline-block;
+  width: 64px;
+}
+
+.thumb {
+  display: inline-block;
+  width: 50px;
+}
+
+.thumb-sm {
+  display: inline-block;
+  width: 40px;
+}
+
+.thumb-xs {
+  display: inline-block;
+  width: 34px;
+}
+
+.thumb-xxs {
+  display: inline-block;
+  width: 30px;
+}
+
 .m-center {
   margin-left: auto;
   margin-right: auto;
@@ -2569,6 +2604,7 @@ a.text-#000000:hover {
     position: fixed;
     left: 0;
     right: 55%;
+    // top: 100px;
   }
 
   &.affix-bottom {
@@ -2580,13 +2616,13 @@ a.text-#000000:hover {
   }
 
   li {
-    .dropdown {
-      position: absolute;
-      right: 0;
-      z-index: 1;
-      margin: 20px 20px 0 0;
-      display: none;
-    }
+    // .dropdown {
+    //   position: absolute;
+    //   right: 0;
+    //   z-index: 1;
+    //   margin: 20px 20px 0 0;
+    //   display: none;
+    // }
 
     a.doc-item {
       padding: 10px 40px!important;
@@ -2614,11 +2650,11 @@ a.text-#000000:hover {
   }
 
   &:not(.loading) {
-    li.active {
-      .dropdown {
-        display: block;
-      }
-    }
+    // li.active {
+    //   .dropdown {
+    //     display: block;
+    //   }
+    // }
 
     li:not(.active) a.doc-item:hover {
       background-color: $dark_color_lt!important;

@@ -80,6 +80,28 @@
     </div>
   </div>
 </resource-modal>
+<div class="modal fade modal-full" id="normal-modal" tabindex="-1" role="dialog">
+  <button class="btn btn-rounded btn-lg btn-icon btn-default btn-close" data-dismiss="modal">
+    <i class="fa fa-times"></i>
+  </button>
+  <div class="grid-over h-full">
+    <div class="dp-table w-half h-full item m-center">
+      <div class="cell v-middle wrapper-md">
+        <div class="modal-dialog" role="document">
+          <h3 class="txt-center text-primary-lter">Add collaborators to your project</h3>
+          <div class="bg-dark no-bg">
+            <tags-editor></tags-editor>
+            <div class="m-t txt-center">
+              <span class="divider-txt">
+                <span><b>Note:</b> emails have to be comma separated when pasted in</span>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 <% end %>
 
 <% content_for :content do %>
@@ -88,16 +110,16 @@
     <div class="col w-45 bg-dark">
       <div class="wrapper-md">
         <div class="h3 m-t-xs m-b-sm">
-          <span><%= @owner.username %></span>
+          <span><a href="/<%= @owner.username %>"><%= @owner.username %></a></span>
           <span class="sep">/</span>
           <span><%= @project.name %></span>
         </div>
+        <collaborators-list></collaborators-list>
         <small class="text-muted"><%= @project.summary %></small>
       </div>
       <documents-list :documentid="<%= @document.id %>" :documentname="document_name" @documentchanged="documentChanged">
         <% @change.parts(@project, :documents).each do |doc| %>
-        <li data-id="<%= doc.id %>">
-          <resources-oulline :document="current"></resources-oulline>
+        <li data-id="<%= doc.id %>" class="dp-none doc-li">
           <a class="doc-item" href="<%= doc.name %>">
             <small class="text-muted">version</small>
             <h5><%= doc.summary %></h5>
