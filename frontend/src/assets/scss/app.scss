@@ -841,6 +841,7 @@ small {
   }
 }
 
+
 .win-over, .grid-over {
   top: 0;
   right: 0;
@@ -2939,6 +2940,11 @@ a.text-#000000:hover {
         animation-fill-mode: both;
       }
     }
+  }
+
+  &.center {
+    margin-left: auto;
+    margin-right: auto;
   }
 }
 

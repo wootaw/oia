@@ -3,11 +3,78 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <style>
-      /* Email styles need to be inline */
+      body {
+        font-family: Source Code Pro, Panic Sans, Monaco, monospace, sans-serif;
+        font-size: 13px;
+        padding: 0;
+        margin: 0;
+        color: #333;
+      }
+      .padder {
+        padding: 20px 0;
+      }
+      .header {
+        background-color: #000;
+      }
+      .header img {
+        float: left;
+        margin-right: 20px;
+      }
+      .header .h1 {
+        line-height: 48px;
+        font-size: 30px;
+        color: #27a102;
+        text-decoration: none;
+      }
+      .btn {
+        background-color: #27a102;
+        color: #fff;
+        padding: 10px 20px;
+        border-radius: 4px;
+        text-decoration: none;
+        display: inline-block;
+      }
+      .clearfix {
+        clear: both;
+        display: block;
+      }
+      .col {
+        width: 640px;
+        margin: 0 auto;
+      }
+      .topic {
+        background-color: #eee;
+        font-size: 14px;
+        font-weight: bold;
+      }
+      .footer {
+        background-color: #ccc;
+        color: #666;
+      }
     </style>
   </head>
 
   <body>
-    <%= yield %>
+    <div class="header padder">
+      <div class="col">
+        <%= image_tag '/logo.png' %>
+        <a href="http://www.apiwoods.com" class="h1">apiwoods</a>
+      </div>
+    </div>
+    <div class="topic padder">
+      <div class="col">
+        <%= yield(:topic) %>
+      </div>
+    </div>
+    <div class="content padder">
+      <div class="col">
+        <%= yield(:content) %>
+      </div>
+    </div>
+    <div class="footer padder">
+      <div class="col">
+        This email is sent automatically by apiwoods system. Please do not reply directly.
+      </div>
+    </div>
   </body>
 </html>

@@ -641,4 +641,35 @@ RSpec.describe Project, type: :model do
 
   end
 
+  describe '.append_collaborators' do
+
+    it 'should be able to back the former collaborators' do
+      collaborator_user = create(:collaborator_user, state: :left)
+
+      collaborator_user.project.append_collaborators([collaborator_user.member.email])
+      collaborator_user.reload
+      expect(collaborator_user.joined?).to be_truthy
+    end
+
+    it 'should be able to invite signed users' do
+      user = create(:user)
+
+      project_user.append_collaborators([user.email])
+      expect(project_user.collaborators.count).to eq 1
+    end
+
+    it 'should be able to back the declined invitation' do
+      collaborator_invitation = create(:collaborator_invitation, state: :declined)
+
+      collaborator_invitation.project.append_collaborators([collaborator_invitation.member.email])
+      collaborator_invitation.reload
+      expect(collaborator_invitation.mounted?).to be_truthy
+    end
+
+    it 'should be able to invite unsigned users by email' do
+      project_user.append_collaborators(["abc@website.com"])
+      expect(project_user.collaborators.count).to eq 1
+    end
+  end
+
 end

@@ -1,0 +1,9 @@
+<% content_for :topic do %>
+<div class="h2">You've been invited to collaborate</div>
+<% end %>
+
+<% content_for :content do %>
+<div class="clearfix">Just to let you know that <%= @collaborator.user.username %> has added you as a collaborator on the project <%= @collaborator.project.name %></div>
+<br/>
+<%= link_to 'Start collaborating', invitation_url(@collaborator.member.key), :class => "btn" %>
+<% end %>

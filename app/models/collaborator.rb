@@ -2,6 +2,7 @@ class Collaborator < ApplicationRecord
   include AASM
 
   belongs_to :project
+  belongs_to :user
   belongs_to :member, polymorphic: true
 
   enum state: {

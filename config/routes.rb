@@ -7,16 +7,9 @@ Rails.application.routes.draw do
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   root to: 'home#index'
 
-  resources :documents
-  resources :projects do
-    collection do
-      get :templates
-    end
-  end
-
-  resources :users do
-    collection do
-      get :exists
+  namespace :api do
+    namespace :v1 do
+      resources :documents
     end
   end
 
@@ -25,10 +18,19 @@ Rails.application.routes.draw do
       post :preview
     end
   end
-  
-  namespace :api do
-    namespace :v1 do
-      resources :documents
+
+  resources :documents
+  resources :invitations
+  resources :projects do
+    collection do
+      get :templates
+    end
+  end
+
+  resources :resources
+  resources :users do
+    collection do
+      get :exists
     end
   end
 
