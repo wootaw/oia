@@ -16,7 +16,6 @@ $(function() {
     data: {
       sign: 0,
       modal: 0,
-      email: null
     },
 
     mixins: [Sign],

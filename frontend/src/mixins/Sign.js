@@ -2,7 +2,12 @@ import signService from 'SERVICE/SignService';
 
 export default {
   methods: {
-    openPage(path, is) {
+    openPage(path, is, data) {
+      if (data != null) {
+        Object.keys(data).forEach((item, idx) => {
+          $('#sign-modal').data(item, data[item]);
+        });
+      }
       this[is] = path.replace(/^\//, '').replace(/\//g, '-');
     },
 

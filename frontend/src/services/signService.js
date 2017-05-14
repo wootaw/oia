@@ -9,11 +9,17 @@ class SignService {
     });
   }
 
-  getSignUpForm() {
-    return xhr({
+  getSignUpForm(data) {
+    const options = {
       url: '/users/sign_up',
       prefix: 'page'
-    });
+    };
+
+    if (data != null) {
+      options.body = data;
+    }
+
+    return xhr(options);
   }
 
   sign(path, query) {

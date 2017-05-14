@@ -1,10 +1,20 @@
+<% content_for :assets do %>
+<%= webpack_javascript_include_tag 'invitations' %>
+<% end %>
+
 <% content_for :content do %>
 <div class="app-content-body">
-  <div class="panel w-half center m-t-lg m-b-lg bg-dark">
-    <h3 class="txt-center m-b-lg m-t-lg"><%= @invitation.collaborator.user.username %> wants to collaborate with you!</h3>
-    <div class="txt-center h5 m-b-lg">Join <%= @invitation.collaborator.user.username %> and collaborate on RESTful web API document. Sign up below to get started.</div>
-    <div class="txt-center h5 m-b-lg">
-      <a href="#" class="btn btn-success btn-lg">Sign up & start collaborating</a>
+  <div class="dp-table w-full h-xxl item">
+    <div class="cell w-half v-middle wrapper-md">
+      <div class="padder-xl m-b-xxxl">
+        <div class="panel w-half h-middle m-t-xxxl m-b-xxxl bg-dark padder-xl padder-md">
+          <h3 class="txt-center m-b-lg m-t-lg"><%= @invitation.collaborator.user.username %> wants to collaborate with you!</h3>
+          <div class="txt-center h5 m-b-lg">Join <%= @invitation.collaborator.user.username %> and collaborate on RESTful web API document. Sign up below to get started.</div>
+          <div class="txt-center h5 m-b-lg">
+            <button class="btn btn-success btn-lg" data-toggle="modal" data-target="#sign-modal" @click="openPage('/users/sign_up', 'sign', {'key': '<%= @invitation.key %>', 'email': '<%= @invitation.email %>'})">Sign up & start collaborating</button>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>

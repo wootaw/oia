@@ -24,7 +24,9 @@ Validator.extend('exists', {
 
 const UsersSignUp = Vue.component('users-sign_up', (resolve, reject) => {
 
-  signService.getSignUpForm().then(d => {
+  const inits = $('#sign-modal').data();
+
+  signService.getSignUpForm(inits).then(d => {
     resolve({
       mixins: [ValidatableForm],
 
@@ -53,6 +55,14 @@ const UsersSignUp = Vue.component('users-sign_up', (resolve, reject) => {
           password: 'required|min:6'
         };
       },
+
+      created () {
+        Object.keys(this.form).forEach((item, idx) => {
+          if (inits[item] != null) {
+            this.form[item] = inits[item];
+          }
+        });
+      }
 
     });
   });

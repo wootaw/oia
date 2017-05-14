@@ -2109,7 +2109,9 @@ fieldset[disabled] .btn-dark.active {
 .m-b-xxl {
   margin-bottom: 50px;
 }
-
+.m-b-xxxl {
+  margin-bottom: 100px;
+}
 .m-b-n-xxs {
   margin-bottom: -1px;
 }
@@ -2572,13 +2574,13 @@ a.text-#000000:hover {
       }
     }
 
-    input:focus {
-      outline: none;
-      outline-width: 0;
-      outline-offset: 0;
-      border-color: $primary_color;
-      border-left: 0;
-    }
+    // input:focus {
+    //   outline: none;
+    //   outline-width: 0;
+    //   outline-offset: 0;
+    //   border-color: $primary_color;
+    //   border-left: 0;
+    // }
   }
 }
 
@@ -2942,7 +2944,7 @@ a.text-#000000:hover {
     }
   }
 
-  &.center {
+  &.h-middle {
     margin-left: auto;
     margin-right: auto;
   }

@@ -16,10 +16,10 @@
         </span>
         <% else %>
         <div class="form-group">
-          <input type="email" class="form-control" placeholder="Enter email">
+          <input type="email" class="form-control" placeholder="Enter email" v-model="email">
         </div>
         <span>
-          <button class="btn btn-success">Get Started</button>
+          <button class="btn btn-success" data-toggle="modal" data-target="#sign-modal" @click="openPage('/users/sign_up', 'sign', {'email': email})">Get Started</button>
         </span>
         <% end %>
         <div class="m-t-md">Already have an account? <a href="#" @click.prevent="setPath('<%= new_user_session_path %>', 'sign')">Sign in</a></div>

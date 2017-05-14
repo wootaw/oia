@@ -1,4 +1,4 @@
-<div class="m-center padder-sm sign-box">
+<div class="m-center padder-sm sign-box bg-dark no-bg">
   <div class="txt-center"><img src="/logo.png"></div>
   <div class="m-b-sm">
     <h3 class="txt-center">Good afternoon! Welcome back.</h3>
@@ -22,7 +22,7 @@
       <a href="#" @click.prevent="setPath('<%= new_user_password_path %>', 'sign')">Forgotten password?</a>
     </div>
     <div class="m-b">
-      <%= f.submit "Sign in", ":class" => "{'btn-lg': true, 'btn-success': !loading && !disabledSubmit, 'w-full': true, disabled: disabledSubmit, 'bg-loading': loading, 'x-md-y-c': true }".html_safe, "v-bind:disabled" => "disabledSubmit" %>
+      <%= f.submit "Sign in", ":class" => "{'btn-lg': true, 'no-border': true, 'btn-success': !loading && !disabledSubmit, 'w-full': true, disabled: disabledSubmit, 'bg-loading': loading, 'x-md-y-c': true }".html_safe, "v-bind:disabled" => "disabledSubmit" %>
     </div>
     <% if devise_mapping.rememberable? -%>
       <div class="checkbox">

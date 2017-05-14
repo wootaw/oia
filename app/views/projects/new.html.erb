@@ -1,7 +1,8 @@
 <div class="modal-dialog" role="document" v-modal="success">
   <h2 class="txt-center text-primary-lter">Create Project</h2>
-  <%= form_for(:project, url: projects_path(@project), html: { class: "m-b-xl", "v-on:submit.prevent" => "trySubmit" }) do |f| %>
+  <%= form_for(:project, url: projects_path(@project), html: { class: "m-b-xl bg-dark no-bg", "v-on:submit.prevent" => "trySubmit" }) do |f| %>
     <div class="form-inline m-b">
+      
       <div class="form-group">
         <label class="text-primary">Owner</label>
         <%= f.hidden_field :owner_type %>
@@ -12,11 +13,12 @@
             <span class="caret"></span>
           </button>
           <ul class="dropdown-menu pull-left">
-            <li><a href="#">Action</a></li>
+            <li><a href="#"><%= current_user.username %></a></li>
+            <li class="divider"></li>
             <li><a href="#">Another action</a></li>
             <li><a href="#">Something else here</a></li>
             <li class="divider"></li>
-            <li><a href="#">Separated link</a></li>
+            <li><a href="#"><b class="text-primary">Create Team</b></a></li>
           </ul>
         </div>
       </div>
@@ -24,6 +26,7 @@
         <label class="block">&nbsp;</label>
         <span class="text-xl text-white"><b>/</b></span>
       </div>
+     
       <div :class="{ 'form-group': true, 'has-error': errors.has('name') }" data-toggle="tooltip" data-placement="right" v-bind:data-original-title="errors.first('name')" v-toggle-tooltip="errors_changed.name">
         <label class="text-primary">Project name</label>
         <%= f.text_field :name, autofocus: true, class: "form-control block w-lg", "v-model" => "form.name" %>
@@ -67,8 +70,7 @@
       </label>
     </div>
     <div class="m-b">
-      <%= f.submit "Create Project", ":class" => "{'btn-lg': true, 'btn-success': !loading && !disabledSubmit, disabled: disabledSubmit, 'pull-left': true }".html_safe, "v-bind:disabled" => "disabledSubmit" %>
-      <div :class="{ 'bg-loading': loading, 'w-xs': true, 'h-xxs': true, 'pull-left': true, 'm-l-md': true, 'x-md-y-c': true }"></div>
+      <%= f.submit "Create Project", ":class" => "{'btn-lg': true, 'no-border': true, 'btn-success': !loading && !disabledSubmit, disabled: disabledSubmit, 'w-full': true, 'bg-loading': loading, 'x-md-y-c': true }".html_safe, "v-bind:disabled" => "disabledSubmit" %>
     </div>
   <% end %>
 </div>
