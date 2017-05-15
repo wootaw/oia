@@ -18,7 +18,6 @@ class SignService {
     if (data != null) {
       options.body = data;
     }
-
     return xhr(options);
   }
 

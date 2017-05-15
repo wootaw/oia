@@ -1,6 +1,6 @@
 const rootPaths = { api: '/api/v1', page: '' }
 const xhr = ({ method='get', url, body=null, prefix='api', dt='html' }) => {
-  const defer = $.Deferred()
+  const defer = $.Deferred();
 
   $.ajax({
     type: method,
@@ -12,13 +12,13 @@ const xhr = ({ method='get', url, body=null, prefix='api', dt='html' }) => {
   })
   .always((data, textStatus, jqxhr) => {
     if (/^(nocontent|success)$/.test(textStatus)) {
-      defer.resolve({ data: data, code: jqxhr.status })
+      defer.resolve({ data: data, code: jqxhr.status });
     } else {
-      defer.resolve({ data: data.responseJSON, code: data.status })
+      defer.resolve({ data: data.responseJSON, code: data.status });
     }
   });
 
-  return defer.promise()
+  return defer.promise();
 }
 
 export default xhr

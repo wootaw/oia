@@ -9,11 +9,11 @@
   <%= form_for(resource, as: resource_name, url: session_path(resource_name), html: { class: "m-b-xl", "v-on:submit.prevent" => "trySubmit" }) do |f| %>
     <div :class="{ 'input-group': true, 'm-b': true, 'has-error': errors.has('account') }" data-toggle="tooltip" data-placement="left" v-bind:data-original-title="errors.first('account')" v-toggle-tooltip="errors_changed.account">
       <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
-      <%= f.text_field :account, autofocus: true, class: "form-control input-lg", "v-model" => "form.account", placeholder: "Account" %>
+      <%= f.text_field :account, autofocus: true, class: "form-control input-lg", "v-model" => "form.account", placeholder: "Account", "v-groupfocus" => "'.input-group'".html_safe %>
     </div>
     <div :class="{ 'input-group': true, 'm-b': true, 'has-error': errors.has('password') }" data-toggle="tooltip" data-placement="left" v-bind:data-original-title="errors.first('password')" v-toggle-tooltip="errors_changed.password">
       <span class="input-group-addon"><i class="fa fa-lock"></i></span>
-      <%= f.password_field :password, autocomplete: "off", class: "form-control input-lg", "v-model" => "form.password", placeholder: "Password" %>
+      <%= f.password_field :password, autocomplete: "off", class: "form-control input-lg", "v-model" => "form.password", placeholder: "Password", "v-groupfocus" => "'.input-group'".html_safe %>
     </div>
     <div class="alert alert-danger alert-validate" v-if="alert">
       <b>Oh snap!</b> <span v-for="msg in msgs">{{msg}}</span>

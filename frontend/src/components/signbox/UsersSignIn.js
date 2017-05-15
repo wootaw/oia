@@ -3,6 +3,7 @@ import signService from 'SERVICE/SignService';
 import { Validator } from 'vee-validate';
 import isEmail from 'validator/lib/isEmail'
 import ValidatableForm from 'MIXIN/ValidatableForm'
+import 'DIRECTIVE/groupfocus';
 
 Validator.extend('account', {
   getMessage: field => 'The account must be an email or username you registered with.',

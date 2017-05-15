@@ -3,6 +3,7 @@ import signService from 'SERVICE/SignService';
 import { Validator } from 'vee-validate';
 import ValidatableForm from 'MIXIN/ValidatableForm'
 import Timer from 'UTIL/Timer';
+import 'DIRECTIVE/groupfocus';
 
 Validator.extend('exists', {
   getMessage: (field) => `${field} already exists, or is reserved word.`,
@@ -24,7 +25,13 @@ Validator.extend('exists', {
 
 const UsersSignUp = Vue.component('users-sign_up', (resolve, reject) => {
 
-  const inits = $('#sign-modal').data();
+  let inits = $('#sign-modal').data();
+  inits = Object.keys(inits).reduce((r, c) => {
+    if (typeof inits[c] != 'object') {
+      r[c] = inits[c];
+    }
+    return r;
+  }, {});
 
   signService.getSignUpForm(inits).then(d => {
     resolve({

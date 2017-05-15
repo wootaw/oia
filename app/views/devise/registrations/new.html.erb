@@ -9,15 +9,15 @@
   <%= form_for(resource, as: resource_name, url: registration_path(resource_name, @options), html: { class: "m-b-xl", "v-on:submit.prevent" => "trySubmit" }) do |f| %>
     <div :class="{ 'input-group': true, 'm-b': true, 'has-error': errors.has('username') }" data-toggle="tooltip" data-placement="left" v-bind:data-original-title="errors.first('username')" v-toggle-tooltip="errors_changed.username">
       <span class="input-group-addon"><i class="fa fa-user"></i></span>
-      <%= f.text_field :username, autofocus: true, class: "form-control input-lg", "v-model" => "form.username", placeholder: "Username" %>
+      <%= f.text_field :username, autofocus: true, class: "form-control input-lg", "v-model" => "form.username", placeholder: "Username", "v-groupfocus" => "'.input-group'".html_safe %>
     </div>
     <div :class="{ 'input-group': true, 'm-b': true, 'has-error': errors.has('email') }" data-toggle="tooltip" data-placement="left" v-bind:data-original-title="errors.first('email')" v-toggle-tooltip="errors_changed.email">
       <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
-      <%= f.email_field :email, class: "form-control input-lg", "v-model" => "form.email", placeholder: "Email" %>
+      <%= f.email_field :email, class: "form-control input-lg", "v-model" => "form.email", placeholder: "Email", "v-groupfocus" => "'.input-group'".html_safe %>
     </div>
     <div :class="{ 'input-group': true, 'm-b': true, 'has-error': errors.has('password') }" data-toggle="tooltip" data-placement="left" v-bind:data-original-title="errors.first('password')" v-toggle-tooltip="errors_changed.password">
       <span class="input-group-addon"><i class="fa fa-lock"></i></span>
-      <%= f.password_field :password, autocomplete: "off", class: "form-control input-lg", "v-model" => "form.password", placeholder: "Password(#{@minimum_password_length} characters minimum)" %>
+      <%= f.password_field :password, autocomplete: "off", class: "form-control input-lg", "v-model" => "form.password", placeholder: "Password(#{@minimum_password_length} characters minimum)", "v-groupfocus" => "'.input-group'".html_safe %>
     </div>
     <div class="alert alert-danger alert-validate" v-if="alert">
       <b>Oh snap!</b> <span v-for="msg in msgs">{{msg}}</span>
