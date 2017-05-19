@@ -3,6 +3,7 @@ require 'rails_helper'
 RSpec.describe ProjectsController, type: :controller do
   let(:project) { create :project }
   let(:user)    { create :user }
+  let(:rest)    { JSON.parse(response.body).symbolize_keys }
 
   describe ':create' do
     it 'should not allow anonymous create' do
@@ -24,7 +25,6 @@ RSpec.describe ProjectsController, type: :controller do
       post :create, params: { project: params }
       expect(response).to be_success
 
-      rest = JSON.parse(response.body).symbolize_keys
       expect(rest[:code]).to eq 1000
     end
 

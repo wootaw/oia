@@ -53,7 +53,10 @@ class Ability
 
   def basic_read_only
     can :read, Project do |project|
-      project.jpublic? || !@user.nil? && project.owner.is_a?(User) && project.owner_id == @user.id
+      project.jpublic? || !@user.nil? && (
+        project.owner.is_a?(User) && project.owner_id == @user.id || 
+        project.signed_collaborators.exists?(state: :joined, member_id: @user.id)
+      )
     end
   end
 

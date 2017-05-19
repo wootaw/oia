@@ -45,7 +45,7 @@ const UsersSignUp = Vue.component('users-sign_up', (resolve, reject) => {
         processResponse(resp) {
           switch(resp.code) {
           case 200:
-            location.reload();
+            location.href = resp.data.redirect;
             break;
           case 401:
             this.alert = true;

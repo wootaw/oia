@@ -13,6 +13,7 @@ class User::RegistrationsController < Devise::RegistrationsController
 
   # POST /resource
   def create
+    ret = { code: 200, redirect: "/#{user_params[:username]}" }
     self.resource = User.new(user_params)
 
     bubbles = Bubbles.new(256)
@@ -20,9 +21,19 @@ class User::RegistrationsController < Devise::RegistrationsController
       self.resource.avatar = f
     end
 
+    if params[:invitation_key].present?
+      invitation = Invitation.find_by(key: params[:invitation_key])
+      unless invitation.nil?
+        project = invitation.collaborator.project
+        invitation.collaborator.confirm!
+        resource.collaborators.build(project: invitation.collaborator.project, state: :joined)
+        ret[:redirect] = "/#{project.owner_name}/#{project.name}"
+      end
+    end
+
     if resource.save
       sign_in :user, resource
-      return render body: nil
+      render json: ret
     else
       clean_up_passwords resource
       render json: { code: 401, msgs: resource.errors.full_messages }, status: 401

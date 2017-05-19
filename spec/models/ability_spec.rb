@@ -38,6 +38,17 @@ RSpec.describe Ability, type: :model do
       it { is_expected.not_to be_able_to(:update, other_private_project) }
       it { is_expected.not_to be_able_to(:destroy, other_public_project) }
       it { is_expected.not_to be_able_to(:destroy, other_private_project) }
+
+      context 'is a collaborator at other private project' do
+        before(:example) do
+          create :collaborator, project: other_private_project, member: user, state: :joined
+        end
+
+        it { is_expected.to be_able_to(:read, other_private_project) }
+        it { is_expected.not_to be_able_to(:create, other_private_project) }
+        it { is_expected.not_to be_able_to(:update, other_private_project) }
+        it { is_expected.not_to be_able_to(:destroy, other_private_project) }
+      end
     end
   end
 

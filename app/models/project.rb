@@ -36,6 +36,10 @@ class Project < ApplicationRecord
   #   state :running
   # end
 
+  def owner_name
+    self.owner_type == "User" ? owner.username : owner.name
+  end
+
   def version_number
     "#{major_version}.#{minor_version}.#{patch_version}.#{changes_version}"
   end

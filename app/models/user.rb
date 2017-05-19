@@ -11,6 +11,7 @@ class User < ApplicationRecord
 
   has_many :members, dependent: :destroy
   has_many :personal_projects, as: :owner, dependent: :destroy, class_name: "Project"
+  has_many :collaborators, as: :member, dependent: :destroy
   has_many :comments, dependent: :destroy
 
   has_many :teams, through: :members, source: :team

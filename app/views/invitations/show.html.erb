@@ -9,10 +9,19 @@
       <div class="padder-xl m-b-xxxl">
         <div class="panel w-half h-middle m-t-xxxl m-b-xxxl bg-dark padder-xl padder-md">
           <h3 class="txt-center m-b-lg m-t-lg"><%= @invitation.collaborator.user.username %> wants to collaborate with you!</h3>
+          <% if @invitation.collaborator.mounted? %>
           <div class="txt-center h5 m-b-lg">Join <%= @invitation.collaborator.user.username %> and collaborate on RESTful web API document. Sign up below to get started.</div>
           <div class="txt-center h5 m-b-lg">
             <button class="btn btn-success btn-lg" data-toggle="modal" data-target="#sign-modal" @click="openPage('/users/sign_up', 'sign', {'key': '<%= @invitation.key %>', 'email': '<%= @invitation.email %>'})">Sign up & start collaborating</button>
           </div>
+          <% elsif @invitation.collaborator.confirmed? && !current_user.nil? %>
+          <div class="txt-center h5 m-b-lg">Welcome! <%= current_user.username %>. </div>
+          <div class="txt-center h5 m-b-lg">
+            <%= link_to "Go to the #{@invitation.collaborator.project.name}", project_documents_path(owner_name: @invitation.collaborator.project.owner_name, project_name: @invitation.collaborator.project.name), :class => "btn btn-success btn-lg" %>
+          </div>
+          <% else %>
+          <div class="txt-center h5 m-b-lg">Oops! You are late. </div>
+          <% end %>
         </div>
       </div>
     </div>
