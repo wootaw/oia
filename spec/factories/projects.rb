@@ -7,6 +7,10 @@ FactoryGirl.define do
 
     factory :project_user do
       association :owner, factory: :user
+
+      after(:create) do |project, evaluator|
+        create :collaborator, state: :joined, project: project, member: project.owner
+      end
     end
 
     factory :project_team do

@@ -20,21 +20,30 @@
   <% end %>
     <div class="in bg-dark lowest"></div>
   </div>
-  <div class="panel-heading no-border no-padder dk fixed-block">
+  <% color = defined?(project) ? "'dk': true" : "'dk': project.owned, 'dker': !project.owned" %>
+  <div :class="{'panel-heading': true, 'no-border': true, 'no-padder': true, 'fixed-block': true, <%= color.html_safe %>}">
     <div class="item h">
       <div class="top text-left m-l m-t-sm">
-        <span class="badge bg-primary m-r-xxs"><i class="fa fa-home text"></i></span>
-        <span class="badge bg-primary m-r-xxs"><i class="fa fa-users text"></i></span>
-        <span class="badge bg-info m-r-xxs"><i class="fa fa-eye text"></i></span>
-        <span class="badge bg-success m-r-xxs"><i class="fa fa-bookmark text"></i></span>
+        <% unless defined?(project) %>
+          <i class="fa fa-home text-md text-white" v-if="project.owned"></i>
+          <i class="fa fa-users text" v-else></i>
+        <% end %>
+        <!-- <span class="badge bg-info m-r-xxs"><i class="fa fa-eye text"></i></span> -->
+        <!-- <span class="badge bg-success m-r-xxs"><i class="fa fa-bookmark text"></i></span> -->
       </div>
       <div class="bottom wrapper bg-gd-dk text-white w-full">
         <div class="h3 m-b-sm text-primary-lter"><% if defined?(project) %><%= project.name %><% else %>{{project.name}}<% end %></div>
         <div class="m-b-xs">
-          <span class="badge bg-primary m-r-xxs"><i class="fa fa-file text"></i> 15</span>
-          <span class="badge bg-primary m-r-xxs"><i class="fa fa-circle text"></i> 15</span>
-          <span class="badge bg-info m-r-xxs"><i class="fa fa-eye text"></i> 15</span>
-          <span class="badge bg-success m-r-xxs"><i class="fa fa-bookmark text"></i> 29</span>
+          <% if defined?(project) %>
+          <span class="badge bg-purple m-r-xxs"><i class="fa fa-file text"></i> <%= project.documents.count %></span>
+          <span class="badge bg-info m-r-xxs"><i class="fa fa-circle text"></i> <%= project.resources.count %></span>
+          <% else %>
+          <span class="badge bg-purple m-r-xxs"><i class="fa fa-file text"></i> {{project.documents_count}}</span>
+          <span class="badge bg-info m-r-xxs"><i class="fa fa-circle text"></i> {{project.resources_count}}</span>
+          <% end %>
+          
+          <!-- <span class="badge bg-info m-r-xxs"><i class="fa fa-eye text"></i> 15</span>
+          <span class="badge bg-success m-r-xxs"><i class="fa fa-bookmark text"></i> 29</span> -->
         </div>
         <div>Created <% if defined?(project) %><%= distance_of_time_in_words_to_now(project.created_at) %><% else %>{{project.created}}<% end %> ago</div>
       </div>
@@ -48,10 +57,6 @@
     <li class="list-group-item">
       <span class="pull-right"><% if defined?(project) %><%= distance_of_time_in_words_to_now(project.updated_at) %><% else %>{{project.updated}}<% end %> ago</span>
       Recent Updated
-    </li>
-    <li class="list-group-item">
-      <span class="pull-right">21,000</span>
-      Starup
     </li>
   </ul>
 </div>

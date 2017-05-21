@@ -33,6 +33,8 @@ RSpec.describe ProjectsController, type: :controller do
       params = build(:project, owner: user).attributes.symbolize_keys
       post :create, params: { project: params }
       expect(response).to be_success
+
+      expect(Project.find(rest[:projects]["id"]).collaborators.count).to eq 1
     end
   end
 

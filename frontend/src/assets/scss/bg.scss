@@ -619,10 +619,15 @@
   background-color: #131e26 !important;
 }
 
-.bg-primary {
+.bg-purple {
   color: #f4f3f9;
-  background-color: #7266ba;
+  background-color: $purple_color;
 }
+
+// .bg-primary {
+//   color: #f4f3f9;
+//   background-color: #7266ba;
+// }
 
 .bg-primary.lt,
 .bg-primary .lt {

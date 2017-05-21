@@ -14,6 +14,7 @@ class User < ApplicationRecord
   has_many :collaborators, as: :member, dependent: :destroy
   has_many :comments, dependent: :destroy
 
+  has_many :participating_projects, through: :collaborators, source: :project
   has_many :teams, through: :members, source: :team
   has_many :team_projects, through: :teams, source: :projects
   has_many :roles, through: :members, source: :roles
@@ -32,6 +33,14 @@ class User < ApplicationRecord
   aasm column: :state, enum: true do
     state :mounted, initial: true
     state :running
+  end
+
+  def view_projects(current_user)
+    if !current_user.nil? && self.id == current_user.id
+      self.participating_projects.where("collaborators.state = ?", Collaborator.states[:joined])
+    else
+      self.personal_projects.where(clazz: :jpublic)
+    end
   end
 
   def self.find_for_database_authentication(warden_conditions)

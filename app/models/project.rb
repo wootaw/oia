@@ -36,6 +36,10 @@ class Project < ApplicationRecord
   #   state :running
   # end
 
+  def owned?(current_user)
+    !current_user.nil? && self.owner_type == "User" && self.owner_id == current_user.id
+  end
+
   def owner_name
     self.owner_type == "User" ? owner.username : owner.name
   end
@@ -80,7 +84,8 @@ class Project < ApplicationRecord
       begin
         invitation.key = SecureRandom.hex
       end while Invitation.exists?(key: invitation.key)
-      collaborators.create(member: invitation, user: user)
+      collaborator = collaborators.create(member: invitation, user: user)
+      CollaboratorMailer.invite_email(collaborator).deliver_later
     end
   end
 end
