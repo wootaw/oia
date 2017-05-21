@@ -1,6 +1,7 @@
 FactoryGirl.define do
   factory :collaborator do
     association :project, factory: :project_user
+    association :user, factory: :user
 
     factory :collaborator_user do
       association :member, factory: :user

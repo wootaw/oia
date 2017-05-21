@@ -26,8 +26,8 @@ module Apiwoods
       g.fixture_replacement :factory_girl, dir: 'spec/factories'
     end
 
-    config.active_job.queue_name_prefix = Rails.env
-    config.active_job.queue_name_delimiter = '.'
+    # config.active_job.queue_name_prefix = Rails.env
+    # config.active_job.queue_name_delimiter = '.'
     config.active_job.queue_adapter = :sidekiq
     config.middleware.use Rack::Attack
 
@@ -38,6 +38,7 @@ module Apiwoods
     #   Devise::UnlocksController.layout "devise"            
     #   Devise::PasswordsController.layout "devise"        
     # end
+    # config.action_mailer.default_url_options = { host: 'www.apiwoods.com' }
 
     config.webpack = {
       asset_manifest: {}

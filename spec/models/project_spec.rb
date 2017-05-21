@@ -642,11 +642,17 @@ RSpec.describe Project, type: :model do
   end
 
   describe '.append_collaborators' do
+    include ActiveJob::TestHelper
+
+    after do
+      clear_enqueued_jobs
+    end
 
     it 'should be able to back the former collaborators' do
       collaborator_user = create(:collaborator_user, state: :left)
+      owner = collaborator_user.project.owner
 
-      collaborator_user.project.append_collaborators([collaborator_user.member.email])
+      collaborator_user.project.append_collaborators(owner, [collaborator_user.member.email])
       collaborator_user.reload
       expect(collaborator_user.joined?).to be_truthy
     end
@@ -654,21 +660,46 @@ RSpec.describe Project, type: :model do
     it 'should be able to invite signed users' do
       user = create(:user)
 
-      project_user.append_collaborators([user.email])
-      expect(project_user.collaborators.count).to eq 1
+      project_user.append_collaborators(project_user.owner, [user.email])
+      expect(project_user.collaborators.count).to eq 2
     end
 
     it 'should be able to back the declined invitation' do
       collaborator_invitation = create(:collaborator_invitation, state: :declined)
+      owner = collaborator_invitation.project.owner
 
-      collaborator_invitation.project.append_collaborators([collaborator_invitation.member.email])
+      collaborator_invitation.project.append_collaborators(owner, [collaborator_invitation.member.email])
       collaborator_invitation.reload
       expect(collaborator_invitation.mounted?).to be_truthy
     end
 
     it 'should be able to invite unsigned users by email' do
-      project_user.append_collaborators(["abc@website.com"])
-      expect(project_user.collaborators.count).to eq 1
+      project_user.append_collaborators(project_user.owner, ["abc@website.com"])
+      expect(project_user.collaborators.count).to eq 2
+    end
+
+    it 'should be created mail job' do
+      ActiveJob::Base.queue_adapter = :test
+      expect {
+        project_user.append_collaborators(project_user.owner, ["abc@website.com"])
+      }.to have_enqueued_job.on_queue('mailers')
+    end
+
+    it 'should be sent invite mail' do
+      expect {
+        perform_enqueued_jobs do
+          project_user.append_collaborators(project_user.owner, ["abc@website.com"])
+        end
+      }.to change { ActionMailer::Base.deliveries.size }.by(1)
+    end
+
+    it 'should be sent to the right user' do
+      perform_enqueued_jobs do
+        project_user.append_collaborators(project_user.owner, ["abc@website.com"])
+      end
+
+      mail = ActionMailer::Base.deliveries.last
+      expect(mail.to[0]).to eq "abc@website.com"
     end
   end
 

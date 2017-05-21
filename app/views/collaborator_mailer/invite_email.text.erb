@@ -1,0 +1,9 @@
+<% content_for :topic do %>
+You've been invited to collaborate
+<% end %>
+
+<% content_for :content do %>
+Just to let you know that <%= @collaborator.user.username %> has added you as a collaborator on the project <%= @collaborator.project.name %>
+
+Start collaborating: <%= url_for(invitation_url(@collaborator.member.key)) %>
+<% end %>

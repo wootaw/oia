@@ -1,6 +1,7 @@
 FactoryGirl.define do
   factory :project do
     sequence(:name)       { |n| "project_name#{n}" }
+    sequence(:summary)    { |n| "project_summary#{n}" }
     sequence(:access_key) { |n| "project_access_key#{n}" }
     sequence(:secret_key) { |n| "project_secret_key#{n}" }
     sequence(:clazz)      { |n| Project.clazzs.keys.sample }
