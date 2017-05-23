@@ -1,11 +1,19 @@
 <template>
   <ul class="nav nav-tabs m-t-md">
     <li class="left"><a class="bg-paper" href="#" @click.stop.prevent="toggleDent"><i :class="dentClasses"></i></a></li>
+    <li :class="consoleTabClasses"><a href="#" @click.stop.prevent="toggleTab('console')">Console</a></li>
     <li :class="commentsTabClasses">
       <a href="#" @click.stop.prevent="toggleTab('comments')">Comments
       <span class="badge bg-warning m-l-xs m-t-n-xs" v-show="commentstotal!=0">{{commentstotal}}</span></a>
     </li>
-    <li :class="consoleTabClasses"><a href="#" @click.stop.prevent="toggleTab('console')">Console</a></li>
+    <li>
+      <a href="#" data-toggle="dropdown">Env</a>
+      <ul class="dropdown-menu pull-left m-r">
+        <li><a href="#">aaa</a></li>
+        <li><a href="#">bb</a></li>
+        <li><a href="#">ccc</a></li>
+            </ul>
+    </li>
   </ul>
 </template>
 
@@ -31,13 +39,13 @@ export default {
 
     commentsTabClasses () {
       return {
-        'm-l': true,
         'active': this.tab == 'comments'
       };
     },
 
     consoleTabClasses () {
       return {
+        'm-l': true,
         'active': this.tab == 'console'
       };
     },
@@ -50,7 +58,7 @@ export default {
     },
 
     toggleTab (tab) {
-      this.$emit('tabchanged', tab);
+      this.$emit('tabchanged', 'tab', tab);
     },
   },
   

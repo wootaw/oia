@@ -9,9 +9,10 @@
     <i class="fa fa-times"></i>
   </button>
   <div class="grid-over h-full">
-    <div class="dp-table w-full h-full item">
-      <div class="cell w-half v-middle wrapper-md" v-if="modal != 0">
-        <component :is="modal" v-on:projectcreated="projectCreated"></component>
+    <div class="dp-table w-half h-full item m-center">
+      <div class="cell v-middle wrapper-md">
+        <!-- <div class="bg-loading w-full h-xxs x-c-y-c"></div> -->
+        <component v-if="modal != 0" :is="modal" v-on:projectcreated="projectCreated"></component>
       </div>
     </div>
   </div>
@@ -19,7 +20,7 @@
 <% end %>
 
 <% content_for :content do %>
-<div class="app-content-body ">
+<div class="app-content-body">
   <div class="hbox hbox-auto-xs hbox-auto-sm">
     <div class="col">
       <div class="bg-green dker b-b wrapper-md">
@@ -35,8 +36,7 @@
           </div>
         </div>
       </div>
-
-      <div class="wrapper-md">
+      <div class="wrapper-md h-xxh">
       <% if can?(:create, Project.new(owner: @owner)) %>
         <projects-list :lastest="lastest" :owner="'<%= @owner.username %>'"></projects-list>
       <% else %>

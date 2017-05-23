@@ -38,7 +38,7 @@ export default {
 
   computed: {
     methodClasses () {
-      let r = ['label', 'pull-left', 'm-r-sm'];
+      const r = ['label', 'pull-left', 'm-r-sm'];
       r.push({
         'GET':    'label-success', 
         'POST':   'label-warning', 

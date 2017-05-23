@@ -1,6 +1,6 @@
 <template>
-  <div :class="editorClasses" v-init="[setProps]">
-    <span :class="itemClasses(index)" v-for="(tag, index) in tags" :key="index">
+  <div :class="{'tags-editor': true, 'form-control': true, 'h': true, 'editor-focus': focus}" v-init="[setProps]">
+    <span :class="{'tag-item': true, 'selected': selected == index}" v-for="(tag, index) in tags" :key="index">
       <span @click="selected = index">{{tag}}</span>
       <i class="fa fa-times" @click="doRemove(index)"></i>
     </span>
@@ -9,7 +9,6 @@
 </template>
 
 <script>
-// import debounce from 'lodash/debounce'
 import 'ASSET/scss/variables.scss'
 import isEmail from 'validator/lib/isEmail'
 export default {
@@ -25,19 +24,15 @@ export default {
 
   computed: {
 
-    editorClasses () {
-      return {
-        'tags-editor': true,
-        'form-control': true,
-        'h': true,
-        'editor-focus': this.focus
-      };
-    }
   },
 
   watch: {
     text (nv, ov) {
       this.size = nv.length > 20 ? nv.length + 2 : 20;
+    },
+
+    tags (nv, ov) {
+      this.$emit('tagschanged', nv);
     }
   },
 
@@ -58,17 +53,7 @@ export default {
       this[prop] = value;
     },
 
-    itemClasses (index) {
-      return {
-        'tag-item': true,
-        'selected': this.selected == index
-      }
-    },
-
     checkInput (e) {
-
-      // console.log(e)
-
       if (e.code == "Backspace") {
         if (this.text == '') {
           
@@ -136,9 +121,4 @@ export default {
 .tags-editor .tag-item.selected {
   background-color: #ab7a4b;
 }
-/*.tags-editor .tag-item .tag-bg {
-  padding: 2px 4px;
-  background-color: #27a102;
-  border-radius: 3px;
-}*/
 </style>

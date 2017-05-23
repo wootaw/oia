@@ -13,6 +13,7 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :collaborators
   resources :comments do
     collection do
       post :preview

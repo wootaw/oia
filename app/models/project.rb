@@ -12,10 +12,11 @@ class Project < ApplicationRecord
   has_many :collaborators, dependent: :destroy
   has_many :version_changes, dependent: :destroy, class_name: 'Change'
 
-  has_many :resources, through: :documents
-
   has_many :signed_collaborators, -> { where "collaborators.member_type = 'User'" }, class_name: "Collaborator"
   has_many :unsign_collaborators, -> { where "collaborators.member_type = 'Invitation'" }, class_name: "Collaborator"
+
+  has_many :resources, through: :documents
+  has_many :members, through: :signed_collaborators, source: :member, source_type: 'User'
 
   validates :name, presence: true, length: { minimum: 2, maximum: 50 }, uniqueness: { scope: :owner }
   # validates :summary, presence: true

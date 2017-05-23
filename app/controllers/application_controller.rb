@@ -3,11 +3,6 @@ class ApplicationController < ActionController::Base
   before_action :configure_permitted_parameters, if: :devise_controller?
   layout :layout
 
-  def current_ability
-    set_owner
-    @current_ability ||= Ability.new(current_user, @owner)
-  end
-
   def set_owner
     if params[:owner_name].present? && !@owner.present?
       @owner = User.find_by(username: params[:owner_name])
@@ -15,10 +10,24 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def set_project
-    @project = if @owner.is_a?(User)
-                @owner.personal_projects.find_by(name: params[:project_name])
-              end
+  def current_ability
+    @current_ability ||= Ability.new(current_user, @owner)
+  end
+
+  def existing_project
+    set_owner
+    if @owner.nil?
+      render_404
+    else
+      @project = @owner.view_projects(current_user).find_by(name: params[:project_name])
+      if @project.nil?
+        render_404
+      elsif can?(:read, @project)
+        yield @project if block_given?
+      else
+        render_404
+      end
+    end
   end
 
   def render_404

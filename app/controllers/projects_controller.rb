@@ -1,6 +1,5 @@
 class ProjectsController < ApplicationController
   before_action :authenticate_user!, except: [:show]
-  before_action :set_owner, only: [:show]
   authorize_resource :project
   include ActionView::Helpers::DateHelper
 
@@ -34,33 +33,23 @@ class ProjectsController < ApplicationController
   end
 
   def show
-    if @owner.nil?
-      render_404
-    else
-      set_project
-      if @project.nil?
-        render_404
-      elsif can?(:read, @project)
-        @change   = @project.lastest_change
-        @document = if params[:slug].present?
-          resource = @project.resources.find_by(slug: params[:slug])
-          if resource.nil?
-            @project.the_documents(@change).find_by(name: params[:slug])
-          else
-            resource.document
-          end
+    existing_project do |project|
+      @change   = project.lastest_change
+      @document = if params[:slug].present?
+        resource = project.resources.find_by(slug: params[:slug])
+        if resource.nil?
+          project.the_documents(@change).find_by(name: params[:slug])
         else
-          @hide_top = true
-          @project.the_documents(@change).take
-        end
-        
-        if @document.nil?
-          render_404
-        else
-          @resources = @document.the_resources(@change)
+          resource.document
         end
       else
+        project.the_documents(@change).take
+      end
+      
+      if @document.nil?
         render_404
+      else
+        @resources = @document.the_resources(@change)
       end
     end
   end

@@ -47,7 +47,20 @@ export default {
   directives: {
     init: {
       inserted(el, binding) {
-        $(el).find('li a.doc-item').click(function() {
+        const items = [];
+        const fn = function() {
+          let dli = items.pop();
+          setTimeout(() => {
+            dli.removeClass('dp-none').addClass('scale-in-hor-right');
+            if (items.length > 0) {
+              fn();
+            }
+          }, 100);
+        }
+
+        $('li a.doc-item', el).click(function(e) {
+          e.stopPropagation();
+          e.preventDefault();
           if ($(this).parents('.nav-cata').hasClass('loading')) {
             return false;
           }
@@ -55,14 +68,18 @@ export default {
           binding.value[1]('slug', $(this).attr('href'));
           return false;
         }).each((i, elm) => {
-          if ($(elm).parents().data('id') == binding.value[0]) {      // binding.value[0] == selected
-            $(elm).parents().addClass('active');
+          let li = $(elm).parents('li');
+          if (li.data('id') == binding.value[0]) {      // binding.value[0] == selected
+            li.addClass('active');
           }
+          items.push(li);
         });
+
+        fn();
       },
 
       componentUpdated(el, binding) {
-        $(el).find('li').each((i, elm) => {
+        $('li.doc-li', el).each((i, elm) => {
           if ($(elm).data('id') == binding.value[0]) {
             $(elm).addClass('active');
           } else {
@@ -87,7 +104,7 @@ export default {
           binding.value[0]('affix', 'affix-bottom');
         });
       }
-    }
+    },
   },
 
   methods: {

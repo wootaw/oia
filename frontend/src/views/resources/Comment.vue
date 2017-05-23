@@ -2,7 +2,7 @@
   <div>
     <a class="pull-left thumb-sm avatar m-l-n-md scale-up-center">
       <img :src="comment.user.avatar_url">
-    </a>          
+    </a>
     <div :class="panelClasses">
       <div class="panel-heading pos-rlt b-b b-light">
         <span class="arrow left"></span>                    

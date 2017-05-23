@@ -21,7 +21,7 @@ export default {
   props: ['document', 'dir', 'name'],
 
   components: {
-    'resource-panel': ResourcePanel
+    'resource-panel': ResourcePanel,
   },
 
   data () {
