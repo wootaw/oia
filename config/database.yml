@@ -3,8 +3,9 @@ default: &default
   encoding: unicode
   host: localhost
   pool: 5
-  username: wt
-  password: smellegg411322
+  username: <%= A.db.username %>
+  password: <%= A.db.password %>
+  port: <%= A.db.port %>
 
 development:
   <<: *default
@@ -19,4 +20,4 @@ test:
 
 production:
   <<: *default
-  database: apiwoods
+  database: <%= A.db.database %>

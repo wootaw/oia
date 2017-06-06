@@ -33,3 +33,5 @@ webpack --config frontend/build/webpack.prod.conf.js -p
 
 ./node_modules/.bin/webpack --config frontend/build/webpack.prod.conf.js -p
 ./node_modules/.bin/webpack-dev-server --config frontend/build/webpack.dev.conf.js --hot --inline
+
+docker run -it --rm --name test -e POSTGRES_PASSWORD=123123 -e POSTGRES_USER=wt -v /Users/wutao/ws/apiwoods/uploads:/var/lib/postgresql/data -d -p 5999:5432 postgres

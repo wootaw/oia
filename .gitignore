@@ -18,9 +18,12 @@
 !/tmp/.keep
 
 # Ignore Byebug command history file.
-/public/uploads/
-/config/database.yml
-/config/application.yml
+public/uploads/
+public/assets/
+public/mocks/
+config/application.yml
 .byebug_history
 coverage
 node_modules
+data-postgres
+data-redis
