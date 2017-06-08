@@ -38,8 +38,6 @@ services:
     build:
       context: .
       dockerfile: config/containers/node/Dockerfile
-    # volumes:
-    #   - node_modules
     volumes:
       - .:/var/www/apiwoods
     # volumes_from:
