@@ -19,9 +19,8 @@ services:
 
   db:
     image: postgres:9.6.3-alpine
-    environment:
-      - POSTGRES_USER=camellia
-      - POSTGRES_PASSWORD=rR5qgoGnFzJ4B7yZ
+    env_file:
+      - ./config/common.env
     ports:
       - "6999:5432"
     volumes:
