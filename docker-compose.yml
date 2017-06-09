@@ -39,6 +39,7 @@ services:
       dockerfile: config/containers/node/Dockerfile
     volumes:
       - .:/var/www/apiwoods
+#      - /var/www/apiwoods/node_modules
     # volumes_from:
     #   - app
 

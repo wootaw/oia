@@ -24,7 +24,7 @@ RUN mkdir -p tmp/pids && \
 # COPY Gemfile $APP_HOME/
 # COPY Gemfile.lock $APP_HOME/
 
-# COPY Gemfile* $APP_HOME/
+COPY Gemfile* $APP_HOME/
 # COPY package.json $APP_HOME/
 
 RUN gem install bundler && \
