@@ -30,12 +30,13 @@ COPY Gemfile* $APP_HOME/
 RUN gem install bundler && \
     bundle install
     # npm install -g yarn && \
-    # yarn && \
+    # yarn
     # node_modules/.bin/webpack --config frontend/build/webpack.prod.conf.js -p
     # npm install -g cyarn && \
     # npm install -g cyarn --registry=https://registry.npm.taobao.org && \
     # cyarn install
-# COPY . $APP_HOME
+
+# COPY . .
 
 EXPOSE 3000
 CMD ["bundle", "exec", "puma", "-C", "config/puma.rb"]
