@@ -23,6 +23,7 @@ public/assets/
 public/mocks/
 config/application.yml
 config/common.env
+.env*
 .byebug_history
 coverage
 node_modules

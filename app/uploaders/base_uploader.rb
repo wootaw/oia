@@ -15,7 +15,7 @@ class BaseUploader < CarrierWave::Uploader::Base
 
   def store_dir
     dir = model.class.to_s.underscore
-    if A.upload_provider == 'file'
+    if ENV["UPLOAD_PROVIDER"] == 'file'
       dir = "uploads/#{dir}"
     end
     dir
