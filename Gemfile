@@ -7,6 +7,7 @@ source 'https://gems.ruby-china.org'
 # end
 
 gem 'rails', '~> 5.0.2'
+gem 'dotenv-rails', require: 'dotenv/rails-now'
 gem 'pg'
 gem 'sass-rails', '~> 5.0'
 gem 'uglifier', '>= 1.3.0'

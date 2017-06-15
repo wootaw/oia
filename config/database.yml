@@ -3,9 +3,9 @@ default: &default
   encoding: unicode
   host: localhost
   pool: 5
-  username: <%= A.db.username %>
-  password: <%= A.db.password %>
-  port: <%= A.db.port %>
+  username: <%= ENV["POSTGRES_USER"] %>
+  password: <%= ENV["POSTGRES_PASSWORD"] %>
+  port: <%= ENV["POSTGRES_PORT"] %>
 
 development:
   <<: *default
@@ -20,4 +20,4 @@ test:
 
 production:
   <<: *default
-  database: <%= A.db.database %>
+  database: apiwoods
