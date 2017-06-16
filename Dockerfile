@@ -7,8 +7,8 @@ RUN mv /etc/apt/sources.list /etc/apt/sources.list.bak && \
     echo "deb-src http://mirrors.163.com/debian/ jessie-proposed-updates main non-free contrib" >>/etc/apt/sources.list && \
     apt-get update && \
     apt-get install -y --no-install-recommends build-essential curl apt-utils libssl-dev libpq-dev libxml2-dev libxslt1-dev git imagemagick libbz2-dev libjpeg-dev libevent-dev libmagickcore-dev libffi-dev libglib2.0-dev zlib1g-dev libyaml-dev && \
-    # curl -sL https://deb.nodesource.com/setup_6.x | bash - && \
-    # apt-get install -y nodejs && \
+    curl -sL https://deb.nodesource.com/setup_6.x | bash - && \
+    apt-get install -y nodejs && \
     rm -rf /var/lib/apt/lists/*
 
 ENV APP_HOME /var/www/apiwoods
