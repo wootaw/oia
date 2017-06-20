@@ -4,6 +4,9 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable and :omniauthable
   attr_accessor :account
 
+  LOGIN_FORMAT = 'A-Za-z0-9\-\_\.'
+  ALLOW_LOGIN_FORMAT_REGEXP = /\A[#{LOGIN_FORMAT}]+\z/
+
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable, authentication_keys: [:account]
 
@@ -20,8 +23,8 @@ class User < ApplicationRecord
   has_many :roles, through: :members, source: :roles
   has_many :groups, through: :roles, source: :group
 
-  validates_format_of :username, with: /\A[a-zA-Z0-9_-]*\Z/, multiline: true
-  validates :username, presence: true, length: { minimum: 2, maximum: 50 }, uniqueness: true
+  validates_format_of :username, with: ALLOW_LOGIN_FORMAT_REGEXP, multiline: false
+  validates :username, presence: true, length: { minimum: 2, maximum: 20 }, uniqueness: { case_sensitive: false }
   validates :username, exclusion: { in: A::RESERVED_WORDS, message: "%{value} is reserved." }
   validate :validate_username
 
