@@ -20,6 +20,9 @@ module Apiwoods
     config.autoload_paths += [
       Rails.root.join('lib')
     ]
+    config.eager_load_paths += [
+      Rails.root.join('lib/apiwoods')
+    ]
 
     config.generators do |g|
       g.assets false
