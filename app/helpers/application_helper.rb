@@ -8,8 +8,8 @@ module ApplicationHelper
     elsif Rails.configuration.webpack[:manifest]
       asset_name = Rails.configuration.webpack[:manifest]["#{name}.js"]
       if asset_name
-        gzs = "#{asset_name}.gz"
-        asset_name = gzs if File.exists?("#{Rails.root}/public/assets/#{gzs}")
+        # gzs = "#{asset_name}.gz"
+        # asset_name = gzs if File.exists?("#{Rails.root}/public/assets/#{gzs}")
         src = asset_url("/assets/#{asset_name}")
       end
     end
