@@ -7,6 +7,7 @@ import 'UTIL/bootjs'
 import 'es6-shim'
 import Vue from 'vue'
 import Sign from 'MIXIN/Sign'
+import 'DIRECTIVE/scaleout';
 import 'COMPONENT/signbox/UsersSignIn'
 import 'COMPONENT/signbox/UsersSignUp'
 import DocumentsList from 'VIEW/projects/DocumentsList'
@@ -42,7 +43,7 @@ $(function() {
 
     mixins: [Sign],
 
-    components: { 
+    components: {
       'documents-list':       DocumentsList,
       'document-panel':       DocumentPanel,
       'resource-modal':       ResourceModal,
@@ -82,7 +83,7 @@ $(function() {
             // let parts = location.pathname.split('/');
             // let url = `/${parts[1]}/${parts[2]}/${id}`;
             // if (url != location.pathname) {
-            //   if ($(el).data('old') == undefined) { 
+            //   if ($(el).data('old') == undefined) {
             //     $(el).data('old', true);
             //   } else {
             //     window.history.replaceState("", "", url);
