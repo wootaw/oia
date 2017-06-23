@@ -35,4 +35,8 @@ config.plugins.push(
   })
 );
 
+config.devServer = {
+  headers: { "Access-Control-Allow-Origin": "*" }
+};
+
 module.exports = config;

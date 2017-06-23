@@ -42,11 +42,11 @@ module.exports = {
   module: {
     loaders: [
       { 
-        test: require.resolve("jquery/src/core"), 
+        test: require.resolve("jquery"), 
         loader: "expose-loader?jQuery" 
       },
       { 
-        test: require.resolve("jquery/src/core"), 
+        test: require.resolve("jquery"), 
         loader: "expose-loader?$" 
       },
       {

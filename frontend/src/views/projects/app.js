@@ -1,6 +1,6 @@
 import 'bootstrap/dist/css/bootstrap.css'
 import 'ASSET/scss/app.scss'
-import 'VENDOR/font-awesome/css/font-awesome.min.css'
+import 'VENDOR/icons/iconfont.css'
 import 'ASSET/scss/highlight.css'
 
 import 'UTIL/bootjs'
@@ -106,11 +106,11 @@ $(function() {
       //   }
       // },
 
-      sticky: {
-        inserted(el, binding) {
-          // $('.panel-res > .panel-heading', el).stick_in_parent(binding.value);
-        }
-      },
+      // sticky: {
+      //   inserted(el, binding) {
+      //     // $('.panel-res > .panel-heading', el).stick_in_parent(binding.value);
+      //   }
+      // },
 
     },
 
