@@ -142,6 +142,10 @@ small {
       .item {
         padding: 60px;
       }
+      i.fa {
+        font-size: 220px;
+        color: $dark_color_lter;
+      }
 
       &.feature-design {
         top: 0px;
@@ -155,16 +159,25 @@ small {
         top: 30px;
         left: -200px;
         width: 240px;
+        i.fa {
+          font-size: 120px;
+        }
       }
       &.feature-versioning {
         top: 30px;
         left: 80px;
         width: 280px;
+        i.fa {
+          font-size: 160px;
+        }
       }
       &.feature-debug {
         top: 30px;
         left: 400px;
         width: 320px;
+        i.fa {
+          font-size: 200px;
+        }
       }
       &.feature-mock {
         top: 30px;
@@ -174,6 +187,9 @@ small {
         top: 30px;
         left: 1140px;
         width: 380px;
+        i.fa {
+          font-size: 260px;
+        }
       }
     }
   }
