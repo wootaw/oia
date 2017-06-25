@@ -1,7 +1,9 @@
 version: "2"
 services:
   app:
-    build: .
+    build:
+      context: .
+      dockerfile: config/containers/app/Dockerfile
 
     env_file: 
       - .env
@@ -12,11 +14,23 @@ services:
     links:
       - db
       - redis
-      # - node
     expose:
       - "3000"
     volumes:
       - .:/var/www/apiwoods
+
+  job:
+    build:
+      context: .
+      dockerfile: config/containers/app/Dockerfile
+    env_file: 
+      - .env
+    links:
+      - db
+      - redis
+    volumes:
+      - .:/var/www/apiwoods
+    command: ["bundle", "exec", "sidekiq", "-C", "config/sidekiq.yml"]
 
   db:
     image: postgres:9.6.3-alpine
