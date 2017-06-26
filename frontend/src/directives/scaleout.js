@@ -2,9 +2,13 @@ import Vue from 'vue'
 
 Vue.directive('scaleout', {
   bind(el, binding) {
-    $('.loading-logo', el).addClass('scale-out-center');
+    $('.navbar-brand', el).removeClass('loading');
+
+    $('div', el).removeClass('rotate-down');
+    $('.navbar-collapse', el).removeClass('loading').addClass('fixed-to-top');
+
     setTimeout(() => {
-      $(el).css('display', 'none');
+      $(el).removeClass('loading');
     }, 800);
   }
 })

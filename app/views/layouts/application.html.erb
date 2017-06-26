@@ -8,16 +8,6 @@
   </head>
   <body>
     <div id="app" class="app app-header-fixed app-aside-fixed">
-      <div class="loading-full txt-center" v-scaleout>
-        <div class="loading-logo">
-          <div></div>
-          <svg viewBox="0 0 80 80">
-            <g>
-              <polygon fill="#27a102" points="53.911,57.084 40.562,56.555 36.993,50.372 40.466,50.372 31.444,34.738 31.441,34.742 31.439,34.738 22.409,50.369 25.784,50.369 19.635,61.015 3.88,67 13.461,50.415 10.085,50.415 31.444,13.444 44.86,36.693 54.362,20.244 71.765,50.125 69.32,50.125 76.526,61.814 65.419,57.589 60.635,50.094 63.083,50.094 54.362,35.258 54.36,35.261 54.359,35.258 49.192,44.201 51.588,48.354 52.778,50.415 49.312,50.415"></polygon>
-            </g>
-          </svg>
-        </div>
-      </div>
       <%= render partial: "shared/header" %>
       <div class="app-content" role="main">
       <% if content_for?(:content) %>

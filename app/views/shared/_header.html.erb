@@ -1,8 +1,13 @@
-<header id="header" class="app-header navbar box-shadow" role="menu">
-  <div class="collapse pos-rlt navbar-collapse box-shadow bg-white-only">
-    <a href="/" class="navbar-brand text-lt full-left">
-      <img src="/logo.png" alt=".">
-      <span class="hidden-folded m-l-xs ng-binding">apiwoods</span>
+<header id="header" class="app-header navbar box-shadow loading" role="menu" v-scaleout>
+  <div class="collapse pos-rlt navbar-collapse loading">
+    <a href="/" class="navbar-brand full-left loading">
+      <div class="rotate-down"></div>
+      <svg viewBox="0 0 80 80">
+        <g>
+          <polygon fill="#27a102" points="53.911,57.084 40.562,56.555 36.993,50.372 40.466,50.372 31.444,34.738 31.441,34.742 31.439,34.738 22.409,50.369 25.784,50.369 19.635,61.015 3.88,67 13.461,50.415 10.085,50.415 31.444,13.444 44.86,36.693 54.362,20.244 71.765,50.125 69.32,50.125 76.526,61.814 65.419,57.589 60.635,50.094 63.083,50.094 54.362,35.258 54.36,35.261 54.359,35.258 49.192,44.201 51.588,48.354 52.778,50.415 49.312,50.415"></polygon>
+        </g>
+      </svg>
+      <span class="hidden-folded m-l-xs">apiwoods</span>
     </a>
 
     <% if false %>
@@ -10,7 +15,7 @@
     <ul class="nav navbar-nav hidden-sm">
       <li class="dropdown pos-stc">
         <a href="#" data-toggle="dropdown" class="dropdown-toggle">
-          <span>Mega</span> 
+          <span>Mega</span>
           <span class="caret"></span>
         </a>
         <div class="dropdown-menu wrapper w-full bg-white">
@@ -151,7 +156,7 @@
     <!-- / search form -->
     <% end %>
     <!-- nabar right -->
-    
+
     <% if user_signed_in? %>
     <ul class="nav navbar-nav navbar-right">
       <% if params[:controller] == "projects" && params[:action] == "show" %>
@@ -253,8 +258,8 @@
       </button>
     </div>
     <% end %>
-    
+
     <!-- / navbar right -->
   </div>
-  
+
 </header>
