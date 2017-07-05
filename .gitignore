@@ -13,9 +13,12 @@
 
 # Ignore all logfiles and tempfiles.
 /log/*
-/tmp/*
+/tmp/**/*.log
+/tmp/**/*.pid
+/tmp/**/*.state
+/tmp/**/*.sock
 !/log/.keep
-!/tmp/.keep
+!/tmp/**/.keep
 
 # Ignore Byebug command history file.
 public/uploads/
