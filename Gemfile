@@ -19,7 +19,7 @@ gem 'puma'
 gem 'turbolinks', '~> 5'
 gem 'jbuilder', '~> 2.5'
 gem 'json-schema'
-
+gem 'oneapm_rpm'
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 3.0'
 # Use ActiveModel has_secure_password
@@ -74,6 +74,7 @@ group :development, :test do
 end
 
 group :development do
+  gem 'annotate', github: 'ctran/annotate_models'
   gem 'better_errors'
   # Access an IRB console on exception pages or by using <%= console %> anywhere in the code.
   gem 'web-console', '>= 3.3.0'
