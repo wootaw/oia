@@ -1,4 +1,4 @@
-source 'https://gems.ruby-china.org'
+source 'https://gems.ruby-china.com'
 # source 'https://rubygems.org'
 
 # git_source(:github) do |repo_name|
@@ -6,7 +6,7 @@ source 'https://gems.ruby-china.org'
 #   "https://github.com/#{repo_name}.git"
 # end
 
-gem 'rails', '~> 5.0.2'
+gem 'rails', '~> 5.2.3'
 gem 'dotenv-rails', require: 'dotenv/rails-now'
 gem 'pg'
 gem 'sass-rails', '~> 5.0'
@@ -74,7 +74,7 @@ group :development, :test do
 end
 
 group :development do
-  gem 'annotate', github: 'ctran/annotate_models'
+  gem 'annotate'
   gem 'better_errors'
   # Access an IRB console on exception pages or by using <%= console %> anywhere in the code.
   gem 'web-console', '>= 3.3.0'
